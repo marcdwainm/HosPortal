@@ -44,7 +44,9 @@ else {
 
                 $_SESSION['email'] = $email;
                 $_SESSION['fullname'] = "$fname $mname $lname";
+                $_SESSION['patientid'] = $row['patient_id'];
                 $_SESSION['contact'] = $row['contact_num'];
+                $_SESSION['position'] = 'patient';
                 header('location: ../patient-homepage.php');
             } else {
                 header("Location: ../index.php?acc=notfound&loginemail=$email");
