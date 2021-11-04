@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <div class='profile-container'>
     <div class='profile-picture'>
         <div class='profile-pic-div'>
