@@ -1,0 +1,175 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+:root{
+    --background: #E6E6E6;
+    --blue: #6094C9;
+    --green: #AAC46B;
+    --graytext: #8B8B8B;
+    --grayoutline: rgb(209, 209, 209);
+}
+
+body{
+    font-family: 'Century Gothic';
+}
+
+nav{
+    background: white;
+    height: 70px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid rgb(209, 209, 209);
+}
+
+.logo-container{
+    position: absolute;
+    top: -2px;
+    left: 20px;
+    max-width: 230px;
+}
+
+.logo-container img{
+    width: 100%;
+}
+
+nav ul{
+    float: right;
+    height: auto;
+    background-color: var(--blue);
+    display: flex;
+}
+
+nav ul li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+nav ul li:hover{
+    background-color: var(--green);
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+nav ul li a{
+    color: white;
+    font-size: 16px;
+    padding: 0px 20px;
+    text-transform: uppercase;
+}
+
+.checkbtn{
+    font-size: 30px;
+    color: white;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+
+.checkbtn-prof{
+    float: right;
+    line-height: 80px;
+    margin-right: 20px;
+    cursor: pointer;
+    display: none;
+}
+
+#check{
+    display: none;
+}
+
+#check-prof{
+    display: none;
+}
+
+/*TABLET STYLES*/
+@media screen and (max-width: 925px){
+    nav{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        z-index: 2;
+        font-size: 0.9em;
+    }
+
+    .checkbtn{
+        border-radius: 5px;
+        display: block;
+        width: 50px;
+        height: 50px;
+        background-color: var(--blue);
+        margin-right: 20px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .checkbtn-prof{
+        border-radius: 5px;
+        display: block;
+        width: 50px;
+        height: 50px;
+        background-color: var(--blue);
+        margin-right: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .checkbtn-prof i{
+        color: white;
+    }
+
+
+    .checkbtn div{
+        width: 100%;
+        height: 3px;
+        border-radius: 2rem;
+        background-color: white;
+    }
+
+    ul{
+        position:fixed;
+        width: 100%;
+        height: 100vh;
+        top: 70px;
+        left: -100%;
+        text-align: center;
+        transition: 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        box-shadow: -8px 1px 14px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: -8px 1px 14px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: -8px 1px 14px 0px rgba(0,0,0,0.75);
+    }
+
+    nav ul li{
+        display: block;     
+    }
+
+    nav ul li a{
+        font-size: 20px;
+    }
+
+    a:hover, a.active{
+        background: none;
+    }
+
+    #check:checked ~ ul{
+        left: 0;
+    }
+}

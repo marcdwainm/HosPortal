@@ -1,0 +1,237 @@
+:root{
+    --background: #E6E6E6;
+    --blue: #6094C9;
+    --green: #AAC46B;
+    --graytext: #8B8B8B;
+    --grayoutline: rgb(209, 209, 209);
+}
+
+.employee-contents{
+    width: calc(100% - 350px);
+    height: auto;
+    position: absolute;
+    z-index: -10;
+    right: 0;
+    top: 70px;
+    padding: 50px;
+}
+
+.e-contents-header{
+    color: gray;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.e-contents-header-app{
+    color: gray;
+    margin-bottom: 20px;
+}
+
+.document-header-btn{
+    display: flex;
+    justify-content: space-between;
+}
+
+.document-header-btn a{
+    background-color: var(--green);
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.document-header-btn a:hover{
+    background-color: var(--blue);
+    transition: 0.3s ease-in-out;
+}
+
+
+.document-header-btn a button{
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer
+}
+
+.e-contents-header-app h1{
+    margin-bottom: 10px;
+}
+
+.e-contents-header-app h2{
+    font-weight: 200;
+}
+
+.e-contents-header input{
+    padding: 10px;
+    font-family: 'Century Gothic';
+    border: 1px solid var(--grayoutline);
+    outline: none;
+    width: 25%;
+}
+
+.e-contents-header h1{
+    margin-bottom: 10px;
+}
+
+.e-contents-header h2{
+    font-weight: 200;
+}
+
+.e-contents-table{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    margin-bottom: 40px;
+}
+
+/*TABLE*/
+
+.e-contents-header-table{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--grayoutline);
+}
+
+.e-contents-header-table span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.e-contents{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--grayoutline);
+    text-align: center;
+}
+
+.e-contents span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+    font-size: 0.7em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.e-contents div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.e-contents div a{
+    padding: 10px;
+    background-color: var(--green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.view{
+    width: 50%;
+}
+
+.e-contents div a:hover{
+    background-color: var(--blue);
+    transition: 0.3s ease-in-out;
+}
+
+.e-contents div a button{
+    background-color: transparent;
+    color: white;
+    font-family: 'Century Gothic';
+    border: none;
+    cursor: pointer;
+}
+
+
+/**PATIENTS**/
+.e-contents-header-table-patients{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--grayoutline);
+}
+
+.e-contents-header-table-patients span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+    font-size: 0.8em;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.e-contents-patients{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--grayoutline);
+}
+
+.e-contents-patients span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+    font-size: 0.7em;
+    text-align: center;
+}
+
+
+.e-contents-patients div{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.e-contents-patients div a {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--green);
+    width: 40%;
+    cursor: pointer;
+}
+
+.e-contents-patients div a:hover{
+    background-color: var(--blue);
+    transition: 0.3s ease-in-out;
+}
+
+.e-contents-patients div a button{
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    font-family: 'Century Gothic';
+}
+
+
+
+
+
+/**TABLET STYLES**/
+
+@media screen and (max-width: 927px){
+    .employee-contents{
+        width: 100vw;
+    }
+
+}
