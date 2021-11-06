@@ -52,12 +52,23 @@ $(document).ready(function () {
     $("#appointments").on("click", function () {
         window.location.href = 'patient-homepage.php';
     })
+    $("#appointments-doctor").on("click", function () {
+        window.location.href = 'employee-homepage.php';
+    })
+
+    $("#patients-doctor").on("click", function () {
+        window.location.href = 'employee-patients.php';
+    })
 
     $("#documents").on("click", function () {
         window.location.href = 'patient-documents.php';
     })
+    $("#documents-doctor").on("click", function () {
+        window.location.href = 'employee-documents.php';
+    })
 
-    $("#logout").click(function () {
+
+    $("#logout").add("#logout-doctor").click(function () {
         $.ajax({
             type: "GET",
             url: "php_processes/logout.php",

@@ -6,6 +6,127 @@
     --grayoutline: rgb(209, 209, 209);
 }
 
+.notification-area{
+    position: absolute;
+    top: 100px;
+    right: 50px;
+}
+
+.notification-num{
+    width: 30px;
+    height: 30px;
+    background-color: rgb(231, 43, 43);
+    color: white;
+    border-radius: 50%;
+    position: absolute;
+    right: 40px;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-size: 0.8em;
+}
+
+.notification-num span{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notification-btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: -1px 0px 13px -4px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -1px 0px 13px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 0px 13px -4px rgba(0,0,0,0.75);
+    cursor:pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--graytext);
+}
+
+.notification-box{
+    width: 300px;
+    height: auto;
+    background-color: white;
+    border: 1px solid var(--grayoutline);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.notif-header{
+    height: auto;
+    padding: 15px;
+    font-size: 0.8em;
+    border-bottom: 1px solid var(--grayoutline);
+    color: var(--graytext);
+    font-weight: 600;
+}
+
+.notif-content{
+    width: 100%;
+    height: 70px;
+    border-bottom: 1px solid var(--grayoutline);
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.resched-notif-type{
+    height: auto;
+}
+
+.notif-content span{
+    width: 180px;
+    font-size: 0.7em;
+    color: rgb(94, 94, 94);
+    display: flex;
+    justify-content: center;
+}
+
+.notif-img{
+    width: 40px;
+    height: 40px;
+    background-color: gray;
+}
+
+.seen{
+    width: 10px;
+    height: 100%;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.seen-circle{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--green);
+}
+
+.notif-see-all{
+    width: 100%;
+    height: 50px;
+    color: white;
+    font-size: 0.8em;
+    background-color: var(--blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
 .employee-contents{
     width: calc(100% - 350px);
     height: auto;

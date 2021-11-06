@@ -15,12 +15,83 @@
 
 <body>
     <?php
-    session_start();
     include 'extras/employee-navbar.php';
     include 'extras/profile.php'
     ?>
 
     <div class='background-container'></div>
+
+    <div class="notification-area">
+        <div class="notification-box">
+            <div class='notif-header'>
+                <span>Notifications</span>
+            </div>
+            <div class="notif-contents">
+                <!--10 People Have booked for appointments-->
+                <div class="notif-content book-notif-type">
+                    <div class='notif-img'></div>
+                    <span>
+                        10 patients has booked for appointment
+                    </span>
+                    <div class="seen">
+                        <div class="seen-circle"></div>
+                    </div>
+                </div>
+
+                <!--A patient has settled a bill-->
+                <div class="notif-content bill-notif-type">
+                    <div class='notif-img'></div>
+                    <span>
+                        Marc Dwain B. Magracia has settled a bill
+                    </span>
+                    <div class="seen">
+                        <div class="seen-circle"></div>
+                    </div>
+                </div>
+
+                <!--A patient has requested an appointment reschedule. Accept?-->
+                <div class="notif-content resched-notif-type">
+                    <div class='notif-img'></div>
+                    <span>
+                        Marc Dwain Magracia requested an appointment reschedule. Accept?
+                    </span>
+                    <div class="seen">
+                        <div class="seen-circle"></div>
+                    </div>
+                </div>
+
+                <!--A patient has settled a bill-->
+                <div class="notif-content bill-notif-type">
+                    <div class='notif-img'></div>
+                    <span>
+                        Marc Dwain B. Magracia has settled a bill
+                    </span>
+                    <div class="seen">
+                        <div class="seen-circle"></div>
+                    </div>
+                </div>
+
+                <!--A patient has settled a bill-->
+                <div class="notif-content bill-notif-type">
+                    <div class='notif-img'></div>
+                    <span>
+                        Marc Dwain B. Magracia has settled a bill
+                    </span>
+                    <div class="seen">
+                        <div class="seen-circle"></div>
+                    </div>
+                </div>
+
+                <div class='notif-see-all'>
+                    <span>See All</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification-num"><span>0</span></div>
+        <div class="notification-btn">
+            <i class="far fa-bell"></i>
+        </div>
+    </div>
 
     <div class='employee-contents'>
         <!--APPOINTMENT UPCOMING-->
