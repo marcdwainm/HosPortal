@@ -140,7 +140,21 @@
         <!--APPOINTMENT UPCOMING-->
         <div class='e-contents-header-app'>
             <h1>Appointments</h1>
-            <h2>Today</h2>
+            <h2 class='h2-sortation'>
+                <span>Today</span>
+                <form class='sortation' method='GET'>
+                    <select name='sortation' class='sortation-select'>
+                        <option value='' selected disabled>Select Option</option>
+                        <option value='today'>Today</option>
+                        <option value='upcoming'>Upcoming</option>
+                        <option value='recent'>Recent Appointments</option>
+                        <option value='all'>All</option>
+                    </select>
+                    <button type='button' id='sort-btn' disabled>
+                        Sort
+                    </button>
+                </form>
+            </h2>
         </div>
 
         <div class='e-contents-table'>
@@ -191,50 +205,6 @@
                         ';
                 }
                 ?>
-            </div>
-        </div>
-
-        <div class="reload-all">
-            <button type='button' id='reload-tbl'>Reload Table</button>
-            <button id='see-all-appt'>See All Appointments</button>
-            <button id='see-all-appt'>Add an Appointment</button>
-        </div>
-
-
-
-        <!--APPOINTMENT HISTORY-->
-        <div class='e-contents-header'>
-            <h2>History</h2>
-        </div>
-
-        <div class='e-contents-table'>
-            <div class='e-contents-header-table'>
-                <span>Appointment No.</span>
-                <span>Patient</span>
-                <span>Date/Time</span>
-                <span>Status</span>
-            </div>
-
-            <!-- TABLE CONTENTS -->
-            <div class='e-contents'>
-                <span>1902983721367</span>
-                <span>Marc Dwain Magracia</span>
-                <span>19/03/2021 5:00PM</span>
-                <span>Appointed</span>
-            </div>
-
-            <div class='e-contents'>
-                <span>1902983721367</span>
-                <span>Marc Dwain Magracia</span>
-                <span>19/03/2021 5:00PM</span>
-                <span>Appointed</span>
-            </div>
-
-            <div class='e-contents'>
-                <span>1902983721367</span>
-                <span>Marc Dwain Magracia</span>
-                <span>19/03/2021 5:00PM</span>
-                <span>Appointed</span>
             </div>
         </div>
     </div>

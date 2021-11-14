@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $('#book-appointment').click(function () {
         $('.dim').fadeIn();
         $('.date-time-input').val('');
@@ -15,13 +14,32 @@ $(document).ready(function () {
 
 
     $('#book').on('click', function () {
-        $('.dim').fadeOut();
-        Swal.fire(
-            'Success!',
-            'Your appointment is now on queue!',
-            'success'
-        )
-        $(".table").load(window.location.href + " .table");
+        dt = $("#appointment-date-time").val();
+        desc = $(".description").val();
+
+        $.ajax({
+            type: "POST",
+            url: "php_processes/book-appointment.php",
+            data: {
+                'appointment-date-time': dt,
+                'description': desc
+            },
+            success: function (result) {
+                $('#book-appointment').prop('disabled', true);
+                $('.dim').fadeOut();
+                Swal.fire(
+                    'Success!',
+                    'Your appointment is now on queue!',
+                    'success'
+                )
+                $("#appt-table").html(result);
+
+
+            },
+            error: function (result) {
+                alert('error');
+            }
+        })
     })
 
     $('.book-content').on('input', function () {
@@ -45,4 +63,6 @@ $(document).ready(function () {
             }
         ]
     });
+
+
 })

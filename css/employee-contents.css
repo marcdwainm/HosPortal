@@ -7,7 +7,7 @@
 }
 
 .notification-area{
-    position: absolute;
+    position: fixed;
     top: 100px;
     right: 50px;
 }
@@ -60,6 +60,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
+    display: none;
 }
 
 .notif-header{
@@ -127,6 +128,16 @@
     cursor: pointer;
 }
 
+.no-new{
+    padding: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(189, 189, 189);
+}
+
 .employee-contents{
     width: calc(100% - 350px);
     height: auto;
@@ -147,6 +158,16 @@
 .e-contents-header-app{
     color: gray;
     margin-bottom: 20px;
+}
+
+.no-appointments{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    font-weight: 600;
+    color: rgb(189, 189, 189);
+    text-align: center;
 }
 
 .document-header-btn{
@@ -231,6 +252,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     border-bottom: 1px solid var(--grayoutline);
     text-align: center;
+    position: relative;
 }
 
 .e-contents span{
@@ -239,10 +261,22 @@
     align-items: center;
     padding: 20px 0px;
     font-size: 0.7em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
+
+.e-contents .e-num{
+    position: relative;
+}
+
+.e-contents .e-num button{
+    position: absolute;
+    right: 20px;
+    border: none;
+    background-color: transparent;
+    color: rgb(61, 61, 61);
+    cursor: pointer;
+}
+
+
 
 .e-contents div{
     width: 100%;
@@ -262,6 +296,39 @@
     margin-right: 10px;
 }
 
+.e-contents .dropdown{
+    position: absolute;
+    top: 45px;
+    right: 30px;
+    background-color: white;
+    width: 200px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    display: none;
+    border: 1px solid var(--grayoutline);
+    -webkit-box-shadow: 5px 5px 18px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 18px -10px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 18px -10px rgba(0,0,0,0.75);
+}
+
+.e-contents .dropdown button{
+    width: 100%;
+    border: none;
+    padding: 10px 0;
+    background-color: transparent;
+    font-family: 'Century Gothic';
+    cursor: pointer;
+}
+
+.e-contents .dropdown button:hover{
+    background-color: var(--blue);
+    color: white;
+    transition: 0.3s ease-in-out;
+}
+
+
 .view{
     width: 50%;
 }
@@ -277,6 +344,66 @@
     font-family: 'Century Gothic';
     border: none;
     cursor: pointer;
+}
+
+.reload-all{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-left: auto;
+}
+
+.reload-all button{
+    font-family: 'Century Gothic';
+    background-color: var(--blue);
+    padding: 10px;
+    width: 150px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+.reload-all button:hover{
+    background-color: var(--green);
+    transition: 0.2s ease-in-out;
+}
+
+.h2-sortation{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sortation{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+}
+
+.sortation-select{
+    padding: 10px;
+    outline: none;
+    border: 1px solid var(--grayoutline);
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+
+.sortation button{
+    height: 100%;
+    padding: 0px 20px;
+    border: none;
+    background: var(--blue);
+    color: white;
+    font-family: 'Century Gothic';
+    cursor: pointer;
+}
+
+.sortation button:hover{
+    background-color: var(--green);
+    transition: 0.2s ease-in-out;
 }
 
 

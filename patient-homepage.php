@@ -28,12 +28,66 @@
         header("Location: index.php");
     }
 
-    include 'extras/navbar.php'
+    include 'extras/navbar.php';
+    include 'extras/profile.php';
 
     ?>
 
     <div class='background-container'></div>
-    <?php include 'extras/profile.php' ?>
+
+    <div class="notification-area">
+        <div class="notification-box">
+            <div class='notif-header'>
+                <span>Notifications</span>
+            </div>
+            <div class="notif-contents">
+                <!--10 People Have booked for appointments-->
+                <?php
+                $patient_id = $_SESSION['patientid'];
+                include 'php_processes/db_conn.php';
+
+                $query = "SELECT * FROM patients_notifications WHERE patient_id = '$patient_id' AND date_notified > DATE_SUB(NOW(), INTERVAL '1' DAY)";
+
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) == 0) {
+                    echo "<span class = 'no-new'>No New Notifications!</span>";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $appnum = $row['appointment_num'];
+                        echo "
+                            <div class='notif-content cancel-notif-type'>
+                                <div class='notif-img'></div>
+                                <span>
+                                    The doctor has cancelled your appointment (Appointment #$appnum)
+                                </span>
+                                <div class='seen'>
+                                    <div class='seen-circle'></div>
+                                </div> 
+                            </div>
+                        ";
+                    }
+                }
+
+                ?>
+
+
+                <!-- Doctor has cancelled your appointment, put appointment in appointment history -->
+                <!-- The doctor has sent you a prescription -->
+                <!-- Your lab result is out -->
+                <!-- Recent Appointment not paid. Settle now?-->
+
+
+                <div class='notif-see-all'>
+                    <span>See All</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification-num"><span>0</span></div>
+        <div class="notification-btn">
+            <i class="far fa-bell"></i>
+        </div>
+    </div>
 
     <div class='dim'>
         <div class='book-container'>
@@ -41,7 +95,7 @@
                 <span>Book an Appointment</span>
                 <span class='exit'>X</span>
             </div>
-            <form class='book-content' action='php_processes/book-appointment.php' method='POST' target='dummyframe'>
+            <form class='book-content' target='dummyframe'>
                 <span class='content-head'>Set Date/Time</span>
                 <input type='datetime-local' class='date-time-input' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date and Time...">
                 <input type='text' class='description' name='description' placeholder="Provide a brief description of your concern (Optional)">
@@ -50,7 +104,7 @@
                     <span class='time-date'>Monday - Saturday</span>
                     <span class='time-date'>9:00AM - 4:00PM</span>
                 </div>
-                <button id='book'>Book Appointment</button>
+                <button type='submit' id='book'>Book Appointment</button>
             </form>
         </div>
     </div>
@@ -59,7 +113,6 @@
         <div class='appointment-container'>
             <h3 class='header-table'>
                 <span>Upcoming Appointments</span>
-                <button id='book-appointment'>Book Appointments</button>
             </h3>
 
             <div class='table'>
@@ -70,38 +123,67 @@
                     <span>Time</span>
                 </div>
 
-                <!--APPOINTMENT TABLE CONTENTS-->
-                <?php
-                include 'php_processes/db_conn.php';
+                <div id='appt-table'>
+                    <!--APPOINTMENT TABLE CONTENTS-->
+                    <?php
+                    include 'php_processes/db_conn.php';
 
-                $patientid = $_SESSION['patientid'];
-                $query = "SELECT * FROM appointments WHERE patient_id = '$patientid'";
+                    $patientid = $_SESSION['patientid'];
+                    $query = "SELECT * FROM appointments WHERE patient_id = '$patientid'";
+
+                    $result = mysqli_query($conn, $query);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_array($result)) {
+                            $appointmentnum = $row['appointment_num'];
+                            $datetime = $row['date_and_time'];
+                            $dt = new DateTime($datetime);
+
+                            $date = $dt->format('F j, Y l');
+                            $time = $dt->format('h:i A');
+
+                            echo "
+                                <div class='table-content'>
+                                    <span class='appointment-num'>$appointmentnum</span>
+                                    <span>$date</span>
+                                    <span class = 'e-num'>
+                                        $time
+                                        <button><i class='fas fa-ellipsis-v'></i></button>
+                                    </span>
+                                    <form class = 'dropdown'>
+                                        <button type = 'button' class = 'cancel-appointment-patient' value = '$appointmentnum'>Cancel Appointment</button>
+                                    </form>
+                                </div>
+                            ";
+                        }
+                    } else {
+                        echo '
+                            <span class = "no-appointments">You currently have no appointments</span>
+                        ';
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <div class='reload-book-btns'>
+                <?php
+                $query = "SELECT num_of_appt FROM user_table WHERE patient_id = '$patientid'";
 
                 $result = mysqli_query($conn, $query);
 
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_array($result)) {
-                        $appointmentnum = $row['appointment_num'];
-                        $datetime = $row['date_and_time'];
-                        $dt = new DateTime($datetime);
+                $row = mysqli_fetch_array($result);
 
-                        $date = $dt->format('F j, Y l');
-                        $time = $dt->format('h:i A');
-
-                        echo "
-                            <div class='table-content'>
-                                <span class='appointment-num'>$appointmentnum</span>
-                                <span>$date</span>
-                                <span>$time</span>
-                            </div>
-                        ";
-                    }
+                if ($row[0] == 1) {
+                    echo "
+                    <button id = 'reload'>Reload Table</button>
+                    <button id='book-appointment' disabled>Book Appointments</button>
+                ";
                 } else {
-                    echo '
-                        <span class = "no-appointments">You currently have no appointments</span>
-                    ';
+                    echo "
+                    <button id = 'reload'>Reload Table</button>
+                    <button id='book-appointment'>Book Appointments</button>
+                ";
                 }
-
                 ?>
             </div>
         </div>
@@ -140,5 +222,7 @@
 <script src='js/navbar.js'></script>
 <script src='js/book-appointment.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src='js/notification.js'></script>
+<script src='js/appointment-manager.js'></script>
 
 </html>
