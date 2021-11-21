@@ -20,6 +20,7 @@ $date_booked = date('Y-m-d h:i:s', time());
 //Logged in Patient ID
 $patientid = $_SESSION['patientid'];
 $fullname = $_SESSION['fullname'];
+$contact = $_SESSION['contact'];
 
 // Appointment num = datetime user registered appointment + patientid
 $appointmentnum = $date . $patientid;
@@ -32,8 +33,8 @@ $email = $_SESSION['email'];
 $position = $_SESSION['position'];
 
 //INSERT APPOINTMENT TO DATABSE
-$query = "INSERT INTO `appointments`(`appointment_num`, `patient_id`, `patient_fullname`, `date_and_time`, `description`, `status`) 
-            VALUES ('$appointmentnum', '$patientid', '$fullname', '$datetime', '$desc', 'pending')";
+$query = "INSERT INTO `appointments`(`appointment_num`, `patient_id`, `patient_fullname`, `date_and_time`, `description`, `contact`, `app_type`, `appointed_by`, `status`) 
+            VALUES ('$appointmentnum', '$patientid', '$fullname', '$datetime', '$desc', '$contact', 'f2f', 'user', 'pending')";
 $result = mysqli_query($conn, $query);
 
 

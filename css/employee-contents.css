@@ -234,7 +234,7 @@
 
 .e-contents-header-table{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     border-bottom: 1px solid var(--grayoutline);
 }
 
@@ -249,7 +249,7 @@
 
 .e-contents{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     border-bottom: 1px solid var(--grayoutline);
     text-align: center;
     position: relative;
@@ -262,6 +262,15 @@
     padding: 20px 0px;
     font-size: 0.7em;
 }
+
+.e-contents .orange-text{
+    color: orange;
+}
+
+.e-contents .green-text{
+    color: green;
+}
+
 
 .e-contents .e-num{
     position: relative;
@@ -349,7 +358,7 @@
 .reload-all{
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 315px;
     margin-left: auto;
 }
 
@@ -406,8 +415,173 @@
     transition: 0.2s ease-in-out;
 }
 
+/**BOOK APPOINTMENT MANUAL**/
+
+.dim{
+    position: fixed;
+    top: 0;
+    background-color: rgb(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.book-container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: auto;
+    background-color: white;
+}
+
+.book-header-exit{
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 15px 20px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--grayoutline);
+    font-weight: 400;
+    color: var(--graytext);
+    font-size: 0.8em;
+}
+
+.exit{
+    cursor: pointer;
+}
+
+.exit:hover{
+    color: red;
+    transition: 0.3s ease-in-out;
+}
+
+.book-content-doctor{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-content-doctor .content-head{
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 0.8em;
+    color: var(--graytext);
+}
+
+.book-content-doctor input{
+    padding: 15px;
+    font-family: 'Century Gothic';
+    margin-bottom: 15px;
+    border: 1px solid var(--grayoutline);
+    outline: none;
+    cursor: text;
+}
+
+.availability{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;    
+}
+
+.availability span{
+    text-align: center;
+}
+
+.available-head{
+    margin-bottom: 5px;
+    font-size: 0.7em;
+}
+
+
+.time-date{
+    font-size: 0.7em;
+    color: red;
+}
+
+
+.book-content-doctor #book-doctor{
+    padding: 15px;
+    border: none;
+    background-color: var(--green);
+    color: white;
+    font-family: 'Century Gothic';
+    cursor: pointer;
+}
+
+.book-content-doctor #book-doctor:hover{
+    background-color: var(--blue);
+    transition: 0.3s ease-in-out;
+}
+
+.book-content-doctor #book-doctor:disabled{
+    background-color: rgb(207, 207, 207);
+    cursor: default;
+}
+
+.search-patient{
+    width: 100%;
+    position: relative;
+}
+
+.search-patient input{
+    width: 100%;
+}
+
+#plist-search{
+    background-color: white;
+    border: 1px solid rgb(190, 190, 190);
+    max-height: 230px;
+    width: 100%;
+    position: absolute;
+    top: 47px;
+    display: none;
+    overflow-y: scroll;
+}
+
+.search-results{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border: none;
+    padding: 15px;
+    font-family: 'Century Gothic';
+    cursor: pointer;
+}
+
+.search-results:hover{
+    background-color: rgb(230, 230, 230);
+}
+
+.search-results span{
+    text-align: center;
+}
+
+#appointment-type{
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid var(--grayoutline);
+    font-family: 'Century Gothic';
+    outline: none;
+    cursor: pointer;
+}
 
 /**PATIENTS**/
+.e-contents-table-patients{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    margin-bottom: 40px;
+}
+
 .e-contents-header-table-patients{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;

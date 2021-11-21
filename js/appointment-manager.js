@@ -1,8 +1,13 @@
 $(document).ready(function () {
     $('#reload-tbl').on('click', function () {
+        selected = $(this).val();
+
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "php_processes/table-live-update.php",
+            data: {
+                'selected': selected
+            },
             success: function (result) {
                 $("#doctor-appt-table").html(result);
             },
@@ -19,6 +24,7 @@ $(document).ready(function () {
     $('#sort-btn').on('click', function () {
         selected = $('.sortation-select').find(':selected').val();
         selectedText = $('.sortation-select').find(':selected').text();
+        $('#reload-tbl').val(selected);
 
         $('.h2-sortation span').html(selectedText);
         $.ajax({
@@ -34,10 +40,16 @@ $(document).ready(function () {
                 alert('error');
             }
         })
-    })
 
-    $('#see-all-appt').on('click', function () {
-        window.location = 'employee-all-appointments.php';
+        Swal.fire({
+            position: 'bottom-right',
+            icon: 'success',
+            title: 'Appointments Sorted',
+            backdrop: 'none',
+            showConfirmButton: false,
+            timer: 1000
+        })
+
     })
 
     $("#doctor-appt-table").on('click', '.e-contents .e-num button', function () {
@@ -57,6 +69,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.cancel-appointment', function () {
         appointmentNum = $(this).val();
+        selected = $("#reload-tbl").val();
 
         Swal.fire({
             title: 'Cancel this Appointment?',
@@ -69,9 +82,12 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: 'php_processes/appointment-cancel.php',
-                    data: { app_num: appointmentNum },
+                    data: {
+                        app_num: appointmentNum,
+                        selected: selected
+                    },
                     success: function (result) {
                         $("#doctor-appt-table").html(result)
                     }
@@ -82,6 +98,57 @@ $(document).ready(function () {
                     'The appointment has been cancelled.',
                     'success'
                 )
+            }
+        })
+    })
+
+
+    $(document).on('click', '#finish-appointment', function () {
+        appointmentNum = $(this).val();
+        selected = $('#reload-tbl').val();
+
+        Swal.fire({
+            icon: 'question',
+            title: 'Finish Appointment?',
+            text: "You may issue the bill now or later",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Online Bill Issue',
+            denyButtonText: 'Don\'t Issue',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('Bill Issued!', 'The patient has an outstanding balance', 'success')
+            } else if (result.isDenied) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "The patient won't be issued with a bill",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //MARK AS DONE APPOINTMENT
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php_processes/appointment-done.php',
+                            data: {
+                                app_num: appointmentNum,
+                                selected: selected
+                            },
+                            success: function (result) {
+                                $("#doctor-appt-table").html(result)
+                            }
+                        })
+
+                        Swal.fire(
+                            'Appointment Done!',
+                            'Patient won\'t be issued',
+                            'success'
+                        )
+                    }
+                })
             }
         })
     })
