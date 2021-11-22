@@ -1,5 +1,10 @@
 document.getElementById("download").addEventListener("click", () => {
     const invoice = this.document.getElementById("invoice");
+
+    const params = new URLSearchParams(window.location.search);
+    doctype = params.get('docType');
+    pid = params.get('pid');
+
     var opt = {
         margin: 0,
         filename: 'myfile.pdf',
@@ -23,10 +28,31 @@ document.getElementById("download").addEventListener("click", () => {
             }
             xhttp.open("POST", "../php_processes/blob-to-database.php", true);
             xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhttp.send("blob=" + encodeURIComponent(base64data));
+            xhttp.send("blob=" + encodeURIComponent(base64data) + "&doctype=" + doctype + "&pid=" + pid);
         }
     })
 })
+
+
+document.getElementById("copy").addEventListener("click", () => {
+    const invoice = this.document.getElementById("invoice");
+
+    const params = new URLSearchParams(window.location.search);
+    doctype = params.get('docType');
+    const date = Date.now();
+    pid = params.get('pid');
+    filename = doctype + "-" + date + pid;
+
+    var opt = {
+        margin: 0,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    file = html2pdf().set(opt).from(invoice).save();
+})
+
 
 $(document).ready(function () {
     addDiv = function () {
@@ -56,6 +82,11 @@ $(document).ready(function () {
         }
 
         addDiv();
+    })
+
+
+    $('#print').on('click', function () {
+        window.print();
     })
 })
 

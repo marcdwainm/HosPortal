@@ -18,11 +18,11 @@
 
 <body>
     <?php
-session_start();
+    session_start();
 
-if (!isset($_SESSION['email'])) {
-    header("Location: index.php");
-}
+    if (!isset($_SESSION['email'])) {
+        header("Location: index.php");
+    }
 
     include 'extras/employee-navbar.php';
     include 'extras/profile.php'

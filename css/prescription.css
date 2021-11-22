@@ -46,7 +46,7 @@
     transition: 0.3s ease-in-out;
 }
 
-#download{
+.btns{
     padding: 10px;
     background-color: var(--green);
     color: white;
@@ -54,7 +54,7 @@
     cursor: pointer;
 }
 
-#download:hover{
+.btns:hover{
     background-color: var(--blue);
     transition: 0.3s ease-in-out;
 }
@@ -173,3 +173,21 @@ body{
     justify-content: space-between;
     align-items: center;
 }
+
+
+@media print {
+    body * {
+      visibility: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    #invoice, #invoice * {
+      visibility: visible;
+      break-inside: avoid;
+    }
+    #invoice {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
