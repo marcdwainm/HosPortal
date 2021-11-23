@@ -65,23 +65,51 @@
                 <span>Filename</span>
                 <span>Patient</span>
                 <span>Date Uploaded</span>
-                <span></span>
             </div>
 
-            <!-- TABLE CONTENTS -->
+            <!-- TABLE CONTENTS OF PRESCRIPTION DOCUMENTS -->
+            <?php
+                include 'php_processes/db_conn.php';
 
-            <div class='e-contents'>
-                <span>190298_3721367.pdf</span>
-                <span>Marc Dwain Magracia</span>
-                <span>19/03/2021</span>
-                <div>
-                    <a class='view'><button>View</button></a>
-                    <a><button><i class="fas fa-download"></i></button></a>
-                </div>
-            </div>
+                //USED INNER JOIN TO QUERY MULTIPLE TABLES WITH SAME KEYS, TO ACCESS PATIENT NAME VIA CODE
+                $query = "SELECT documents.sent_to, documents.docs_date_time, documents.doc_type, user_table.first_name, user_table.last_name
+                FROM documents 
+                INNER JOIN user_table ON documents.sent_to = user_table.patient_id
+                ORDER BY docs_date_time DESC
+                ";
+
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $pdf_file = 'fakeprescription.pdf';
+                        $sent_to = $row['sent_to'];
+                        $patient_fName = $row['first_name'];
+                        $patient_lName = $row['last_name'];
+                        $doc_datetime = $row['docs_date_time'];
+                        $doc_type = $row['doc_type'];
+
+                        if ($doc_type === 'prescription'){
+                            echo "
+                                <div class='e-contents'>
+                                    <span>$pdf_file</span>
+                                    <span>$patient_fName $patient_lName</span>
+                                    <span>$doc_datetime</span>
+                                    <div>
+                                        <a class='view'><button>View</button></a>
+                                        <a><button><i class='fas fa-download'></i></button></a>
+                                    </div>
+                                </div>
+                            ";
+                        }
+                    }
+                } else {
+                        echo '
+                            <span class = "no-appointments">No Prescriptions Found</span>
+                        ';
+                }
+            ?>
         </div>
-
-
 
         <!--APPOINTMENT HISTORY-->
         <div class='e-contents-header'>
@@ -96,17 +124,48 @@
                 <span></span>
             </div>
 
-            <!-- TABLE CONTENTS -->
+            <!-- TABLE CONTENTS OF LABORATORY TESTS-->
 
-            <div class='e-contents'>
-                <span>190298_3721367.pdf</span>
-                <span>Marc Dwain Magracia</span>
-                <span>19/03/2021</span>
-                <div>
-                    <a class='view'><button>View</button></a>
-                    <a><button><i class="fas fa-download"></i></button></a>
-                </div>
-            </div>
+            <?php
+                include 'php_processes/db_conn.php'; 
+
+                $query = "SELECT documents.sent_to, documents.docs_date_time, documents.doc_type, user_table.first_name, user_table.last_name
+                FROM documents 
+                INNER JOIN user_table ON documents.sent_to = user_table.patient_id
+                ORDER BY docs_date_time DESC
+                ";
+
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $pdf_file = 'fakeprescription.pdf';
+                        $sent_to = $row['sent_to'];
+                        $patient_fName = $row['first_name'];
+                        $patient_lName = $row['last_name'];
+                        $doc_datetime = $row['docs_date_time'];
+                        $doc_type = $row['doc_type'];
+
+                        if ($doc_type === 'labresult'){
+                            echo "
+                                <div class='e-contents'>
+                                    <span>$pdf_file</span>
+                                    <span>$patient_fName $patient_lName</span>
+                                    <span>$doc_datetime</span>
+                                    <div>
+                                        <a class='view'><button>View</button></a>
+                                        <a><button><i class='fas fa-download'></i></button></a>
+                                    </div>
+                                </div>
+                            ";
+                        }
+                    }
+                } else {
+                        echo '
+                            <span class = "no-appointments">No Laboratory Results Found</span>
+                        ';
+                }
+            ?>
         </div>
     </div>
 </body>

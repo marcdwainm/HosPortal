@@ -2,7 +2,7 @@
 
 $host = 'localhost';
 $username = 'root';
-$password = 'root';
+$password = '';
 $database = 'twincare_db';
 
 $conn = new mysqli($host, $username, $password, $database);
