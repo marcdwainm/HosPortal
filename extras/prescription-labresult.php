@@ -8,21 +8,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
     <script src="https://kit.fontawesome.com/f45be26f8c.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel='stylesheet' type='text/css' href='../css/prescription.css'>
     <title></title>
 </head>
 
 <body>
-    <?php
-    if ($_GET['docType'] == 'prescription') {
-        echo "THIS IS A PRESCRIPTION";
-    } else if ($_GET['docType'] == 'labresult') {
-        echo "THIS IS A LAB LAB RESULT";
-    }
-
-    ?>
-
-
     <?php
     include '../php_processes/db_conn.php';
 
@@ -51,6 +42,13 @@
         $date_today = $to->format('m/d/Y');
     }
 
+    if ($_GET['pid'] == '0000') {
+        $patient_name = ucwords($_GET['pname']);
+        $patient_age = '0';
+        $to = new DateTime('today');
+        $date_today = $to->format('m/d/Y');
+    }
+
     ?>
     <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
     <div class='buttons'>
@@ -60,7 +58,7 @@
         </div>
 
         <div class='buttons-download'>
-            <button id='download' class='btns'>Send to Patient</button>
+            <button id='download' class='btns'>Upload</button>
             <button id='copy' class='btns'>Download a Copy</button>
             <button id='print' class='btns'>Print</button>
         </div>
@@ -68,57 +66,64 @@
 
     <div class='container'>
 
-        <!--!PRESCRIPTION-->
-
-        <div class='prescription-container' id='invoice'>
-            <h2>TWIN CARE MEDICAL CLINIC AND DIAGNOSTIC LABORATORY</h2>
-            <h4>02 Tapatan Road<br />Sulucan 3012<br />Angat, Bulacan</h4>
-            <div class='patient-info'>
-                <div class='name-age'>
-                    <div class='name-container'>
-                        <span>Patient Name: </span>
-                        <span contenteditable='true' class='underlined' id='name'><?php echo $patient_name; ?></span>
+        <?php
+        // IF DOCUMENT TYPE IS PRESCRIPTION
+        if ($_GET['docType'] == 'prescription') {
+            echo "
+                THIS IS A PRESCRIPTION
+                <div class='prescription-container' id='invoice'>
+                    <h2>TWIN CARE MEDICAL CLINIC AND DIAGNOSTIC LABORATORY</h2>
+                    <h4>02 Tapatan Road<br />Sulucan 3012<br />Angat, Bulacan</h4>
+                    <div class='patient-info'>
+                        <div class='name-age'>
+                            <div class='name-container'>
+                                <span>Patient Name: </span>
+                                <span contenteditable='true' class='underlined' id='name'>$patient_name</span>
+                            </div>
+                            <div class='age-container'>
+                                <span>Age: </span>
+                                <span contenteditable='true' class='underlined' id='age'>$patient_age</span>
+                            </div>
+                        </div>
+                        <div class='address-date'>
+                            <div class='address-container'>
+                                <span>Address: </span>
+                                <span contenteditable='true' class='underlined' id='address'>Patient Address</span>
+                            </div>
+                            <div class='date-container'>
+                                <span>Date: </span>
+                                <span contenteditable='true' class='underlined' id='date'>$date_today</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class='age-container'>
-                        <span>Age: </span>
-                        <span contenteditable='true' class='underlined' id='age'><?php echo $patient_age; ?></span>
+
+                    <div class='medicine'>
+                        <img src='../img/rx.png'>
+                        <div class='medicine-table' id='medicine-table'>
+                            <div class='medicine-table-header'>
+                                <span class='left'>Drug</span>
+                                <span class='center'>Amount</span>
+                                <span class='right'>Frequency</span>
+                            </div>
+
+                            <div class='medicine-table-content' id='prescription-item'>
+                                <span contenteditable='true' class='left'>Drug Name</span>
+                                <span contenteditable='true' class='center'>0mg</span>
+                                <span contenteditable='true' class='right'>Sample Frequency</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='footer'>
+                        <span>Signature: Doctor's Signature Here</span>
                     </div>
                 </div>
-                <div class='address-date'>
-                    <div class='address-container'>
-                        <span>Address: </span>
-                        <span contenteditable='true' class='underlined' id='address'>Sample Address</span>
-                    </div>
-                    <div class='date-container'>
-                        <span>Date: </span>
-                        <span contenteditable='true' class='underlined' id='date'><?php echo $date_today; ?></span>
-                    </div>
-                </div>
-            </div>
+            ";
+        } else if ($_GET['docType'] == 'labresult') {
+            echo "THIS IS A LAB RESULT";
+        }
 
-            <div class='medicine'>
-                <img src='../img/rx.png'>
-                <div class='medicine-table' id='medicine-table'>
-                    <div class='medicine-table-header'>
-                        <span class='left'>Drug</span>
-                        <span class='center'>Amount</span>
-                        <span class='right'>Frequency</span>
-                    </div>
-
-                    <div class='medicine-table-content' id='prescription-item'>
-                        <span contenteditable='true' class='left'>Drug Name</span>
-                        <span contenteditable='true' class='center'>0mg</span>
-                        <span contenteditable='true' class='right'>Sample Frequency</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class='footer'>
-                <span>Signature: Doctor's Signature Here</span>
-            </div>
-        </div>
-
-        <!--!END OF PRESCRIPTION-->
+        ?>
 
     </div>
 </body>

@@ -16,8 +16,16 @@
 </head>
 
 <body>
-    <?php include 'extras/employee-navbar.php' ?>
-    <?php include 'extras/profile.php' ?>
+    <?php
+    session_start();
+
+    if (!isset($_SESSION['email'])) {
+        header("Location: index.php");
+    }
+
+    include 'extras/employee-navbar.php';
+    include 'extras/profile.php'
+    ?>
 
     <div class='background-container'></div>
 
@@ -29,6 +37,12 @@
         </div>
         <form class='upload-document-content' method='GET'>
             <div class="p-name-documents">
+                <div class='portal-registered-checkbox'>
+                    <div class='checkbox'>
+                        <label for="portal-registered">Portal Registered Patient</label>
+                        <input type="checkbox" name="portal-registered" id='portal-registered' value="p-registered">
+                    </div>
+                </div>
                 <input type='text' id='patient-search' placeholder="Enter Patient's Name" autocomplete="off">
                 <div class="p-name-documents-autocomplete">
                     <!--Dynamic Results Here-->
@@ -42,10 +56,10 @@
             </select>
             <input type="File" name="file" id='file' accept='application/msword, text/plain, application/pdf'>
             <div class='document-upload-btns'>
-                <button id='upload-from-device' type='button' disabled>Upload from Device</button>
-                <button id='file-to-database' type='button'>Upload File</button>
+                <button id='upload-from-device' type='button' value='0000' disabled>Upload from Device</button>
+                <button id='file-to-database' type='button' value='0000'>Upload File</button>
                 <span>OR</span>
-                <button id='generate-document' name='submit' type='submit' disabled>Generate Document</button>
+                <button id='generate-document' name='submit' type='submit' value='0000' disabled>Generate Document</button>
             </div>
         </form>
     </div>
@@ -61,27 +75,55 @@
         </div>
 
         <div class='e-contents-table'>
-            <div class='e-contents-header-table'>
-                <span>Filename</span>
+            <div class='e-contents-header-table-docs'>
                 <span>Patient</span>
                 <span>Date Uploaded</span>
                 <span></span>
             </div>
 
             <!-- TABLE CONTENTS -->
+            <div class="presc-tbl">
 
-            <div class='e-contents'>
-                <span>190298_3721367.pdf</span>
-                <span>Marc Dwain Magracia</span>
-                <span>19/03/2021</span>
-                <div>
-                    <a class='view'><button>View</button></a>
-                    <a><button><i class="fas fa-download"></i></button></a>
-                </div>
+                <?php
+                include 'php_processes/db_conn.php';
+
+                $query = "
+                    SELECT * FROM documents ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 15
+                ";
+
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) == 0) {
+                    echo "<div class = 'empty'>You don't have any prescriptions</div>";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $doc_type = ucwords($row['doc_type']);
+                        $pname = $row['patient_name'];
+                        $date_uploaded = strtotime($row['date_uploaded']);
+                        $date_up_formatted = date('M d, Y h:i A', $date_uploaded);
+                        $doc_num = $row['doc_num'];
+
+                        echo "
+                    <div class='e-contents three-fr'>
+                        <span>$pname</span>
+                        <span>$date_up_formatted</span>
+                        <div>
+                            <button class = 'view' value = '$doc_num'>View</button>
+                            <button class = 'download-pdf' value = '$doc_num'><i class='fas fa-download'></i></button>
+                        </div>
+                    </div>
+                ";
+                    }
+                }
+
+                ?>
+
             </div>
         </div>
 
-
+        <div class="reload-all">
+            <button type='button' id='reload-tbl-prescription'>Reload Table</button>
+        </div>
 
         <!--APPOINTMENT HISTORY-->
         <div class='e-contents-header'>

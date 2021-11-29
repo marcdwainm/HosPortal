@@ -3,7 +3,7 @@ session_start();
 include 'db_conn.php';
 
 $patientid = $_SESSION['patientid'];
-$query = "SELECT * FROM appointments WHERE patient_id = '$patientid'";
+$query = "SELECT * FROM appointments WHERE patient_id = '$patientid' and status = 'pending'";
 
 $result = mysqli_query($conn, $query);
 

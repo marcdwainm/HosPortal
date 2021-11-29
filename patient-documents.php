@@ -29,11 +29,16 @@
 
     <div class='background-container'></div>
 
+    <?php include 'extras/patient-notifications.php'; ?>
+
     <div class='contents'>
         <h1>DOCUMENTS</h1>
         <div class='document-container'>
             <h3 class='header-table'>
                 <span>Lab Results</span>
+                <div class="reload-book-btns">
+                    <button id='see-all-documents'>See all Documents</button>
+                </div>
             </h3>
 
             <div class='table'>
@@ -61,7 +66,6 @@
                 </div>
 
 
-
             </div>
         </div>
 
@@ -76,26 +80,42 @@
 
             <div class='table'>
                 <!--PRESCRIPTIONS TABLE HEADER-->
-                <div class='table-header'>
-                    <span>Collection Date</span>
-                    <span>Estimated Date of Result</span>
+                <div class='table-header two-fr'>
+                    <span>Date Uploaded</span>
                     <span></span>
                 </div>
 
                 <!--PRESCRIPTIONS TABLE CONTENTS-->
 
+                <?php
+                include 'php_processes/db_conn.php';
+                $pid = $_SESSION['patientid'];
 
-                <div class='table-content'>
-                    <span>021382372.pdf</span>
-                    <span>12/02/2021</span>
-                    <div class='table-btns2'>
-                        <a href='patient-prescription.php'>
-                            <button class='details-btn'>Details</button>
-                        </a>
-                        <button class='download'><i class="fas fa-download"></i></button>
-                    </div>
-                </div>
+                $query = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'prescription' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 5";
 
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) == 0) {
+                    echo "<div class = 'no-appointments'>You don't have prescriptions</div>";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $date = strtotime($row['date_uploaded']);
+                        $date_formatted = date('M d, Y h:i A', $date);
+                        $docnum = $row['doc_num'];
+
+                        echo "
+                            <div class='table-content two-fr'>
+                                <span>$date_formatted</span>
+                                <div class='table-btns2'>
+                                    <button class='details-btn' value = '$docnum'>View</button>
+                                    <button class='download' value = '$docnum'><i class='fas fa-download'></i></button>
+                                </div>
+                            </div>
+                        ";
+                    }
+                }
+
+                ?>
 
             </div>
         </div>
@@ -103,5 +123,7 @@
 </body>
 <script src='js/navbar.js'></script>
 <script src='js/book-appointment.js'></script>
+<script src='js/patient-documents.js'></script>
+<script src="js/notification.js"></script>
 
 </html>

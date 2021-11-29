@@ -61,6 +61,9 @@
     top: 20px;
     right: 20px;
     display: none;
+    -webkit-box-shadow: 0px 7px 18px -5px rgba(49, 49, 49, 0.75);
+    -moz-box-shadow: 0px 7px 18px -5px rgba(49, 49, 49, 0.75);
+    box-shadow: 0px 7px 18px -5px rgba(49, 49, 49, 0.75);
 }
 
 .notif-header{
@@ -72,19 +75,44 @@
     font-weight: 600;
 }
 
+.notif-contents{
+    width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 .notif-content{
     width: 100%;
     height: 70px;
-    border-bottom: 1px solid var(--grayoutline);
+    background: white;
     display: flex;
     align-items: center;
     padding: 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    border: none;
+    font-family: 'Century Gothic';
+    font-size: 1em;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.notif-content:hover{
+    background: rgb(233, 233, 233);
+    transition: 0.2s ease-in-out;
 }
 
 .cancel-notif-type{
     height: 90px;
+}
+
+.doc-notif-type{
+    height: 70px;
+}
+
+.app-notif-type{
+    height: 70px;
 }
 
 .resched-notif-type{
@@ -92,11 +120,12 @@
 }
 
 .notif-content span{
-    width: 180px;
+    max-width: 200px;
     font-size: 0.7em;
     color: rgb(94, 94, 94);
     display: flex;
     justify-content: center;
+    padding: 10px;
 }
 
 .notif-img{
@@ -118,18 +147,6 @@
     height: 10px;
     border-radius: 50%;
     background-color: var(--green);
-}
-
-.notif-see-all{
-    width: 100%;
-    height: 50px;
-    color: white;
-    font-size: 0.8em;
-    background-color: var(--blue);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
 }
 
 .no-new{
@@ -236,14 +253,14 @@
 .book-content button{
     padding: 15px;
     border: none;
-    background-color: var(--green);
+    background-color: var(--blue);
     color: white;
     font-family: 'Century Gothic';
     cursor: pointer;
 }
 
 .book-content button:hover{
-    background-color: var(--blue);
+    background-color: var(--green);
     transition: 0.3s ease-in-out;
 }
 
@@ -297,6 +314,35 @@
     align-items: center;
 }
 
+.header-table .sortation{
+    display: flex;
+    justify-content: center;
+}
+
+.header-table .sortation select{
+    padding: 10px;
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
+    font-family: 'Century Gothic';
+}
+
+.header-table .sortation button{
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: var(--blue);
+    color: white;
+    padding: 11px;
+    font-family: 'Century Gothic';
+    width: 60px;
+}
+
+.header-table .sortation button:hover{
+    transition: 0.3s ease-in-out;
+    background: var(--green);
+}
+
 .reload-book-btns{
     display: flex;
     justify-content: flex-end;
@@ -321,7 +367,7 @@
 }
 
 .reload-book-btns button:disabled{
-    background-color: rgb(207, 207, 207);
+    background-color: rgb(196, 196, 196);
     cursor: default;
 }
 
@@ -332,6 +378,7 @@
     height: auto;
     background-color: white;
     margin-bottom: 30px;
+    border: 1px solid rgb(165, 165, 165);
 }
 
 .table-header{
@@ -370,6 +417,25 @@
     font-size: 0.7em;
     position: relative;
 }
+
+.table-content:last-child{
+    border-bottom: none;
+}
+
+.table-content:nth-child(even){
+    background: rgb(241, 241, 241);
+}
+
+.two-fr{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.three-fr{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
 
 .e-num{
     position: relative;
@@ -582,30 +648,27 @@
     align-items: center;
 }
 
-.table-btns2 a{
+.table-btns2 button{
     padding: 10px;
     background-color: var(--green);
-    width: 60%;
+    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
     cursor: pointer;
-}
-
-.table-btns2 a:hover{
-    background-color: var(--blue);
-    transition: 0.3s ease-in-out;
-}
-
-.table-btns2 a button{
     border: none;
     color: white;
     font-family: 'Century Gothic';
-    outline: none;
-    background-color: transparent;
-    height: 100%;
-    cursor: pointer;
+}
+
+.table-btns2 .download{
+    width: auto;
+}
+
+.table-btns2 button:hover{
+    background-color: var(--blue);
+    transition: 0.3s ease-in-out;
 }
 
 .download{

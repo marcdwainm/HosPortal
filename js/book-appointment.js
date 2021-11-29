@@ -17,6 +17,7 @@ $(document).ready(function () {
             $(this).val('')
         })
         $("#appointment-type").val($("#appointment-type option:first").val());
+        $('#portal-registered').prop('checked', false)
     })
 
 
@@ -59,6 +60,7 @@ $(document).ready(function () {
         appType = $('#appointment-type').val();
         desc = $('#desc').val();
         selected = $('#reload-tbl').val();
+        pid = $(this).val();
 
         $.ajax({
             type: "POST",
@@ -69,7 +71,8 @@ $(document).ready(function () {
                 'patient-contact': patientContact,
                 'app-type': appType,
                 'desc': desc,
-                'selected': selected
+                'selected': selected,
+                'pid': pid
             },
             success: function (result) {
                 clearInterval(interval);
@@ -117,30 +120,74 @@ $(document).ready(function () {
     $('#pname-search').on('keyup', function () {
         query = $(this).val()
 
-        if (query != '') {
-            $.ajax({
-                url: 'php_processes/search.php',
-                method: 'POST',
-                data: {
-                    query: query
-                },
-                success: function (data) {
-                    if (data == '') {
-                        $('#plist-search').hide()
-                        $('#plist-search').html('')
-                    } else {
-                        $('#plist-search').show()
+        if ($('#portal-registered').is(':checked')) {
+            if (query === '') {
+                $('#plist-search').hide();
+                $('#patient-error').hide();
+            } else {
+                $('#plist-search').show();
+                $.ajax({
+                    url: 'php_processes/search.php',
+                    method: 'POST',
+                    data: {
+                        query: query
+                    },
+                    success: function (data) {
                         $('#plist-search').html(data)
-                    }
 
-                }
-            })
-        }
-        else if (query == '') {
-            $('#plist-search').hide()
-            $('#plist-search').html('')
+                        if (data == '') {
+                            $('#patient-error').show()
+                            $('#plist-search').hide()
+                            $('#plist-search').html('')
+                        } else {
+                            $('#plist-search').show()
+                            $('#patient-error').hide()
+                        }
+
+                    }
+                })
+            }
+        } else {
+
         }
     })
+
+
+    $('#portal-registered').on('click', function () {
+        if ($(this).is(':checked')) {
+            if (query === '') {
+                $('#plist-search').hide();
+                $('#patient-error').hide();
+            } else {
+                $('#plist-search').show();
+                $.ajax({
+                    url: 'php_processes/search.php',
+                    method: 'POST',
+                    data: {
+                        query: query
+                    },
+                    success: function (data) {
+                        $('#plist-search').html(data)
+
+                        if (data == '') {
+                            $('#patient-error').show()
+                            $('#plist-search').hide()
+                            $('#plist-search').html('')
+                        } else {
+                            $('#plist-search').show()
+                            $('#patient-error').hide()
+                        }
+
+                    }
+                })
+            }
+        } else {
+            $('#plist-search').hide()
+            $('#book-doctor').val('0000')
+            $('#patient-error').hide();
+        }
+    })
+
 
 
     $(document).on('click', '.search-results', function () {
@@ -160,30 +207,34 @@ $(document).ready(function () {
                 console.log(data.fullname);
                 $('#pname-search').val(data.fullname);
                 $('#pcontact').val(data.contact);
+                $('#book-doctor').val(data.pid)
             }
         })
     })
 
     function checkInputs() {
-        let empty1 = false;
-        let empty2 = false;
-        $('.book-content-doctor input').each(function () {
-            if ($(this).val() === '') {
-                empty1 = true;
-            }
-        })
+        let empty = false;
 
+        if ($('#appointment-date-time').val() === '') {
+            empty = true;
+        }
+        if ($('pname-search').val() === '') {
+            empty = true;
+        }
+        if ($('#portal-registered').is(':checked') && $('#book-doctor').val() === '0000') {
+            empty = true;
+        }
         let value = $('#appointment-type').val();
         if (value === null) {
-            empty2 = true;
+            empty = true;
         }
 
-        if (!empty1 && !empty2) {
+        if (!empty) {
             $('#book-doctor').prop('disabled', false)
         }
         else {
             $('#book-doctor').prop('disabled', true)
         }
-        console.log(empty1, empty2)
+        console.log(empty)
     }
 })

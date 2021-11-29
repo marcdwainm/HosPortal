@@ -51,7 +51,7 @@ $result = mysqli_query($conn, $query);
 
 //AJAX
 
-$query = "SELECT * FROM appointments WHERE SUBSTRING(appointment_num, -4) = '$patientid'";
+$query = "SELECT * FROM appointments WHERE SUBSTRING(appointment_num, -4) = '$patientid' AND status = 'pending'";
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) > 0) {

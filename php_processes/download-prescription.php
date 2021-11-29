@@ -1,7 +1,9 @@
 <?php
 include 'db_conn.php';
 
-$query = "SELECT * FROM documents WHERE doc_num = '20211120022836'";
+$docnum = $_POST['docnum'];
+
+$query = "SELECT * FROM documents WHERE doc_num = '$docnum'";
 $result = mysqli_query($conn, $query);
 
 while ($row = mysqli_fetch_array($result)) {

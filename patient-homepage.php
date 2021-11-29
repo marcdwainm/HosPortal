@@ -35,59 +35,7 @@
 
     <div class='background-container'></div>
 
-    <div class="notification-area">
-        <div class="notification-box">
-            <div class='notif-header'>
-                <span>Notifications</span>
-            </div>
-            <div class="notif-contents">
-                <!--10 People Have booked for appointments-->
-                <?php
-                $patient_id = $_SESSION['patientid'];
-                include 'php_processes/db_conn.php';
-
-                $query = "SELECT * FROM patients_notifications WHERE patient_id = '$patient_id' AND date_notified > DATE_SUB(NOW(), INTERVAL '1' DAY)";
-
-                $result = mysqli_query($conn, $query);
-
-                if (mysqli_num_rows($result) == 0) {
-                    echo "<span class = 'no-new'>No New Notifications!</span>";
-                } else {
-                    while ($row = mysqli_fetch_array($result)) {
-                        $appnum = $row['appointment_num'];
-                        echo "
-                            <div class='notif-content cancel-notif-type'>
-                                <div class='notif-img'></div>
-                                <span>
-                                    The doctor has cancelled your appointment (Appointment #$appnum)
-                                </span>
-                                <div class='seen'>
-                                    <div class='seen-circle'></div>
-                                </div> 
-                            </div>
-                        ";
-                    }
-                }
-
-                ?>
-
-
-                <!-- Doctor has cancelled your appointment, put appointment in appointment history -->
-                <!-- The doctor has sent you a prescription -->
-                <!-- Your lab result is out -->
-                <!-- Recent Appointment not paid. Settle now?-->
-
-
-                <div class='notif-see-all'>
-                    <span>See All</span>
-                </div>
-            </div>
-        </div>
-        <div class="notification-num"><span>0</span></div>
-        <div class="notification-btn">
-            <i class="far fa-bell"></i>
-        </div>
-    </div>
+    <?php include 'extras/patient-notifications.php'; ?>
 
     <div class='dim'>
         <div class='book-container'>
@@ -98,7 +46,7 @@
             <form class='book-content' target='dummyframe'>
                 <span class='content-head'>Set Date/Time</span>
                 <input type='datetime-local' class='date-time-input' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date and Time...">
-                <input type='text' class='description' name='description' placeholder="Provide a brief description of your concern (Optional)">
+                <input type='text' class='description' name='description' placeholder="Provide a brief description of your concern (Optional)" autocomplete="off">
                 <div class="availability">
                     <span class='available-head'>Availablity:</span>
                     <span class='time-date'>Monday - Saturday</span>
@@ -129,7 +77,7 @@
                     include 'php_processes/db_conn.php';
 
                     $patientid = $_SESSION['patientid'];
-                    $query = "SELECT * FROM appointments WHERE patient_id = '$patientid'";
+                    $query = "SELECT * FROM appointments WHERE patient_id = '$patientid' AND status = 'pending'";
 
                     $result = mysqli_query($conn, $query);
 

@@ -16,7 +16,7 @@
 <body>
     <?php
 
-    include 'extras/navbar.php';
+    include 'extras/employee-navbar.php';
     include 'extras/profile.php';
 
     $docnum = $_GET['docnum'];
@@ -41,10 +41,6 @@
 
                     while ($row = mysqli_fetch_array($result)) {
                         $base64 = $row['pdf_file'];
-                    }
-
-                    if (!str_contains($base64, "data:application/pdf;base64,")) {
-                        $base64 = "data:application/pdf;base64," . $base64;
                     }
 
                     echo "

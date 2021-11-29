@@ -5,7 +5,7 @@ $app_num = $_GET['app_num'];
 $selected = $_GET['selected'];
 
 //NOTIIFY USER ABOUT CANCELLATION
-$date_notified = date('Y-m-d h:i:s', time());
+$date_notified = date('Y-m-d H:i:s', time());
 $userid = substr($app_num, -4);
 
 $query = "INSERT INTO patients_notifications (`notif_type`, `patient_id`, `appointment_num`, `date_notified`) VALUES('cancellation', '$userid','$app_num', '$date_notified')";
@@ -14,7 +14,7 @@ $result = mysqli_query($conn, $query);
 $query = "UPDATE user_table SET num_of_appt = 0 WHERE patient_id = '$userid'";
 $result = mysqli_query($conn, $query);
 
-$query = "DELETE FROM appointments WHERE appointment_num = '$app_num'";
+$query = "UPDATE appointments SET `status` = 'cancelled' WHERE appointment_num = '$app_num'";
 $result = mysqli_query($conn, $query);
 
 if ($selected == 'today') {

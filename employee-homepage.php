@@ -32,117 +32,7 @@
     <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
     <div class='background-container'></div>
 
-    <div class="notification-area">
-        <div class="notification-box">
-            <div class='notif-header'>
-                <span>Notifications</span>
-            </div>
-            <div class="notif-contents">
-                <!--10 People Have booked for appointments-->
-                <?php
-
-                include 'php_processes/db_conn.php';
-
-                $query = "SELECT * FROM notifications WHERE date_booked > DATE_SUB(NOW(), INTERVAL '1' DAY)";
-
-                $result = mysqli_query($conn, $query);
-                $number = mysqli_num_rows($result) - 1;
-                $arrayNames = array();
-
-                while ($row = mysqli_fetch_array($result)) {
-                    $fullname = $row['patient_fullname'];
-
-                    if (!in_array($fullname, $arrayNames)) {
-                        array_push($arrayNames, $fullname);
-                    }
-                }
-
-                if (sizeof($arrayNames) == 1) {
-                    echo "
-                        <div class='notif-content book-notif-type'>
-                            <div class='notif-img'></div>
-                            <span>
-                                $arrayNames[0] has booked for appointment
-                            </span>
-                            <div class='seen'>
-                                <div class='seen-circle'></div>
-                            </div> 
-                        </div>
-                    ";
-                } else if (sizeof($arrayNames) == 0) {
-                    echo "<span class = 'no-new'>No New Notifications!</span>";
-                } else {
-                    $size = sizeof($arrayNames) - 1;
-                    echo "
-                        <div class='notif-content book-notif-type'>
-                            <div class='notif-img'></div>
-                            <span>
-                                $arrayNames[0] and $size other/s has booked for appointment
-                            </span>
-                            <div class='seen'>
-                                <div class='seen-circle'></div>
-                            </div> 
-                        </div>
-                    ";
-                }
-
-                ?>
-
-
-                <!-- A patient has settled a bill -->
-                <!-- <div class="notif-content bill-notif-type">
-                    <div class='notif-img'></div>
-                    <span>
-                        Marc Dwain B. Magracia has settled a bill
-                    </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
-                    </div>
-                </div> -->
-
-                <!--A patient has requested an appointment reschedule. Accept?-->
-                <!-- <div class="notif-content resched-notifgit type">
-                    <div class='notif-img'></div>
-                    <span>
-                        Marc Dwain Magracia requested an appointment reschedule. Accept?
-                    </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
-                    </div>
-                </div> -->
-
-                <!--A patient has settled a bill-->
-                <!-- <div class="notif-content bill-notif-type">
-                    <div class='notif-img'></div>
-                    <span>
-                        Marc Dwain B. Magracia has settled a bill
-                    </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
-                    </div>
-                </div> -->
-
-                <!--A patient has settled a bill-->
-                <!-- <div class="notif-content bill-notif-type">
-                    <div class='notif-img'></div>
-                    <span>
-                        Marc Dwain B. Magracia has settled a bill
-                    </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
-                    </div>
-                </div> -->
-
-                <div class='notif-see-all'>
-                    <span>See All</span>
-                </div>
-            </div>
-        </div>
-        <div class="notification-num"><span>0</span></div>
-        <div class="notification-btn">
-            <i class="far fa-bell"></i>
-        </div>
-    </div>
+    <?php include 'extras/doctor-notifications.php'; ?>
 
     <div class='dim'>
         <div class='book-container'>
@@ -151,6 +41,12 @@
                 <span class='exit'>X</span>
             </div>
             <form class='book-content-doctor' target='dummyframe'>
+                <div class='portal-registered-checkbox'>
+                    <div class='checkbox2'>
+                        <label for="portal-registered">Portal Registered Patient</label>
+                        <input type="checkbox" name="portal-registered" id='portal-registered' value="p-registered">
+                    </div>
+                </div>
                 <span class='content-head'>Set Date/Time</span>
                 <input type='datetime-local' class='date-time-input' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date and Time...">
                 <div class='search-patient'>
@@ -159,6 +55,7 @@
                         <!--Autocomplete search results here-->
                     </div>
                 </div>
+                <span id="patient-error" class='p-error'>Patient is not Portal-registered</span>
                 <input type='text' id='pcontact' placeholder="Contact Number">
                 <input type='text' id='desc' placeholder="Provide a short description (Optional)">
                 <select id='appointment-type'>
@@ -171,7 +68,7 @@
                     <span class='time-date'>Monday - Saturday</span>
                     <span class='time-date'>9:00AM - 4:00PM</span>
                 </div>
-                <button type='submit' id='book-doctor'>Book Appointment</button>
+                <button type='submit' id='book-doctor' value='0000'>Book Appointment</button>
             </form>
         </div>
     </div>
@@ -246,23 +143,38 @@
                         $date = $dt->format('F j, Y l');
                         $time = $dt->format('h:i A');
 
-                        echo "
+                        if ($status == 'Cancelled') {
+                            echo "
                                 <div class='e-contents'>
                                     <span>$appointmentnum</span>
                                     <span>$fullname</span>
                                     <span>$datetime</span>
-                                    $status_div
+                                    <span class = 'red-text'>$status</span>
                                     <span class = 'e-num'>
                                         0998390813
                                         <button><i class='fas fa-ellipsis-v'></i></button>
                                     </span>
-                                    <form class = 'dropdown' target = 'dummyframe'>
-                                        $details_btn
-                                        $cancel_btn
-                                        $finish_btn
-                                    </form>
                                 </div>
-                            ";
+                                ";
+                        } else {
+                            echo "
+                                <div class='e-contents'>
+                                        <span>$appointmentnum</span>
+                                        <span>$fullname</span>
+                                        <span>$datetime</span>
+                                        $status_div
+                                        <span class = 'e-num'>
+                                            0998390813
+                                            <button><i class='fas fa-ellipsis-v'></i></button>
+                                        </span>
+                                        <form class = 'dropdown' target = 'dummyframe'>
+                                            $details_btn
+                                            $cancel_btn
+                                            $finish_btn
+                                        </form>
+                                    </div>
+                                ";
+                        }
                     }
                 } else {
                     echo '
