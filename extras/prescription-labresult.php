@@ -21,6 +21,7 @@
     $patient_name = '';
     $patient_age = '';
     $date_today = '';
+    $sex = '';
 
     $query = "SELECT * FROM user_table WHERE patient_id = $userid";
     $result = mysqli_query($conn, $query);
@@ -31,6 +32,7 @@
         $firstname = $row['first_name'];
         $fullname = "$firstname $middlename. $lastname";
         $contact = $row['contact_num'];
+        $sex = ucfirst($row['sex']);
 
         $birthdate = $row['birthdate'];
         $from = new DateTime($birthdate);
@@ -44,33 +46,32 @@
 
     if ($_GET['pid'] == '0000') {
         $patient_name = ucwords($_GET['pname']);
-        $patient_age = '0';
+        $patient_age = 'Unspecified';
         $to = new DateTime('today');
         $date_today = $to->format('m/d/Y');
+        $sex = 'Unspecified';
     }
 
     ?>
-    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-    <div class='buttons'>
-        <div class='buttons-edit'>
-            <button id='add-div'><i class="far fa-plus-square"></i> Add Drug</button>
-            <button id='revert'><i class="fas fa-trash-alt"></i> Revert</button>
-        </div>
 
-        <div class='buttons-download'>
-            <button id='download' class='btns'>Upload</button>
-            <button id='copy' class='btns'>Download a Copy</button>
-            <button id='print' class='btns'>Print</button>
-        </div>
-    </div>
+    <?php
+    // IF DOCUMENT TYPE IS PRESCRIPTION
+    if ($_GET['docType'] == 'prescription') {
+        echo "
+            <iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe>
+            <div class='buttons'>
+                <div class='buttons-edit'>
+                    <button id='add-div'><i class='far fa-plus-square'></i> Add Drug</button>
+                    <button id='revert'><i class='fas fa-trash-alt'></i> Revert</button>
+                </div>
 
-    <div class='container'>
-
-        <?php
-        // IF DOCUMENT TYPE IS PRESCRIPTION
-        if ($_GET['docType'] == 'prescription') {
-            echo "
-                THIS IS A PRESCRIPTION
+                <div class='buttons-download'>
+                    <button id='download' class='btns'>Upload</button>
+                    <button id='copy' class='btns'>Download a Copy</button>
+                    <button id='print' class='btns'>Print</button>
+                </div>
+            </div>
+            <div class='container'>
                 <div class='prescription-container' id='invoice'>
                     <h2>TWIN CARE MEDICAL CLINIC AND DIAGNOSTIC LABORATORY</h2>
                     <h4>02 Tapatan Road<br />Sulucan 3012<br />Angat, Bulacan</h4>
@@ -110,6 +111,7 @@
                                 <span contenteditable='true' class='left'>Drug Name</span>
                                 <span contenteditable='true' class='center'>0mg</span>
                                 <span contenteditable='true' class='right'>Sample Frequency</span>
+                                <button class = 'delete-div'>Delete</button>
                             </div>
                         </div>
                     </div>
@@ -118,14 +120,88 @@
                         <span>Signature: Doctor's Signature Here</span>
                     </div>
                 </div>
+            </div>
             ";
-        } else if ($_GET['docType'] == 'labresult') {
-            echo "THIS IS A LAB RESULT";
-        }
+        // ELSE IF DOCUMENT IS A LABRESULT
+    } else if ($_GET['docType'] == 'labresult') {
+        $fullname_doctor = $_GET['doctorname'];
+        echo "
+            <iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe>
+            <div class='buttons'>
+                <div class='buttons-edit'>
+                    <button id='add-head-lab' class = 'add-head-lab'><i class='far fa-plus-square'></i> Add Head</button>
+                    <button id='add-div-lab' class = 'add-div-lab'><i class='far fa-plus-square'></i> Add Test</button>
+                    <button id='revert-lab'><i class='fas fa-trash-alt'></i> Revert</button>
+                </div>
 
-        ?>
+                <div class='buttons-download'>
+                    <button id='download' class='btns'>Upload</button>
+                    <button id='copy' class='btns'>Download a Copy</button>
+                    <button id='print' class='btns'>Print</button>
+                </div>
+            </div>
 
-    </div>
+
+            <div class='container'>
+                <div class='prescription-container' id='invoice'>
+                    <h2>TWIN CARE MEDICAL CLINIC AND DIAGNOSTIC LABORATORY</h2>
+                    <h4>02 Tapatan Road, Sulucan 3012, Angat, Bulacan</h4>
+                    <div class='patient-info'>
+                        <div class='name-age'>
+                            <div class='name-container'>
+                                <span>Patient Name: </span>
+                                <span contenteditable='true' class='underlined' id='name'>$patient_name</span>
+                            </div>
+                            <div class='age-container'>
+                                <span>Age: </span>
+                                <span contenteditable='true' class='underlined' id='age'>$patient_age</span>
+                            </div>
+                        </div>
+                        <div class='address-date'>
+                            <div class='address-container'>
+                                <span>Sex: </span>
+                                <span contenteditable='true' class='underlined' id='sex'>$sex</span>
+                            </div>
+                            <div class='date-container'>
+                                <span>Date: </span>
+                                <span contenteditable='true' class='underlined' id='date'>$date_today</span>
+                            </div>
+                        </div>
+                        <div class='doctor-container'>
+                            <span>Doctor: </span>
+                            <span contenteditable='true' class='underlined' id='doctor'>$fullname_doctor</span>
+                        </div>
+                    </div>
+
+                    <div class='medicine lab-result'>
+                        <h2>Test Results</h2>
+                        <div class='medicine-table' id='medicine-table'>
+                            <div class='medicine-table-header header-lab'>
+                                <span>Test Name</span>
+                                <span>Result</span>
+                                <span>Normal Range</span>
+                                <span>Units</span>
+                            </div>
+
+                            <div class='lab-result-content' id='prescription-item'>
+                                <span contenteditable='true'>Test Name</span>
+                                <span contenteditable='true'>0</span>
+                                <span contenteditable='true'>#/#</span>
+                                <span contenteditable='true'>0/0</span>
+                                <button class = 'delete-div'>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='footer'>
+                        <span>Signature: Doctor's Signature Here</span>
+                    </div>
+                </div>
+            </div>
+            ";
+    }
+
+    ?>
 </body>
 <script src='../js/pdf-generator.js'></script>
 <script src='../js/base64-to-pdf.js'></script>

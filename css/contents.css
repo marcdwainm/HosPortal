@@ -223,7 +223,7 @@
     margin-bottom: 15px;
     border: 1px solid var(--grayoutline);
     outline: none;
-    cursor: pointer;
+    cursor: text;
 }
 
 .availability{

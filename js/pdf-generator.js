@@ -102,14 +102,48 @@ $(document).ready(function () {
     addDiv = function () {
         var medicineTableContent = document.createElement('div');
         medicineTableContent.classList.add('medicine-table-content')
-        medicineTableContent.innerHTML = "<span contenteditable = 'true' class = 'left'>Drug Name</span><span contenteditable = 'true' class = 'center'>0mg</span><span contenteditable = 'true' class = 'right'>Sample Frequency</span>";
+        medicineTableContent.innerHTML = "<span contenteditable = 'true' class = 'left'>Drug Name</span><span contenteditable = 'true' class = 'center'>0mg</span><span contenteditable = 'true' class = 'right'>Sample Frequency</span><button class = 'delete-div'>Delete</button>";
 
         var divTable = document.getElementById('medicine-table');
         divTable.appendChild(medicineTableContent);
     }
 
+    addDivLab = function () {
+        if ($('.lab-result-content, .lab-test-head').length >= 30) {
+            $('#add-div-lab').prop('disabled', true);
+            $('#add-head-lab').prop('disabled', true);
+        }
+        var labResultContent = document.createElement('div');
+        labResultContent.classList.add('lab-result-content');
+        labResultContent.innerHTML = "<span contenteditable='true'>Test Name</span><span contenteditable='true'>0</span><span contenteditable='true'>#/#</span><span contenteditable='true'>0/0</span><button class = 'delete-div'>Delete</button>";
+
+        var divTable = document.getElementById('medicine-table');
+        divTable.appendChild(labResultContent);
+    }
+
+    addHeadLab = function () {
+        if ($('.lab-result-content, .lab-test-head').length >= 30) {
+            $('#add-div-lab').prop('disabled', true);
+            $('#add-head-lab').prop('disabled', true);
+        }
+        var labResultContent = document.createElement('div');
+        labResultContent.classList.add('lab-test-head');
+        labResultContent.innerHTML = "<span>Enter Head Title</span><button class = 'delete-div'>Delete</button>";
+
+        var divTable = document.getElementById('medicine-table');
+        divTable.appendChild(labResultContent);
+    }
+
     $('#add-div').click(function () {
         addDiv();
+    })
+
+    $('#add-div-lab').click(function () {
+        addDivLab();
+    })
+
+    $('#add-head-lab').click(function () {
+        addHeadLab();
     })
 
     $("#revert").click(function () {
@@ -155,6 +189,87 @@ $(document).ready(function () {
         addDiv();
     })
 
+
+
+    $("#revert-lab").click(function () {
+
+        if (searchParams.get('pid') === '0000') {
+            var today = new Date();
+            var date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+
+            document.getElementById('name').innerHTML = ucwords(searchParams.get('pname'));
+            document.getElementById('age').innerHTML = 'Unspecified';
+            document.getElementById('date').innerHTML = date;
+            document.getElementById('sex').innerHTML = 'Unspecified';
+            document.getElementById('doctor').innerHTML = searchParams.get('doctorname');
+
+        }
+        else if (searchParams.get('pid') !== '0000') {
+            var today = new Date();
+            var date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+            pid = searchParams.get('pid')
+
+            $.ajax({
+                url: '../php_processes/field-filler.php',
+                method: 'POST',
+                data: {
+                    userid: pid
+                },
+                dataType: 'json',
+                success: function (data) {
+                    document.getElementById('name').innerHTML = ucwords(data.fullname);
+                    document.getElementById('age').innerHTML = data.age;
+                    document.getElementById('date').innerHTML = date;
+                    document.getElementById('sex').innerHTML = ucwords(data.sex);
+                    document.getElementById('doctor').innerHTML = searchParams.get('doctorname');
+                }
+            })
+        }
+
+        var divTable = document.getElementById('medicine-table');
+        var toDelete = divTable.getElementsByClassName('lab-result-content');
+
+        while (toDelete[0]) {
+            toDelete[0].parentNode.removeChild(toDelete[0]);
+        }
+
+        toDelete = divTable.getElementsByClassName('lab-test-head');
+        while (toDelete[0]) {
+            toDelete[0].parentNode.removeChild(toDelete[0]);
+        }
+
+        addDivLab();
+        $('#add-div-lab').prop('disabled', false);
+        $('#add-head-lab').prop('disabled', false);
+    })
+
+    $(document).on('mouseover', '.lab-result-content', function () {
+        $(this).find('.delete-div').show();
+    })
+
+    $(document).on('mouseleave', '.lab-result-content', function () {
+        $(this).find('.delete-div').hide();
+    })
+
+    $(document).on('mouseover', '.lab-test-head', function () {
+        $(this).find('.delete-div').show();
+    })
+
+    $(document).on('mouseleave', '.lab-test-head', function () {
+        $(this).find('.delete-div').hide();
+    })
+
+    $(document).on('click', '.delete-div', function () {
+        $(this).parent().remove();
+    })
+
+    $(document).on('mouseover', '.medicine-table-content', function () {
+        $(this).find('.delete-div').show();
+    })
+
+    $(document).on('mouseleave', '.medicine-table-content', function () {
+        $(this).find('.delete-div').hide();
+    })
 
     $('#print').on('click', function () {
         window.print();

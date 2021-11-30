@@ -175,9 +175,16 @@
     justify-content: space-between;
 }
 
+.header-btn-btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .document-header-btn button{
     background-color: var(--blue);
-    padding: 14px;
+    padding: 9px 14px;
+    height: 40px;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -185,6 +192,10 @@
     border: none;
     color: white;
     font-family: 'Century Gothic';
+}
+
+.document-header-btn button:first-child{
+    margin-right: 10px;
 }
 
 .document-header-btn i{
@@ -261,6 +272,7 @@
     border-bottom: 1px solid var(--grayoutline);
 }
 
+
 .e-contents-header-table-docs span{
     display: flex;
     justify-content: center;
@@ -289,6 +301,11 @@
 .three-fr{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+}
+
+.four-fr{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .three-fr:nth-child(odd){
@@ -415,6 +432,7 @@
     justify-content: flex-end;
     width: auto;
     margin-bottom: 30px;
+    position: relative;
 }
 
 .reload-all button{
@@ -434,6 +452,36 @@
     transition: 0.2s ease-in-out;
 }
 
+
+.reload-all div{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+}
+
+.reload-all div button{
+    width: auto;
+    margin: 0;
+}
+
+#offset{
+    display: none;
+}
+
+.reload-all div span{
+    padding: 10px;
+    border: 1px solid gray;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .h2-sortation{
     display: flex;
     flex-direction: row;
@@ -445,6 +493,32 @@
     justify-content: space-between;
     align-items: center;
     width: auto;
+}
+
+.all-docs-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sortation-docs select, .sortation-docs button{
+    padding: 10px;
+    font-family: 'Century Gothic';
+    cursor: pointer;
+}
+
+.sortation-docs button{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: var(--blue);
+    color: white;
+    margin-left: 5px;
+    padding: 12px 15px;
+}
+
+.sortation-docs button:hover{
+    background: var(--green);
+    transition: 0.2s ease-in-out;
 }
 
 .sortation-select{
@@ -899,6 +973,15 @@
 }
 
 #patient-error{
+    width: 100%;
+    text-align: center;
+    color: red;
+    font-size: 14px;
+    padding-bottom: 15px;
+    display: none;
+}
+
+.patient-error2{
     width: 100%;
     text-align: center;
     color: red;

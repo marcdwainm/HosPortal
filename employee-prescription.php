@@ -43,6 +43,10 @@
                         $base64 = $row['pdf_file'];
                     }
 
+                    if (!str_contains($base64, "data:application/pdf;base64,")) {
+                        $base64 = "data:application/pdf;base64," . $base64;
+                    }
+
                     echo "
                     <iframe src='$base64' type='application/pdf'></iframe>
                     ";

@@ -2,20 +2,10 @@
 session_start();
 include 'db_conn.php';
 
-$required_fields = array('appointment-date-time', 'description');
-$error = false;
-
-
-foreach ($required_fields as $field) {
-    if (empty($_POST[$field])) {
-        $error = true;
-    }
-}
-
 //Set timezone then get current date and time
 date_default_timezone_set('Asia/Manila');
 $date = date('Ymdhis', time());
-$date_booked = date('Y-m-d h:i:s', time());
+$date_booked = date('Y-m-d H:i:s', time());
 
 //Logged in Patient ID
 $patientid = $_SESSION['patientid'];
@@ -31,6 +21,10 @@ $datetime = $_POST['appointment-date-time'];
 $desc = $_POST['description'];
 $email = $_SESSION['email'];
 $position = $_SESSION['position'];
+
+if($desc == ''){
+    $desc = 'N/A';
+}
 
 //INSERT APPOINTMENT TO DATABSE
 $query = "INSERT INTO `appointments`(`appointment_num`, `patient_id`, `patient_fullname`, `date_and_time`, `description`, `contact`, `app_type`, `appointed_by`, `status`) 

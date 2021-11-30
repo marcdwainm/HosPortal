@@ -111,7 +111,7 @@
                 <?php
                 include 'php_processes/db_conn.php';
 
-                $query = "SELECT * FROM appointments WHERE date(date_and_time) = CURDATE() ORDER BY date_and_time ASC";
+                $query = "SELECT * FROM appointments WHERE date(date_and_time) = CURDATE() ORDER BY date_and_time ASC LIMIT 0, 5";
 
                 $result = mysqli_query($conn, $query);
 
@@ -187,6 +187,14 @@
         </div>
 
         <div class="reload-all">
+            <div>
+                <!-- <button id='hard-prev'>&#60;&#60;</button> -->
+                <button id='prev'>&#60;</button>
+                <span id='page-num'>1</span>
+                <span id='offset'>0</span>
+                <button id='next'>&gt;</button>
+                <!-- <button id='hard-next'>&gt;&gt;</button> -->
+            </div>
             <button type='button' id='reload-tbl' value='today'>Reload Table</button>
             <button id='see-all-appt'>Add an Appointment</button>
         </div>

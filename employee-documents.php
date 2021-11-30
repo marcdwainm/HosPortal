@@ -11,7 +11,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel='stylesheet' type='text/css' href='css/navbar.css'>
     <link rel='stylesheet' type='text/css' href='css/profile.css'>
-    <link rel='stylesheet' tyype='text/css' href='css/employee-contents.css'>
+    <link rel='stylesheet' type='text/css' href='css/employee-contents.css'>
     <title>Document</title>
 </head>
 
@@ -54,7 +54,8 @@
                 <option value='prescription'>Prescription</option>
                 <option value='labresult'>Lab Result</option>
             </select>
-            <input type="File" name="file" id='file' accept='application/msword, text/plain, application/pdf'>
+            <input type="File" name="file" id='file' accept='application/msword, application/pdf'>
+            <span class='patient-error2'>File is too big! Maximum size: 5MB</span>
             <div class='document-upload-btns'>
                 <button id='upload-from-device' type='button' value='0000' disabled>Upload from Device</button>
                 <button id='file-to-database' type='button' value='0000'>Upload File</button>
@@ -69,7 +70,10 @@
         <div class='e-contents-header-app'>
             <div class='document-header-btn'>
                 <h1>DOCUMENTS</h1>
-                <button id='upload-document'>Upload a Document <i class="fas fa-upload"></i></button>
+                <div class='header-btn-btns'>
+                    <button id='see-all-documents'>See All Documents</button>
+                    <button id='upload-document'>Upload a Document <i class="fas fa-upload"></i></button>
+                </div>
             </div>
             <h2>Prescriptions</h2>
         </div>
@@ -87,9 +91,7 @@
                 <?php
                 include 'php_processes/db_conn.php';
 
-                $query = "
-                    SELECT * FROM documents ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 15
-                ";
+                $query = "SELECT * FROM documents WHERE doc_type = 'prescription' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 5";
 
                 $result = mysqli_query($conn, $query);
 
@@ -122,7 +124,7 @@
         </div>
 
         <div class="reload-all">
-            <button type='button' id='reload-tbl-prescription'>Reload Table</button>
+            <button type='button' class='reload-tbl-doc' value='pres'>Reload Table</button>
         </div>
 
         <!--APPOINTMENT HISTORY-->
@@ -131,8 +133,7 @@
         </div>
 
         <div class='e-contents-table'>
-            <div class='e-contents-header-table'>
-                <span>Filename</span>
+            <div class='e-contents-header-table-docs'>
                 <span>Patient</span>
                 <span>Date Uploaded</span>
                 <span></span>
@@ -140,15 +141,45 @@
 
             <!-- TABLE CONTENTS -->
 
-            <div class='e-contents'>
-                <span>190298_3721367.pdf</span>
-                <span>Marc Dwain Magracia</span>
-                <span>19/03/2021</span>
-                <div>
-                    <a class='view'><button>View</button></a>
-                    <a><button><i class="fas fa-download"></i></button></a>
-                </div>
+            <div class="lab-tbl">
+
+                <?php
+                include 'php_processes/db_conn.php';
+
+                $query = "SELECT * FROM documents WHERE doc_type = 'labresult' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 5";
+
+                $result = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($result) == 0) {
+                    echo "<div class = 'empty'>You don't have any prescriptions</div>";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $doc_type = ucwords($row['doc_type']);
+                        $pname = $row['patient_name'];
+                        $date_uploaded = strtotime($row['date_uploaded']);
+                        $date_up_formatted = date('M d, Y h:i A', $date_uploaded);
+                        $doc_num = $row['doc_num'];
+
+                        echo "
+                    <div class='e-contents three-fr'>
+                        <span>$pname</span>
+                        <span>$date_up_formatted</span>
+                        <div>
+                            <button class = 'view' value = '$doc_num'>View</button>
+                            <button class = 'download-pdf' value = '$doc_num'><i class='fas fa-download'></i></button>
+                        </div>
+                    </div>
+                ";
+                    }
+                }
+
+                ?>
+
             </div>
+        </div>
+
+        <div class="reload-all">
+            <button type='button' class='reload-tbl-doc' value='lab'>Reload Table</button>
         </div>
     </div>
 </body>

@@ -90,6 +90,9 @@ $(document).ready(function () {
                 $('#doctor-appt-table').html(result);
             }
         })
+
+        $('#page-num').html('1');
+        $('#offset').html('0');
     })
 
 

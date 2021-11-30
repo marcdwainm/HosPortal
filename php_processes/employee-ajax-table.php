@@ -61,7 +61,5 @@ if (mysqli_num_rows($result) > 0) {
         }
     }
 } else {
-    echo '
-            <span class = "no-appointments">No Appointments Found</span>
-        ';
+    echo "<span class = 'no-appointments'>No Appointments Found</span>";
 }

@@ -18,9 +18,22 @@
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
+    position: fixed;
+    top: 50px;
+    z-index: 999;
 }
 
-#add-div{
+.buttons button{
+    -webkit-box-shadow: 5px 5px 19px -4px rgba(158,158,158,1);
+-moz-box-shadow: 5px 5px 19px -4px rgba(158,158,158,1);
+box-shadow: 5px 5px 19px -4px rgba(158,158,158,1);
+}
+
+.buttons button:disabled{
+    background: rgb(174, 174, 174);
+}
+
+#add-div, .add-div-lab, .add-head-lab{
     padding: 10px;
     margin-right: 10px;
     background-color: var(--green);
@@ -29,19 +42,19 @@
     cursor: pointer;
 }
 
-#add-div:hover{
+#add-div:hover, .add-div-lab:hover, .add-head-lab:hover{
     background-color: var(--blue);
     transition: 0.3s ease-in-out;
 }
 
-#revert{
+#revert, #revert-lab{
     padding: 10px;
     background-color: var(--green);
     color: white;
     border: none;
     cursor: pointer;
 }
-#revert:hover{
+#revert:hover, #revert-lab:hover{
     background-color: var(--blue);
     transition: 0.3s ease-in-out;
 }
@@ -66,6 +79,7 @@ body{
     justify-content: center;
     align-items: center;
     padding: 70px;
+    padding-top: 120px;
 }
 
 .container{
@@ -124,6 +138,15 @@ body{
     width: 100%;
 }
 
+.lab-result{
+    padding: 0px 30px;
+}
+
+.lab-result h2{
+    padding: 0px;
+    margin-bottom: 10px;
+}
+
 .medicine img{
     width: 70px;
     margin-bottom: 20px;
@@ -138,6 +161,18 @@ body{
     grid-template-columns: 1fr 1fr 1fr;
     border-bottom: 1px solid rgb(192, 192, 192);
     font-weight: 600;
+}
+
+.header-lab{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+}
+
+.header-lab span{
+    text-align: center;
 }
 
 .medicine-table-header span{
@@ -156,14 +191,48 @@ body{
     text-align: right;
 }
 
+.lab-test-head{
+    width: 100%;
+    margin-bottom: 1px;
+    margin-top: 1px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    position: relative;
+}
+
 .medicine-table-content{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     border-bottom: 1px solid rgb(192, 192, 192);
+    position: relative;
 }
+
+.lab-result-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    position: relative;
+}
+
+.delete-div{
+    background: red;
+    color: white;
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 4px;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+}
+
 
 .medicine-table-content span{
     padding: 10px;
+}
+
+.lab-result-content span{
+    text-align: center;
+    padding: 1px;
 }
 
 .footer{

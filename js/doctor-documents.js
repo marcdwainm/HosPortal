@@ -100,12 +100,13 @@ $(document).ready(function () {
         docType = $('#document-type').val();
         pid = $('#generate-document').val();
         pname = $('#patient-search').val();
+        doctorFullname = $('.full-name').children('h1').html();
         var redirect = '';
 
         if (pid === '0000') {
-            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
+            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname + '&doctorname=' + doctorFullname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
         } else {
-            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
+            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname + '&doctorname=' + doctorFullname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
         }
         redirect.location;
 
@@ -134,9 +135,15 @@ $(document).ready(function () {
         $('#file').show();
     })
 
-    $('#file').on('input', function () {
-        $('#upload-from-device').hide();
-        $('#file-to-database').show()
+    $('#file').on('change', function () {
+        if (this.files[0].size > 5242880) {
+            $('.patient-error2').show();
+        }
+        else {
+            $('#upload-from-device').hide();
+            $('#file-to-database').show()
+            $('.patient-error2').hide();
+        }
     })
 
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
@@ -285,25 +292,207 @@ $(document).ready(function () {
             success: function (result) {
                 let base64 = result;
 
+                if (!base64.includes("data:application/pdf;base64,")) {
+                    base64 = base64 + "data:application/pdf;base64,";
+                }
+
                 downloadPDF(base64, docnum);
             }
         })
     })
 
 
-    $('.view').on('click', function () {
+    $(document).on('click', '.view', function () {
         docnum = $(this).val()
         window.location.href = 'employee-prescription.php?docnum=' + docnum;
     })
 
-    $('#reload-tbl-prescription').on('click', function () {
+    $('.reload-tbl-doc').on('click', function () {
+        type = $(this).val()
         $.ajax({
             type: 'POST',
-            url: 'php_processes/reload-prescription-tbl.php',
+            url: 'php_processes/reload-tbl-doc.php',
+            data: {
+                type: type
+            },
             success: function (result) {
-                $('.presc-tbl').html(result);
+                if (type === 'pres') {
+                    $('.presc-tbl').html(result);
+                }
+                else if (type === 'lab') {
+                    $('.lab-tbl').html(result);
+                }
             }
         })
+        $('#page-num').html('1');
+        $('#offset').html('0');
+    })
+
+    $('.reload-tbl-doc-2').on('click', function () {
+        sortValue = $('#sortation-docs').val();
+        $(this).val(sortValue);
+        sortText = '';
+
+        switch (sortValue) {
+            case 'all-desc':
+                sortText = 'All (Latest - Oldest)';
+                break;
+            case 'all-asc':
+                sortText = 'All (Oldest - Latest)';
+                break;
+            case 'prescriptions':
+                sortText = 'Prescriptions';
+                break;
+            case 'labresults':
+                sortText = 'Lab Results';
+                break;
+            case 'today':
+                sortText = 'Today';
+                break;
+            case 'thisweek':
+                sortText = 'This Week';
+                break;
+            case 'thismonth':
+                sortText = 'This Month';
+                break;
+
+        }
+
+        $('.all-docs-header').children('h2').html(sortText);
+
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/employee-all-docs-sort.php',
+            data: {
+                sortval: sortValue
+            },
+            success: function (result) {
+                $('.dynamic-tbl').html(result);
+            }
+        })
+
+        $('#page-num').html('1');
+        $('#offset').html('0');
+    })
+
+    $('#see-all-documents').on('click', function () {
+        window.location.href = 'employee-all-documents.php';
+    })
+
+    $('#sort-table-docs').on('click', function () {
+        sortValue = $('#sortation-docs').val();
+        $(this).val(sortValue);
+        sortText = '';
+
+        switch (sortValue) {
+            case 'all-desc':
+                sortText = 'All (Latest - Oldest)';
+                break;
+            case 'all-asc':
+                sortText = 'All (Oldest - Latest)';
+                break;
+            case 'prescriptions':
+                sortText = 'Prescriptions';
+                break;
+            case 'labresults':
+                sortText = 'Lab Results';
+                break;
+            case 'today':
+                sortText = 'Today';
+                break;
+            case 'thisweek':
+                sortText = 'This Week';
+                break;
+            case 'thismonth':
+                sortText = 'This Month';
+                break;
+
+        }
+
+        $('.all-docs-header').children('h2').html(sortText);
+
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/employee-all-docs-sort.php',
+            data: {
+                sortval: sortValue
+            },
+            success: function (result) {
+                $('.dynamic-tbl').html(result);
+            }
+        })
+
+        $('#page-num').html('1');
+        $('#offset').html('0');
+    })
+
+    //PAGINATION
+
+    $('#next').on('click', function () {
+        sortType = $('#sort-table-docs').val();
+        if (sortType === '') {
+            sortType = 'all-desc';
+        }
+        offset = parseInt($('#offset').html());
+        pageNum = parseInt($('#page-num').html());
+
+        if (pageNum >= 1) {
+            $('#prev').prop('disabled', false)
+        }
+
+        offset += 5;
+        $('#offset').html(offset)
+        $('#page-num').html(pageNum + 1)
+
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/employee-all-docs-sort.php',
+            data: {
+                sortval: sortType,
+                offset: offset
+            },
+            success: function (result) {
+                if (result === "<div class = 'empty'>No Documents Found</div>") {
+                    pageNum = parseInt($('#page-num').html());
+                    offset -= 5;
+                    $('#offset').html(offset)
+                    $('#page-num').html(pageNum - 1)
+                }
+                else {
+                    $('.dynamic-tbl').html(result);
+                }
+            }
+        })
+    })
+
+    $('#prev').on('click', function () {
+        sortType = $('#sort-table-docs').val();
+        if (sortType === '') {
+            sortType = 'all-desc';
+        }
+        offset = parseInt($('#offset').html());
+        pageNum = parseInt($('#page-num').html());
+
+        if (pageNum == '1') { //DISABLE IF PAGE NUM IS 1
+            $(this).prop('disabled', true)
+        } else {
+            offset -= 5;
+            $('#offset').html(offset)
+            $('#page-num').html(pageNum - 1)
+
+            $.ajax({
+                type: 'POST',
+                url: 'php_processes/employee-all-docs-sort.php',
+                data: {
+                    sortval: sortType,
+                    offset: offset
+                },
+                success: function (result) {
+                    $('.dynamic-tbl').html(result);
+                }
+            })
+        }
+
     })
 })
 

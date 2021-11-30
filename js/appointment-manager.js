@@ -15,6 +15,9 @@ $(document).ready(function () {
                 alert('error');
             }
         })
+
+        $('#page-num').html('1');
+        $('#offset').html('0');
     })
 
     $('.sortation').on('input', function () {
@@ -93,6 +96,9 @@ $(document).ready(function () {
                     }
                 })
 
+                $('#page-num').html('1');
+                $('#offset').html('0');
+
                 Swal.fire(
                     'Deleted!',
                     'The appointment has been cancelled.',
@@ -100,6 +106,8 @@ $(document).ready(function () {
                 )
             }
         })
+        $('#page-num').html('1');
+        $('#offset').html('0');
     })
 
 
@@ -141,6 +149,9 @@ $(document).ready(function () {
                                 $("#doctor-appt-table").html(result)
                             }
                         })
+
+                        $('#page-num').html('1');
+                        $('#offset').html('0');
 
                         Swal.fire(
                             'Appointment Done!',
@@ -201,4 +212,72 @@ $(document).ready(function () {
         })
     })
 
+
+    $('#next').on('click', function () {
+        sortation = $('.sortation-select').val();
+        if (sortation === null) {
+            sortation = 'today';
+        }
+
+        offset = parseInt($('#offset').html());
+        pageNum = parseInt($('#page-num').html());
+
+        if (pageNum >= 1) {
+            $('#prev').prop('disabled', false)
+        }
+
+        offset += 5;
+        $('#offset').html(offset)
+        $('#page-num').html(pageNum + 1)
+
+        $.ajax({
+            type: 'GET',
+            url: 'php_processes/employee-sorted-table.php',
+            data: {
+                selected: sortation,
+                offset: offset
+            },
+            success: function (result) {
+                if (result === "<span class = 'no-appointments'>No Appointments Found</span>") {
+                    pageNum = parseInt($('#page-num').html());
+                    offset -= 5;
+                    $('#offset').html(offset)
+                    $('#page-num').html(pageNum - 1)
+                }
+                else {
+                    $('#doctor-appt-table').html(result);
+                }
+            }
+        })
+    })
+
+    $('#prev').on('click', function () {
+        sortation = $('.sortation-select').val();
+        if (sortation === null) {
+            sortation = 'today';
+        }
+        offset = parseInt($('#offset').html());
+        pageNum = parseInt($('#page-num').html());
+
+        if (pageNum == '1') { //DISABLE IF PAGE NUM IS 1
+            $(this).prop('disabled', true)
+        } else {
+            offset -= 5;
+            $('#offset').html(offset)
+            $('#page-num').html(pageNum - 1)
+
+            $.ajax({
+                type: 'GET',
+                url: 'php_processes/employee-sorted-table.php',
+                data: {
+                    selected: sortation,
+                    offset: offset
+                },
+                success: function (result) {
+                    $('#doctor-appt-table').html(result);
+                }
+            })
+        }
+
+    })
 })

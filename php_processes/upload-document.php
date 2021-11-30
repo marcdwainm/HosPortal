@@ -6,7 +6,7 @@ $doc_num = date('Ymdhis', time());
 $base64 = $_POST['base64'];
 $doc_type = $_POST['doctype'];
 $sent_to = $_POST['sentTo'];
-$date_uploaded = date('Y-m-d h:i:s', time());
+$date_uploaded = date('Y-m-d H:i:s', time());
 
 if (isset($_POST['pname'])) {
     $p_name = ucwords($_POST['pname']);
