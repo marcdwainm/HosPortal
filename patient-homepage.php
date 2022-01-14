@@ -205,7 +205,7 @@
                     <br />
                     <span class='red-text'><b>NOTE:</b></span>
                     <br />
-                    <span class='red-text'>Twin Care Portal uses Paypal as a method for online transactions. To know how Paypal keeps your transactions secure, please click here: <a href='https://www.paypal.com/ph/webapps/mpp/paypal-safety-and-security'>https://www.paypal.com/ph/webapps/mpp/paypal-safety-and-security</a></span>
+                    <span class='red-text'>Twin Care Portal uses Paypal as a method for online transactions. This ensures that your transaction information is kept private. To know how Paypal keeps your transactions secure, please click here: <a href='https://www.paypal.com/ph/webapps/mpp/paypal-safety-and-security'>https://www.paypal.com/ph/webapps/mpp/paypal-safety-and-security</a></span>
                     <div class='pay-btns'>
                         <button type='button' class='cancel-accept'>Cancel</button>
                         <div class='paypal'></div>
