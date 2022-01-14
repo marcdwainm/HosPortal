@@ -19,6 +19,10 @@ if ($selected == 'today') {
     $query = "SELECT * FROM appointments WHERE status = 'pending' ORDER BY date_and_time ASC LIMIT 0, 5";
 } else if ($selected == 'appointed') {
     $query = "SELECT * FROM appointments WHERE status = 'appointed' ORDER BY date_and_time DESC LIMIT 0, 5";
+} else if ($selected == 'cancelled') {
+    $query = "SELECT * FROM appointments WHERE status = 'cancelled' ORDER BY date_and_time DESC LIMIT 0, 5";
+} else if ($selected == 'missed') {
+    $query = "SELECT * FROM appointments WHERE status = 'missed' ORDER BY date_and_time DESC LIMIT 0, 5";
 } else if ($selected == 'all') {
     $query = "SELECT * FROM appointments ORDER BY date_and_time DESC LIMIT 0, 5";
 }

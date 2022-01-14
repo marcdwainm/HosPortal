@@ -1,9 +1,34 @@
 $(document).ready(function () {
+    disabledDatesArr = [];
+
+    var disabledDates = function () {
+        var returnVal = null;
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/get-disabled-dates.php',
+            async: false,
+            success: function (result) {
+                returnVal = result
+            }
+        })
+        return returnVal.split(", ")
+    }
+
+    disabledDatesArr = disabledDates()
+
+    $('#appointment-time').prop('disabled', true);
     var interval;
+    if ($('#appt-table .table-content').length >= 1) {
+        $('#book-appointment').prop('disabled', true);
+    }
+    else {
+        $('#book-appointment').prop('disabled', false);
+    }
+
     $('#book-appointment, #see-all-appt').click(function () {
+        disabledDatesArr = disabledDates()
         $('.dim').fadeIn();
         $('.date-time-input').val('');
-        $('.description').val('');
         $('#book').prop('disabled', true)
         interval = setInterval(checkInputs, 100);
     });
@@ -11,26 +36,199 @@ $(document).ready(function () {
     $('.exit').click(function () {
         $('.dim').fadeOut();
         $('.date-time-input').val('');
-        $('.description').val('');
+        $('.book-content input').val('');
+        $('.book-content input').prop('checked', false);
+        $('.book-content input').prop('disabled', false);
         clearInterval(interval);
         $('.book-content-doctor input').each(function () {
             $(this).val('')
         })
-        $("#appointment-type").val($("#appointment-type option:first").val());
+        // $("#appointment-type").val($("#appointment-type option:first").val());
         $('#portal-registered').prop('checked', false)
+        $('.time-autocomplete').parent().hide();
+    })
+
+    $('#exit-meet').click(function () {
+        $('.dim-2').fadeOut();
+    })
+
+    $(document).on('keypress', '#height', function (evt) {
+        var theEvent = evt || window.event;
+
+        // Handle paste
+        if (theEvent.type === 'paste') {
+            key = event.clipboardData.getData('text/plain');
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+
+        if ($('#height').val().length == 1) {
+            keyword = $('#height').val();
+            $('#height').val(keyword + "'")
+        }
+
+        if ($('#height').val().length == 3) {
+            keyword = $('#height').val()[2];
+
+            if (parseInt(keyword) > 1 || parseInt(keyword) == 0) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+    })
+
+    $(document).on('keypress', '#weight, #temperature', function (evt) {
+        var theEvent = evt || window.event;
+
+        // Handle paste
+        if (theEvent.type === 'paste') {
+            key = event.clipboardData.getData('text/plain');
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    })
+
+    $(document).on('keypress', '#blood-pressure', function (evt) {
+        var theEvent = evt || window.event;
+
+        // Handle paste
+        if (theEvent.type === 'paste') {
+            key = event.clipboardData.getData('text/plain');
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+
+        keyword = $('#blood-pressure').val();
+        var regex = /[0-9]|\//;
+
+        if (keyword.includes('/')) {
+            if (key == '/') {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+
+        if (keyword.length == 0 || keyword.length == 1) {
+            if (key == '/') {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+
+
+        if ($('#blood-pressure').val().includes('/')) {
+            if (key == '/') {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+        else if ($('#blood-pressure').val().length == 3) {
+            if (key == '/') {
+
+            }
+            else {
+                $('#blood-pressure').val(keyword + "/")
+            }
+        }
     })
 
 
     $('#book').on('click', function () {
         dt = $("#appointment-date-time").val();
-        desc = $(".description").val();
+        time = $("#appointment-time").val();
+        ndt = dt + " " + time;
+        chiefComplaint = $('#chief-complaint').val() || "Not Specified";
+        height = $('#height').val() || "Not Specified";
+        weight = ($('#weight').val() == '') ? "Not Specified" : $('#weight').val() + $("#weight-metric").val();
+        bloodPressure = $('#blood-pressure').val() || "Not Specified";
+        temperature = ($('#temperature').val() == '') ? "Not Specified" : $('#temperature').val() + "°C";
+        pastSurgery = $('#past-surgery').val() || "Not Specified";
+        familyHistory = [];
+        allergies = [];
+        socialHistory = [];
+        currentMedications = $("#curr-med").val() || "Not Specified";
+        travelHistory = $('#travel-history').val() || "Not Specified";
+
+        if ($('#none-fam-history').is(":checked")) {
+            familyHistory.push("None/Unknown");
+        } else {
+            $.each($('input[name="family-history"]:checked'), function () {
+                familyHistory.push($(this).val());
+            })
+        }
+
+        if ($('#none-allergies').is(":checked")) {
+            allergies.push("None/Unknown");
+        } else {
+            $.each($('input[name="allergies"]:checked'), function () {
+                allergies.push($(this).val());
+            })
+        }
+
+        if ($('#none-social-history').is(":checked")) {
+            socialHistory.push("None/Unknown");
+        } else {
+            $.each($('input[name="socialhistory"]:checked'), function () {
+                socialHistory.push($(this).val());
+            })
+        }
+
+        famHistoryOthers = $('#others-fam-history').val().charAt(0).toUpperCase() + $('#others-fam-history').val().slice(1);
+        allergiesOthers = $('#others-allergies').val().charAt(0).toUpperCase() + $('#others-allergies').val().slice(1);
+        socialHistoryOthers = $('#others-social-history').val().charAt(0).toUpperCase() + $('#others-social-history').val().slice(1);
+
+        if (famHistoryOthers !== '')
+            familyHistory.push(famHistoryOthers);
+
+        if (allergiesOthers !== '')
+            allergies.push(allergiesOthers);
+
+        if (socialHistoryOthers !== '')
+            socialHistory.push(socialHistoryOthers);
+
+        familyHistory = familyHistory.join(", ");
+        allergies = allergies.join(", ");
+        socialHistory = socialHistory.join(", ");
 
         $.ajax({
             type: "POST",
             url: "php_processes/book-appointment.php",
             data: {
-                'appointment-date-time': dt,
-                'description': desc,
+                'appointment-date-time': ndt,
+                'chief-complaint': chiefComplaint,
+                'height': height,
+                'weight': weight,
+                'blood-pressure': bloodPressure,
+                'temperature': temperature,
+                'past-surgery': pastSurgery,
+                'family-history': familyHistory,
+                'allergies': allergies,
+                'social-history': socialHistory,
+                'current-medications': currentMedications,
+                'travel-history': travelHistory
             },
             success: function (result) {
                 $('#book-appointment').prop('disabled', true);
@@ -38,7 +236,20 @@ $(document).ready(function () {
                 $('.book-content-doctor input').each(function () {
                     $(this).val('')
                 })
-                $("#appointment-type").val($("#appointment-type option:first").val());
+                $('.book-content input').each(function () {
+                    $(this).val('')
+                })
+                $('#family-history-checkboxes div input').each(function () {
+                    $(this).prop('checked', false)
+                })
+                $('.row-4-1 > div div input').each(function () {
+                    $(this).prop('checked', false)
+                })
+                $('.row-4-2 > div div input').each(function () {
+                    $(this).prop('checked', false)
+                })
+                // $("#appointment-type").val($("#appointment-type option:first").val());
+
                 Swal.fire(
                     'Success!',
                     'Your appointment is now on queue!',
@@ -54,40 +265,126 @@ $(document).ready(function () {
 
 
     $('#book-doctor').on('click', function () {
+        //notes
+        // apptype is always f2f
         dt = $("#appointment-date-time").val();
+        time = $("#appointment-time").val();
+        ndt = dt + " " + time;
         patientName = $('#pname-search').val();
-        patientContact = $('#pcontact').val();
-        appType = $('#appointment-type').val();
-        desc = $('#desc').val();
+        patientContact = $('#pcontact').val() || "Not Specified";
+        chiefComplaint = $('#chief-complaint').val() || "Not Specified";
+        height = $('#height').val() || "Not Specified";
+        weight = ($('#weight').val() == '') ? "Not Specified" : $('#weight').val() + $("#weight-metric").val();
+        bloodPressure = $('#blood-pressure').val() || "Not Specified";
+        temperature = ($('#temperature').val() == '') ? "Not Specified" : $('#temperature').val() + "°C";
+        pastSurgery = $('#past-surgery').val() || "Not Specified";
+        familyHistory = [];
+        allergies = [];
+        socialHistory = [];
+        currentMedications = $("#curr-med").val() || "Not Specified";
+        travelHistory = $('#travel-history').val() || "Not Specified";
+        appType = "f2f";
         selected = $('#reload-tbl').val();
         pid = $(this).val();
+
+        if ($('#none-fam-history').is(":checked")) {
+            familyHistory.push("None/Unknown");
+        } else {
+            $.each($('input[name="family-history"]:checked'), function () {
+                familyHistory.push($(this).val());
+            })
+        }
+
+        if ($('#none-allergies').is(":checked")) {
+            allergies.push("None/Unknown");
+        } else {
+            $.each($('input[name="allergies"]:checked'), function () {
+                allergies.push($(this).val());
+            })
+        }
+
+        if ($('#none-social-history').is(":checked")) {
+            socialHistory.push("None/Unknown");
+        } else {
+            $.each($('input[name="socialhistory"]:checked'), function () {
+                socialHistory.push($(this).val());
+            })
+        }
+
+        famHistoryOthers = $('#others-fam-history').val().charAt(0).toUpperCase() + $('#others-fam-history').val().slice(1);
+        allergiesOthers = $('#others-allergies').val().charAt(0).toUpperCase() + $('#others-allergies').val().slice(1);
+        socialHistoryOthers = $('#others-social-history').val().charAt(0).toUpperCase() + $('#others-social-history').val().slice(1);
+
+        if (famHistoryOthers !== '')
+            familyHistory.push(famHistoryOthers);
+
+        if (allergiesOthers !== '')
+            allergies.push(allergiesOthers);
+
+        if (socialHistoryOthers !== '')
+            socialHistory.push(socialHistoryOthers);
+
+        familyHistory = familyHistory.join(", ");
+        allergies = allergies.join(", ");
+        socialHistory = socialHistory.join(", ");
 
         $.ajax({
             type: "POST",
             url: "php_processes/book-appointment-doctor.php",
             data: {
-                'appointment-date-time': dt,
+                'appointment-date-time': ndt,
                 'patient-name': patientName,
                 'patient-contact': patientContact,
+                'chief-complaint': chiefComplaint,
+                'height': height,
+                'weight': weight,
+                'blood-pressure': bloodPressure,
+                'temperature': temperature,
+                'past-surgery': pastSurgery,
+                'family-history': familyHistory,
+                'allergies': allergies,
+                'social-history': socialHistory,
+                'current-medications': currentMedications,
+                'travel-history': travelHistory,
                 'app-type': appType,
-                'desc': desc,
                 'selected': selected,
                 'pid': pid
             },
             success: function (result) {
                 clearInterval(interval);
-                $('#book-appointment').prop('disabled', true);
-                $('.dim').fadeOut();
-                $('.book-content-doctor input').each(function () {
-                    $(this).val('')
-                })
-                $("#appointment-type").val($("#appointment-type option:first").val());
-                Swal.fire(
-                    'Success!',
-                    'The appointment is now on queue!',
-                    'success'
-                )
-                $('#doctor-appt-table').html(result);
+
+                if (result == 'has appointment') {
+                    Swal.fire(
+                        'Failed!',
+                        'The user has a currently booked appointment. To schedule another appointment, you may cancel the current appointment and schedule a new one.',
+                        'error'
+                    )
+                }
+                else {
+                    calendar.refetchEvents()
+                    $('#book-doctor').prop('disabled', true);
+                    $('#book-appointment').prop('disabled', true);
+                    $('.dim').fadeOut();
+                    $('.book-content-doctor input').each(function () {
+                        $(this).val('')
+                    })
+                    $('#family-history-checkboxes div input').each(function () {
+                        $(this).prop('checked', false)
+                    })
+                    $('.row-4-1 > div div input').each(function () {
+                        $(this).prop('checked', false)
+                    })
+                    $('.row-4-2 > div div input').each(function () {
+                        $(this).prop('checked', false)
+                    })
+
+                    Swal.fire(
+                        'Success!',
+                        'The appointment is now on queue!',
+                        'success'
+                    )
+                    $('#doctor-appt-table').html(result);
+                }
             }
         })
 
@@ -95,29 +392,92 @@ $(document).ready(function () {
         $('#offset').html('0');
     })
 
-
-    $('.book-content').on('input', function () {
-        $('#book').prop('disabled', false)
+    var dateToday = new Date();
+    $('#appointment-date-time').datepicker({
+        dateFormat: 'yy-mm-dd',
+        altFormat: 'yy-mm-dd',
+        minDate: 1,
+        beforeShowDay: function (date) {
+            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+            return [disabledDatesArr.indexOf(string) == -1]
+        }
     })
 
+    $('#appointment-date-time').on('change', function () {
+        $('#appointment-time').val("")
+        $('#appointment-time').prop('disabled', false);
+        $('.chosen-time').prop('disabled', false)
 
-    flatpickr("#appointment-date-time", {
-        enableTime: true,
-        defaultHour: 9,
-        defaultMinute: 0,
-        dateFormat: "Y-m-d H:i:s",
-        altInput: true,
-        altFormat: "F j, Y l (h:S K)",
-        minDate: new Date().fp_incr(1),
-        maxDate: new Date().fp_incr(40),
-        minTime: "09:00",
-        maxTime: "16:00",
-        disable: [
-            function (date) {
-                return (date.getDay() === 0);
+        var chosenDate = $(this).val()
+        // PUT DATES FROM DB TO ARRAY THEN DISABLE BUTTONS WHICH ARE
+        // OCCUPIED
+        // AND OVERLAPS WITH THE TIME OF BUTTON + 30 MINS
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/disable-times.php',
+            async: true,
+            data: {
+                chosen_date: chosenDate
+            },
+            success: function (result) {
+                var res = $.parseJSON(result);
+
+                const overlapping = (a, b) => {
+                    const getMinutes = s => {
+                        const p = s.split(':').map(Number);
+                        return p[0] * 60 + p[1];
+                    };
+                    return getMinutes(a.end) >= getMinutes(b.start) && getMinutes(b.end) >= getMinutes(a.start);
+                };
+
+                const isOverlapping = (arr) => {
+                    let i, j;
+                    for (i = 0; i < arr.length - 1; i++) {
+                        for (j = i + 1; j < arr.length; j++) {
+                            if (overlapping(arr[i], arr[j])) {
+                                return true
+                            }
+                        };
+                    };
+                    return false;
+                };
+
+                var timeButtons = $('.time-autocomplete button')
+
+                for (let i = 0; i < timeButtons.length; i++) {
+                    var buttonStart = timeButtons[i].id
+                    buttonStart = buttonStart.slice(-8).replaceAll("-", ":");
+                    var minsToAdd = 30;
+                    var time = buttonStart;
+                    var buttonEnd = new Date(new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+
+                    buttonObject = {
+                        'start': buttonStart,
+                        'end': buttonEnd
+                    }
+
+                    res.push(buttonObject)
+
+                    buttonId = "#i" + buttonStart.replaceAll(":", "-");
+
+                    if (isOverlapping(res)) {
+                        $(buttonId).prop('disabled', true)
+                    }
+                    res.pop()
+                }
             }
-        ]
-    });
+        })
+    })
+
+    $('.chosen-time').on('click', function () {
+        timeInsert = $(this).attr('id').slice(-8).replaceAll("-", ":");
+        $('#appointment-time').val(timeInsert)
+        $('.time-autocomplete').parent().hide();
+    })
+
+    $('#appointment-time').on('click', function () {
+        $('.time-autocomplete').parent().show();
+    })
 
 
     $('#pname-search').on('keyup', function () {
@@ -157,6 +517,8 @@ $(document).ready(function () {
 
 
     $('#portal-registered').on('click', function () {
+        query = $('#pname-search').val();
+
         if ($(this).is(':checked')) {
             if (query === '') {
                 $('#plist-search').hide();
@@ -188,6 +550,8 @@ $(document).ready(function () {
             $('#plist-search').hide()
             $('#book-doctor').val('0000')
             $('#patient-error').hide();
+            // $('#appointment-type').val('')
+            // $('#appointment-type').hide();
         }
     })
 
@@ -211,33 +575,113 @@ $(document).ready(function () {
                 $('#pname-search').val(data.fullname);
                 $('#pcontact').val(data.contact);
                 $('#book-doctor').val(data.pid)
+                // $('#appointment-type').show();
             }
         })
+    })
+
+    $(document).on('click', '#none-fam-history', function () {
+        if ($(this).is(':checked')) {
+            $('#others-fam-history').val('');
+            $('#others-fam-history').prop('disabled', true);
+            $('[name="family-history"]').prop('checked', false);
+            $('[name="family-history"]').prop('disabled', true);
+            $(this).prop('checked', true);
+            $(this).prop('disabled', false);
+        }
+        else {
+            $('#others-fam-history').prop('disabled', false);
+            $('[name="family-history"]').prop('disabled', false);
+        }
+    })
+
+    $(document).on('click', '#none-allergies', function () {
+        if ($(this).is(':checked')) {
+            $('#others-allergies').val('');
+            $('#others-allergies').prop('disabled', true);
+            $('[name="allergies"]').prop('checked', false);
+            $('[name="allergies"]').prop('disabled', true);
+            $(this).prop('checked', true);
+            $(this).prop('disabled', false);
+        }
+        else {
+            $('#others-allergies').prop('disabled', false);
+            $('[name="allergies"]').prop('disabled', false);
+        }
+    })
+
+    $(document).on('click', '#none-social-history', function () {
+        if ($(this).is(':checked')) {
+            $('#others-social-history').val('');
+            $('#others-social-history').prop('disabled', true);
+            $('[name="socialhistory"]').prop('checked', false);
+            $('[name="socialhistory"]').prop('disabled', true);
+            $(this).prop('checked', true);
+            $(this).prop('disabled', false);
+        }
+        else {
+            $('#others-social-history').prop('disabled', false);
+            $('[name="socialhistory"]').prop('disabled', false);
+        }
     })
 
     function checkInputs() {
         let empty = false;
 
-        if ($('#appointment-date-time').val() === '') {
-            empty = true;
-        }
-        if ($('pname-search').val() === '') {
+        //DOCTOR BOOKING
+
+        if ($('#pname-search').val() === '') {
             empty = true;
         }
         if ($('#portal-registered').is(':checked') && $('#book-doctor').val() === '0000') {
             empty = true;
         }
-        let value = $('#appointment-type').val();
-        if (value === null) {
+        if (!$('#portal-registered').is(':checked') && $('#appointment-date-time').val() !== '' && $('#pname-search').val() !== '') {
+            empty = false;
+        }
+
+        //PATIENT BOOKING
+
+        if ($('#appointment-time').val() == '' || $('.appointment-date-time').val() == '' || $('#chief-complaint').val() == '') {
+            empty = true;
+        }
+        if (!$('#none-fam-history').is(':checked') && (!$('[name="family-history"]').is(':checked') && $('#others-fam-history').val() == '')) {
+            empty = true;
+        }
+        if (!$('#none-allergies').is(':checked') && (!$('[name="allergies"]').is(':checked') && $('#others-allergies').val() == '')) {
+            empty = true;
+        }
+        if (!$('#none-social-history').is(':checked') && (!$('[name="socialhistory"]').is(':checked') && $('#others-social-history').val() == '')) {
             empty = true;
         }
 
+
         if (!empty) {
             $('#book-doctor').prop('disabled', false)
+            $('#book').prop('disabled', false)
         }
         else {
             $('#book-doctor').prop('disabled', true)
+            $('#book').prop('disabled', true)
         }
-        console.log(empty)
     }
+
+    $('#pcontact').on('keypress', function (evt) {
+
+        var theEvent = evt || window.event;
+
+        // Handle paste
+        if (theEvent.type === 'paste') {
+            key = event.clipboardData.getData('text/plain');
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    })
 })

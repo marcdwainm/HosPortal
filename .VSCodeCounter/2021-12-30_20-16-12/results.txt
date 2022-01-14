@@ -1,0 +1,265 @@
+Date : 2021-12-30 20:16:12
+Directory : c:\xampp\htdocs\HosPortal new CSS
+Total : 225 files,  57683 codes, 5519 comments, 8630 blanks, all 71832 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |        101 |     42,141 |      5,051 |      6,384 |     53,576 |
+| CSS        |         16 |      8,241 |        253 |        984 |      9,478 |
+| PHP        |        100 |      6,491 |        100 |      1,160 |      7,751 |
+| HTML       |          1 |        447 |         16 |         41 |        504 |
+| SQL        |          1 |        219 |         99 |         53 |        371 |
+| JSON       |          5 |        134 |          0 |          3 |        137 |
+| Markdown   |          1 |         10 |          0 |          5 |         15 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                   |        225 |     57,683 |      5,519 |      8,630 |     71,832 |
+| css                                                                                 |          8 |      4,546 |         24 |        756 |      5,326 |
+| extras                                                                              |         10 |        639 |         16 |         74 |        729 |
+| fullcalendar                                                                        |         86 |     18,837 |      1,024 |        759 |     20,620 |
+| fullcalendar\locales                                                                |         78 |      2,008 |          5 |        314 |      2,327 |
+| jqueryui                                                                            |         11 |     23,722 |      4,161 |      5,295 |     33,178 |
+| jqueryui\external                                                                   |          1 |      6,895 |      1,911 |      2,076 |     10,882 |
+| jqueryui\external\jquery                                                            |          1 |      6,895 |      1,911 |      2,076 |     10,882 |
+| js                                                                                  |         16 |      3,838 |        111 |        605 |      4,554 |
+| php_processes                                                                       |         74 |      3,227 |         73 |        696 |      3,996 |
+| php_processes\calendar_php                                                          |          3 |         25 |          0 |          4 |         29 |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                            | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\xampp\htdocs\HosPortal new CSS\css\contents.css                                  | CSS        |        978 |          8 |        162 |      1,148 |
+| c:\xampp\htdocs\HosPortal new CSS\css\employee-contents.css                         | CSS        |      2,001 |          7 |        330 |      2,338 |
+| c:\xampp\htdocs\HosPortal new CSS\css\index.css                                     | CSS        |        293 |          1 |         52 |        346 |
+| c:\xampp\htdocs\HosPortal new CSS\css\meeting.css                                   | CSS        |        475 |          0 |         67 |        542 |
+| c:\xampp\htdocs\HosPortal new CSS\css\navbar.css                                    | CSS        |        113 |          2 |         21 |        136 |
+| c:\xampp\htdocs\HosPortal new CSS\css\prescription.css                              | CSS        |        488 |          3 |         83 |        574 |
+| c:\xampp\htdocs\HosPortal new CSS\css\profile.css                                   | CSS        |        122 |          2 |         26 |        150 |
+| c:\xampp\htdocs\HosPortal new CSS\css\view-doc.css                                  | CSS        |         76 |          1 |         15 |         92 |
+| c:\xampp\htdocs\HosPortal new CSS\employee-all-documents.php                        | PHP        |        135 |          0 |         22 |        157 |
+| c:\xampp\htdocs\HosPortal new CSS\employee-archive.php                              | PHP        |        266 |          0 |         36 |        302 |
+| c:\xampp\htdocs\HosPortal new CSS\employee-documents.php                            | PHP        |        177 |          0 |         32 |        209 |
+| c:\xampp\htdocs\HosPortal new CSS\employee-homepage.php                             | PHP        |        330 |          0 |         39 |        369 |
+| c:\xampp\htdocs\HosPortal new CSS\employee-patients.php                             | PHP        |        260 |          6 |         21 |        287 |
+| c:\xampp\htdocs\HosPortal new CSS\employee-prescription.php                         | PHP        |         55 |          0 |         13 |         68 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\doctor-notifications.php                   | PHP        |         83 |          4 |         14 |        101 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\employee-navbar.php                        | PHP        |         26 |          0 |          2 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\labres-template.php                        | PHP        |         39 |          0 |          8 |         47 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\medtech-navbar.php                         | PHP        |         19 |          0 |          2 |         21 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\medtech-profile.php                        | PHP        |         12 |          0 |          1 |         13 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\navbar.php                                 | PHP        |         20 |          0 |          2 |         22 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\patient-notifications.php                  | PHP        |        138 |          7 |         18 |        163 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\patient-profile.php                        | PHP        |         13 |          0 |          1 |         14 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\prescription-labresult.php                 | PHP        |        274 |          5 |         25 |        304 |
+| c:\xampp\htdocs\HosPortal new CSS\extras\profile.php                                | PHP        |         15 |          0 |          1 |         16 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\README.md                            | Markdown   |         10 |          0 |          5 |         15 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales-all.js                       | JavaScript |      1,703 |          6 |         85 |      1,794 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales-all.min.js                   | JavaScript |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\af.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ar-dz.js                     | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ar-kw.js                     | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ar-ly.js                     | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ar-ma.js                     | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ar-sa.js                     | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ar-tn.js                     | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ar.js                        | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\az.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\bg.js                        | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\bn.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\bs.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ca.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\cs.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\cy.js                        | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\da.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\de-at.js                     | JavaScript |         59 |          2 |          5 |         66 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\de.js                        | JavaScript |         59 |          2 |          5 |         66 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\el.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\en-au.js                     | JavaScript |         21 |          0 |          4 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\en-gb.js                     | JavaScript |         21 |          0 |          4 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\en-nz.js                     | JavaScript |         21 |          0 |          4 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\eo.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\es-us.js                     | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\es.js                        | JavaScript |         43 |          0 |          4 |         47 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\et.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\eu.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\fa.js                        | JavaScript |         27 |          0 |          4 |         31 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\fi.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\fr-ca.js                     | JavaScript |         21 |          0 |          4 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\fr-ch.js                     | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\fr.js                        | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\gl.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\he.js                        | JavaScript |         21 |          0 |          4 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\hi.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\hr.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\hu.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\hy-am.js                     | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\id.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\is.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\it.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ja.js                        | JavaScript |         22 |          0 |          4 |         26 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ka.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\kk.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\km.js                        | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ko.js                        | JavaScript |         20 |          0 |          4 |         24 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ku.js                        | JavaScript |         25 |          0 |          4 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\lb.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\lt.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\lv.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\mk.js                        | JavaScript |         22 |          0 |          4 |         26 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ms.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\nb.js                        | JavaScript |         35 |          0 |          4 |         39 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ne.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\nl.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\nn.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\pl.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\pt-br.js                     | JavaScript |         22 |          0 |          4 |         26 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\pt.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ro.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ru.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\si-lk.js                     | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\sk.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\sl.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\sm.js                        | JavaScript |         20 |          0 |          4 |         24 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\sq.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\sr-cyrl.js                   | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\sr.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\sv.js                        | JavaScript |         44 |          0 |          4 |         48 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ta-in.js                     | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\th.js                        | JavaScript |         27 |          0 |          4 |         31 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\tr.js                        | JavaScript |         24 |          0 |          4 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\ug.js                        | JavaScript |         14 |          0 |          4 |         18 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\uk.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\uz.js                        | JavaScript |         18 |          0 |          4 |         22 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\vi.js                        | JavaScript |         26 |          0 |          4 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\zh-cn.js                     | JavaScript |         26 |          1 |          4 |         31 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\locales\zh-tw.js                     | JavaScript |         20 |          0 |          4 |         24 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\main.css                             | CSS        |      1,243 |        103 |        138 |      1,484 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\main.js                              | JavaScript |     13,838 |        905 |        217 |     14,960 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\main.min.css                         | CSS        |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\main.min.js                          | JavaScript |          1 |          5 |          0 |          6 |
+| c:\xampp\htdocs\HosPortal new CSS\fullcalendar\package.json                         | JSON       |         32 |          0 |          0 |         32 |
+| c:\xampp\htdocs\HosPortal new CSS\icd10_codes.json                                  | JSON       |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\HosPortal new CSS\index.php                                         | PHP        |        184 |          3 |         22 |        209 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\external\jquery\jquery.js                | JavaScript |      6,895 |      1,911 |      2,076 |     10,882 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\index.html                               | HTML       |        447 |         16 |         41 |        504 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.css                            | CSS        |      1,224 |         49 |         43 |      1,316 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.js                             | JavaScript |     13,856 |      2,104 |      3,086 |     19,046 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.min.css                        | CSS        |          1 |          5 |          1 |          7 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.min.js                         | JavaScript |          1 |          4 |          1 |          6 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.structure.css                  | CSS        |        821 |         36 |         30 |        887 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.structure.min.css              | CSS        |          1 |          3 |          1 |          5 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.theme.css                      | CSS        |        403 |         30 |         14 |        447 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\jquery-ui.theme.min.css                  | CSS        |          1 |          3 |          1 |          5 |
+| c:\xampp\htdocs\HosPortal new CSS\jqueryui\package.json                             | JSON       |         72 |          0 |          1 |         73 |
+| c:\xampp\htdocs\HosPortal new CSS\js\appointment-manager.js                         | JavaScript |        648 |          6 |         94 |        748 |
+| c:\xampp\htdocs\HosPortal new CSS\js\archive.js                                     | JavaScript |        217 |          8 |         34 |        259 |
+| c:\xampp\htdocs\HosPortal new CSS\js\base64-to-pdf.js                               | JavaScript |          0 |         21 |          4 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\js\billing.js                                     | JavaScript |        213 |          4 |         39 |        256 |
+| c:\xampp\htdocs\HosPortal new CSS\js\book-appointment.js                            | JavaScript |        503 |         36 |         84 |        623 |
+| c:\xampp\htdocs\HosPortal new CSS\js\doctor-documents.js                            | JavaScript |        613 |         12 |         76 |        701 |
+| c:\xampp\htdocs\HosPortal new CSS\js\login-and-register.js                          | JavaScript |         48 |          0 |          8 |         56 |
+| c:\xampp\htdocs\HosPortal new CSS\js\medtech.js                                     | JavaScript |        200 |          5 |         31 |        236 |
+| c:\xampp\htdocs\HosPortal new CSS\js\meet.js                                        | JavaScript |        259 |          1 |         43 |        303 |
+| c:\xampp\htdocs\HosPortal new CSS\js\navbar.js                                      | JavaScript |         56 |          0 |         14 |         70 |
+| c:\xampp\htdocs\HosPortal new CSS\js\notification-doc.js                            | JavaScript |         43 |          1 |          6 |         50 |
+| c:\xampp\htdocs\HosPortal new CSS\js\notification.js                                | JavaScript |         73 |         12 |         14 |         99 |
+| c:\xampp\htdocs\HosPortal new CSS\js\patient-documents.js                           | JavaScript |        248 |          0 |         34 |        282 |
+| c:\xampp\htdocs\HosPortal new CSS\js\patient-list.js                                | JavaScript |        298 |          3 |         50 |        351 |
+| c:\xampp\htdocs\HosPortal new CSS\js\pdf-generator.js                               | JavaScript |        354 |          0 |         66 |        420 |
+| c:\xampp\htdocs\HosPortal new CSS\js\upload-medtech.js                              | JavaScript |         65 |          2 |          8 |         75 |
+| c:\xampp\htdocs\HosPortal new CSS\medtech-homepage.php                              | PHP        |        188 |          0 |         27 |        215 |
+| c:\xampp\htdocs\HosPortal new CSS\meeting-room-patient.php                          | PHP        |         49 |          0 |         11 |         60 |
+| c:\xampp\htdocs\HosPortal new CSS\meeting-room.php                                  | PHP        |        203 |          2 |         28 |        233 |
+| c:\xampp\htdocs\HosPortal new CSS\package-lock.json                                 | JSON       |         24 |          0 |          1 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\package.json                                      | JSON       |          5 |          0 |          1 |          6 |
+| c:\xampp\htdocs\HosPortal new CSS\patient-all-documents.php                         | PHP        |        111 |          0 |         21 |        132 |
+| c:\xampp\htdocs\HosPortal new CSS\patient-documents.php                             | PHP        |        190 |          0 |         37 |        227 |
+| c:\xampp\htdocs\HosPortal new CSS\patient-homepage.php                              | PHP        |        351 |          0 |         51 |        402 |
+| c:\xampp\htdocs\HosPortal new CSS\patient-labresult.php                             | PHP        |         39 |          0 |         10 |         49 |
+| c:\xampp\htdocs\HosPortal new CSS\patient-prescription.php                          | PHP        |         48 |          0 |         11 |         59 |
+| c:\xampp\htdocs\HosPortal new CSS\patient-transaction.php                           | PHP        |         39 |          0 |          9 |         48 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\accept-decline-online.php           | PHP        |         54 |          5 |         19 |         78 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\add-patient.php                     | PHP        |         13 |          0 |          6 |         19 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\appointment-cancel-patient.php      | PHP        |        101 |          0 |         14 |        115 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\appointment-cancel.php              | PHP        |         42 |          1 |         13 |         56 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\appointment-done.php                | PHP        |         28 |          0 |          7 |         35 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\appt-table-patient.php              | PHP        |         84 |          0 |         10 |         94 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\archive-document.php                | PHP        |         84 |          4 |         16 |        104 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\archive-pagination.php              | PHP        |         73 |          2 |          9 |         84 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\archive-soap.php                    | PHP        |         62 |          4 |         17 |         83 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\blob-to-database.php                | PHP        |         31 |          0 |         11 |         42 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\book-appointment-doctor.php         | PHP        |         65 |          4 |         17 |         86 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\book-appointment.php                | PHP        |        114 |         11 |         21 |        146 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\calendar-available-btns.php         | PHP        |         82 |          0 |         21 |        103 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\calendar-script.php                 | PHP        |        223 |          9 |         26 |        258 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\calendar_php\delete.php             | PHP        |          7 |          0 |          1 |          8 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\calendar_php\insert.php             | PHP        |          9 |          0 |          1 |         10 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\calendar_php\update.php             | PHP        |          9 |          0 |          2 |         11 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\check-disabled-date.php             | PHP        |         10 |          0 |          5 |         15 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\conclude-appointment.php            | PHP        |          6 |          0 |          5 |         11 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\count-notifs-doctor.php             | PHP        |         16 |          0 |          7 |         23 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\count-notifs.php                    | PHP        |         16 |          0 |          7 |         23 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\db_conn.php                         | PHP        |          9 |          0 |          4 |         13 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\delete-lab-draft.php                | PHP        |         37 |          0 |         10 |         47 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\disable-enable-dates.php            | PHP        |         46 |          1 |         10 |         57 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\disable-times.php                   | PHP        |         13 |          0 |          6 |         19 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\documents-patient-search.php        | PHP        |         32 |          0 |          8 |         40 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\download-prescription.php           | PHP        |          9 |          0 |          4 |         13 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\employee-ajax-table.php             | PHP        |         63 |          0 |          6 |         69 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\employee-all-docs-sort.php          | PHP        |         58 |          0 |          8 |         66 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\employee-code.php                   | PHP        |         12 |          0 |          5 |         17 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\employee-sorted-table.php           | PHP        |         35 |          0 |          7 |         42 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\field-filler.php                    | PHP        |         45 |          0 |          9 |         54 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\get-created-soap.php                | PHP        |         10 |          0 |          6 |         16 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\get-disabled-dates.php              | PHP        |          9 |          0 |          5 |         14 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\get-patient-info.php                | PHP        |         22 |          0 |          7 |         29 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\if-online.php                       | PHP        |         28 |          0 |          7 |         35 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\insert-lab-draft.php                | PHP        |        221 |          2 |         21 |        244 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\issue-bill.php                      | PHP        |         38 |          0 |         10 |         48 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\latest-soap-id.php                  | PHP        |         10 |          0 |          7 |         17 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\loadEvents.php                      | PHP        |         91 |          0 |          8 |         99 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\login.php                           | PHP        |         67 |          3 |         18 |         88 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\logout.php                          | PHP        |          8 |          0 |          7 |         15 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\manual-soap-create.php              | PHP        |         16 |          0 |          9 |         25 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\mark-as-ongoing.php                 | PHP        |         40 |          1 |         11 |         52 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\medtech-dynamic-table.php           | PHP        |         36 |          0 |          5 |         41 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\medtech-uploads.php                 | PHP        |         23 |          0 |          5 |         28 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\open-bill-details.php               | PHP        |         64 |          0 |         16 |         80 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\open-lab-draft.php                  | PHP        |         10 |          0 |          7 |         17 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\open-soap-note-file-archive.php     | PHP        |         10 |          0 |          6 |         16 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\open-soap-note-file.php             | PHP        |         21 |          0 |          9 |         30 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\open-soap-notes.php                 | PHP        |         20 |          0 |          6 |         26 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\patient-list-ajax.php               | PHP        |         80 |          1 |         12 |         93 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\patient-soap-table.php              | PHP        |         34 |          0 |          6 |         40 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\patient-sort-docs.php               | PHP        |         48 |          0 |          8 |         56 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\patient-transaction-table.php       | PHP        |         41 |          0 |          8 |         49 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\pay-bill.php                        | PHP        |         33 |          0 |         13 |         46 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\pay-consultation.php                | PHP        |         12 |          0 |          8 |         20 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\registration.php                    | PHP        |         86 |         11 |         26 |        123 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\rejoin-meet.php                     | PHP        |         10 |          0 |          7 |         17 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\reload-tbl-doc.php                  | PHP        |         34 |          0 |          7 |         41 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\request-online.php                  | PHP        |         41 |          3 |         10 |         54 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\restore-document.php                | PHP        |         59 |          4 |         11 |         74 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\restore-soap.php                    | PHP        |         53 |          3 |         10 |         66 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\save-draft.php                      | PHP        |          8 |          0 |          6 |         14 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\save-soap-note.php                  | PHP        |         32 |          4 |          9 |         45 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\search-archive.php                  | PHP        |         63 |          0 |          9 |         72 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\search.php                          | PHP        |         32 |          0 |          8 |         40 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\seen-notif-doc.php                  | PHP        |          9 |          0 |          5 |         14 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\seen-notif.php                      | PHP        |          9 |          0 |          5 |         14 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\table-live-update-patient-first.php | PHP        |         81 |          0 |         10 |         91 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\table-live-update-patient.php       | PHP        |         83 |          0 |         10 |         93 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\table-live-update.php               | PHP        |         35 |          0 |          7 |         42 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\upload-document.php                 | PHP        |         43 |          0 |         13 |         56 |
+| c:\xampp\htdocs\HosPortal new CSS\php_processes\view-triage.php                     | PHP        |         69 |          0 |          6 |         75 |
+| c:\xampp\htdocs\HosPortal new CSS\twincare_db.sql                                   | SQL        |        219 |         99 |         53 |        371 |
+| Total                                                                               |            |     57,683 |      5,519 |      8,630 |     71,832 |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

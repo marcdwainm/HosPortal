@@ -2,11 +2,14 @@
 include 'db_conn.php';
 
 $type = $_POST['type'];
+$class = "";
 
 if ($type == 'pres') {
     $query = "SELECT * FROM documents WHERE doc_type = 'prescription' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 5";
+    $class = "prescription";
 } else if ($type == 'lab') {
     $query = "SELECT * FROM documents WHERE doc_type = 'labresult' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 5";
+    $class = "labresult";
 }
 
 
@@ -23,14 +26,15 @@ if (mysqli_num_rows($result) == 0) {
         $doc_num = $row['doc_num'];
 
         echo "
-    <div class='e-contents three-fr'>
-        <span>$pname</span>
-        <span>$date_up_formatted</span>
-        <div>
-            <button class = 'view' value = '$doc_num'>View</button>
-            <button class = 'download-pdf' value = '$doc_num'><i class='fas fa-download'></i></button>
-        </div>
-    </div>
-";
+            <div class='e-contents three-fr'>
+                <span>$pname</span>
+                <span>$date_up_formatted</span>
+                <div>
+                    <button class = 'view' value = '$doc_num'><i class='far fa-eye fa-lg'></i></button>
+                    <button class = 'download-pdf' value = '$doc_num'><i class='fas fa-download'></i></button>
+                    <button class = 'archive-$class' value = '$doc_num'><i class='fas fa-archive'></i></button>
+                </div>
+            </div>
+            ";
     }
 }

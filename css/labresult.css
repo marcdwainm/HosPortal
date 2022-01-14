@@ -1,0 +1,681 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+:root{
+    --background: #E6E6E6;
+    --blue: #6094C9;
+    --green: #AAC46B;
+    --graytext: #8B8B8B;
+    --grayoutline: rgb(209, 209, 209);
+}
+
+.buttons{
+    width: 21cm;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 50px;
+    z-index: 10;    
+}
+
+.buttons button{
+    background-color: white;
+    border: 2px solid var(--blue);
+    padding: 9px 14px;
+    height: 40px;
+    cursor: pointer;
+    color: var(--blue);
+    font-weight: 800;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+}
+
+.buttons button:disabled{
+    border: 2px solid rgb(190, 190, 190);
+    background: rgb(228, 228, 228);
+    color: rgb(190, 190, 190);
+    cursor: default;
+}
+
+#add-div, .add-div-lab, .add-head-lab, #save-draft{
+    background-color: white;
+    border: 2px solid var(--blue);
+    padding: 9px 14px;
+    height: 40px;
+    cursor: pointer;
+    color: var(--blue);
+    font-weight: 800;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+}
+
+.head-title{
+    position: relative;
+    width: 100%;
+}
+
+#add-div:hover, .add-div-lab:hover, .add-head-lab:hover, #save-draft:hover{
+    border: 2px solid var(--green);
+    color: var(--green);
+    transition: 0.2s ease-in-out;
+}
+
+#revert, #revert-lab, #revert-lab-medtech{
+    background-color: white;
+    border: 2px solid var(--blue);
+    padding: 9px 14px;
+    height: 40px;
+    cursor: pointer;
+    color: var(--blue);
+    font-weight: 800;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+}
+#revert:hover, #revert-lab:hover, #revert-lab-medtech:hover{
+    border: 2px solid var(--green);
+    color: var(--green);
+    transition: 0.2s ease-in-out;
+}
+
+.btns{
+    padding: 10px;
+    background-color: var(--green);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btns:hover{
+    border: 2px solid var(--green);
+    color: var(--green);
+    transition: 0.2s ease-in-out;
+}
+
+body{
+    background-color: rgb(250,252,254);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 70px;
+    padding-top: 120px;
+}
+
+/*Make new div for lab result*/
+.container-for-prescription{
+    /* statement paper*/
+    width: 5.5in;
+    height: 8.5in;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 39px -30px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 39px -30px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 39px -30px rgba(0,0,0,0.75);
+    border: 1px solid rgb(179, 179, 196);
+}
+
+.container-for-labresult{
+    /* a4 paper*/
+    width: 210mm;
+    height: 297mm; 
+    -webkit-box-shadow: 0px 0px 39px -30px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 39px -30px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 39px -30px rgba(0,0,0,0.75);
+    border: 1px solid rgb(179, 179, 196);
+}
+
+.pres-header{
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.pres-img-logo{
+    width: 70px;
+    height: 70px;
+}
+
+.pres-img-logo img{
+    width: 100%;
+}
+
+.prescription-container, .labresult-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.prescription-container h2, .labresult-container h2{
+    text-align: center;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: 1em;
+}
+
+.prescription-container h4, .labresult-container h4{
+    text-align: center;
+    color: var(--blue);
+    font-weight: 600;
+    font-size: 1em;
+    text-align: center;
+}
+
+.lab-header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    padding-bottom: 10px;
+}
+
+.lab-header > div:first-child{
+    display: flex;
+    height: 100px;
+}
+
+.lab-logo{
+    border: 5px solid var(--blue);
+    border-right: 3px solid var(--blue);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+.lab-logo img{
+    width: 100%;
+}
+
+.lab-clinic-name{
+    border: 5px solid var(--blue);
+    border-left: 2.5px solid var(--blue);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 1.8em;
+    max-width: 500px;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pres-header div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+}
+
+.pres-header div:nth-child(2) > span{
+    width: 100%;
+    font-size: 1em;
+    font-weight: 600;
+    font-style: italic;
+    color: rgb(204, 9, 9);
+    text-align: center;
+}
+
+.pres-header .black{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-weight: 600;
+    text-align: center;
+}
+
+.pres-doctor-details{
+    font-size: 0.8em;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 30px;
+}
+
+.pres-doctor-details > div:nth-child(2){
+    width: 150px;
+}
+
+.hospital-aff{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.74em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px 20px;
+}
+
+.hospital-aff i{
+    text-align: center;
+    width: 75%;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.hospital-aff i{
+    font-size: 1.1em;
+}
+
+.patient-info{
+    width: 100%;
+    padding: 0 30px;
+    font-size: 0.9em;
+}
+
+.patient-info hr{
+    height: 4px;
+    background: rgb(95, 95, 95);
+    margin-bottom: 5px;
+}
+
+.underlined{
+    text-decoration: underline;
+}
+
+.name-age{
+    display: flex;
+    justify-content: space-between;
+}
+
+.address-date{
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+}
+
+.address-container{
+    max-width: 300px;
+    text-align: left;
+}
+
+.date-container{
+    max-width: 160px;
+    text-align: right;
+}
+
+.date-container-2{
+    width: 100%;
+}
+
+
+.medicine{
+    padding: 10px 30px;
+    width: 100%;
+    height: 480px;
+    font-size: 0.9em;
+}
+
+.lab-result{
+    padding: 0px 30px;
+    height: 710px;
+}
+
+.lab-title-type{
+    padding: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 800;
+    text-transform: uppercase;
+    width: 100%;
+    letter-spacing: 5px;
+    border: 1px solid rgb(36, 36, 36);
+}
+
+.medicine img{
+    width: 40px;
+    float: left;
+    margin-right: 15px;
+}
+
+.medicine-table{
+    width: 100%;
+    font-size: 1.1em;
+}
+
+.medicine-table-header{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    font-weight: 600;
+}
+
+.medicine-table-header span{
+    padding: 3px;
+}
+
+.left{
+    text-align: left;
+}
+
+.center{
+    text-align: center;
+}
+
+.right{
+    text-align: right;
+}
+
+.lab-test-head{
+    width: 100%;
+    margin-bottom: 1px;
+    margin-top: 1px;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    position: relative;
+}
+
+.medicine-table-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid rgb(192, 192, 192);
+    position: relative;
+}
+
+.header-lab{
+    width: 100%;
+}
+
+.medicine-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.medicine-table span{
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.medicine-table th{
+    border-spacing: 0px;
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-transform: uppercase;
+}
+
+.lab-result-content{
+    position: relative;
+}
+
+.lab-result-content{
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+.lab-result-content td{
+    text-align: center;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.lab-result-content td:nth-child(2), .lab-result-content td:nth-child(3){
+    position: relative;
+}
+
+.lab-result-content td:nth-child(2) span:nth-child(2){
+    float: left;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.lab-result-content td:nth-child(2) span:nth-child(3){
+    float: right;
+    width: 50%;
+    height: 100%;
+}
+
+.lab-result-content td:nth-child(2) button:nth-child(1), .lab-result-content td:nth-child(3) button:nth-child(1){
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border: none;
+    background: var(--green);
+    color: white;
+    padding: 2px;
+    display: none;
+    cursor: pointer;
+}
+
+.delete-div, .delete-lab-div{
+    background: red;
+    color: white;
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 4px;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+}
+
+.delete-lab-div{
+    padding: 0 5px;
+    height: 20px;
+}
+
+
+.medicine-table-content span{
+    padding: 3px;
+}
+
+.lab-result-content span{
+    text-align: center;
+    padding: 1px;
+}
+
+.remarks{
+    width: 100%;
+    padding: 3px;
+    border: 1px solid black;
+    margin-top: 20px;
+}
+
+.footer{
+    font-size: 0.8em;
+    padding: 0 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer span{
+    outline: none;
+}
+
+.footer > div:nth-child(1){
+    max-width: 280px;
+}
+
+.footer > div:nth-child(1) span:nth-child(1){
+    margin-right: 3px;
+
+}
+
+.footer > div:nth-child(2){
+    max-width: 200px;
+}
+
+.footer-lab{
+    width: 100%;
+    display: flex;
+    padding-bottom: 30px;
+}
+
+.footer-lab > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 0 30px;
+    text-align: center;
+}
+
+.footer-lab > div span:nth-child(3){
+    font-size: 0.8em;
+}
+
+.footer-lab > div span:nth-child(4){
+    font-size: 0.8em;
+}
+
+.e-sig{
+    width: 300px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+    height: 40px;
+}
+
+.e-sig img{
+    width: 50%;
+    height: 150%;
+    object-fit: contain;
+    border: none;
+}
+
+#signature-adder-dim{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0, .5);
+    width: 100vw;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+}
+
+#signature-adder-container{
+    height: auto;
+    background: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    border-radius: 10px;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: column;
+}
+
+#signature-adder-container #signature-adder-header{
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--grayoutline);
+}
+
+.signature-adder-exit{
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.signature-adder-exit:hover{
+    transition: 0.2s ease-in-out;
+    color: red;
+}
+
+#signature-adder-body{
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#signature-adder-container canvas{
+    border: 1px solid var(--grayoutline);
+    margin-bottom: 20px;
+}
+
+.signature-adder-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.signature-adder-buttons button{
+    width: 100%;
+    cursor: pointer;
+    border: 2px solid var(--blue);
+    background: white;
+    color: var(--blue);
+    font-weight: 800;
+    padding: 6px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: 0.2s ease-in-out;
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+}
+
+.signature-adder-buttons button:last-child{
+    margin-bottom: 0px;
+}
+
+.signature-adder-buttons button:hover{
+    color: var(--green);
+    border-color: var(--green);
+    transition: 0.2s ease-in-out;
+}
+
+
+.signature-adder-buttons input{
+    border: 1px solid var(--grayoutline);
+    margin-bottom: 10px;
+    padding: 15px;
+    display:none;
+}
+
+
+
+
+@media print {
+    @page{
+        margin: 0;
+        size: A4;
+    }
+
+    body * {
+      visibility: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    #invoice, #invoice * {
+        visibility: visible;
+        break-inside: avoid;
+    }
+    #invoice{
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }

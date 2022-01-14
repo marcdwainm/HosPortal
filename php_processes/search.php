@@ -6,7 +6,8 @@ if (isset(($_POST['query']))) {
     $query = "SELECT * FROM user_table WHERE
      first_name LIKE '%" . $_POST['query'] . "%' OR
      middle_name LIKE '%" . $_POST['query'] . "%' OR
-     last_name LIKE '%" . $_POST['query'] . "%'";
+     last_name LIKE '%" . $_POST['query'] . "%' OR
+     CONCAT(first_name, ' ', LEFT(middle_name, 1), '. ', last_name) LIKE '%" . $_POST['query'] . "%'";
 
     $result = mysqli_query($conn, $query);
 
@@ -23,7 +24,7 @@ if (isset(($_POST['query']))) {
             $to = new DateTime('today');
             $age = $from->diff($to)->y;
 
-            $output .= "<button type = 'button' class='search-results' value = '$userid'>
+            $output .= "<button type = 'button' class='search-results search-results-medtech' value = '$userid'>
                             <span>$firstname $middlename. $lastname</span>
                             <span>$sex, $age</span>
                         </button>";

@@ -2,7 +2,7 @@
 
 include 'db_conn.php';
 
-$required_fields = array('firstname', 'middlename', 'lastname', 'sex', 'bdate', 'telnum', 'email', 'pass', 'conf_pass');
+$required_fields = array('firstname', 'middlename', 'lastname', 'sex', 'bdate', 'telnum', 'address', 'email', 'pass', 'conf_pass');
 
 $error = false;
 
@@ -12,12 +12,13 @@ foreach ($required_fields as $field) {
     }
 }
 
-$firstname = $_POST['firstname'];
-$middlename = $_POST['middlename'];
-$lastname = $_POST['lastname'];
+$firstname = ucwords($_POST['firstname']);
+$middlename = ucwords($_POST['middlename']);
+$lastname = ucwords($_POST['lastname']);
 $sex = $_POST['sex'];
 $bdate = $_POST['bdate'];
 $telnum = $_POST['telnum'];
+$address = ucwords($_POST['address']);
 $email = $_POST['email'];
 $password = $_POST['pass'];
 $conf_pass = $_POST['conf_pass'];
@@ -63,7 +64,7 @@ if ($error) {
 }
 
 //! IF NAME HAS INVALID VALUES
-else if (!preg_match('/^[A-Za-z ]+$/', $firstname) || !preg_match('/^[A-Za-z]+$/', $middlename) || !preg_match('/^[A-Za-z]+$/', $lastname)) {
+else if (!preg_match('/^[A-Za-z ]+$/', $firstname) || !preg_match('/^[A-Za-z ]+$/', $middlename) || !preg_match('/^[A-Za-z ]+$/', $lastname)) {
     header("Location:../index.php?success=false&name=invalid&fname=$firstname&mname=$middlename&lname=$lastname&sex=$sex&bdate=$bdate&telnum=$telnum&email=$email");
     exit();
 }
@@ -107,11 +108,11 @@ else if (!empty($_POST['employee_code']) && !$emp_code_is_valid) {
 //! IF INPUTS HAVE NO INVALIDATIONS
 else {
     if (empty($_POST['employee_code'])) {
-        $query = "INSERT INTO `user_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `birthdate`) 
-            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$formatted_bdate')";
+        $query = "INSERT INTO `user_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `birthdate`) 
+            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$formatted_bdate')";
     } else if (!empty($_POST['employee_code']) && $emp_code_is_valid) {
-        $query = "INSERT INTO `employee_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `position`)
-            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$position')";
+        $query = "INSERT INTO `employee_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `position`)
+            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$position')";
     }
 
     $result = mysqli_query($conn, $query);

@@ -100,13 +100,12 @@ $(document).ready(function () {
         docType = $('#document-type').val();
         pid = $('#generate-document').val();
         pname = $('#patient-search').val();
-        doctorFullname = $('.full-name').children('h1').html();
         var redirect = '';
 
         if (pid === '0000') {
-            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname + '&doctorname=' + doctorFullname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
+            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
         } else {
-            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname + '&doctorname=' + doctorFullname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
+            redirect = window.open('extras/prescription-labresult.php?docType=' + docType + '&pid=' + pid + '&pname=' + pname, '_blank', 'location=yes,height=800,width=1000,scrollbars=yes,status=yes')
         }
         redirect.location;
 
@@ -146,8 +145,9 @@ $(document).ready(function () {
         }
     })
 
+    base64String = "";
+    fileExt = "";
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    var base64String;
 
     function handleFileSelect(evt) {
         var f = evt.target.files[0]; // FileList object
@@ -159,6 +159,7 @@ $(document).ready(function () {
                 //Converting Binary Data to base 64
                 base64String = window.btoa(binaryData);
                 //showing file converted to base64
+                fileExt = f.type;
             };
         })(f);
         // Read in the image file as a data URL.
@@ -171,7 +172,6 @@ $(document).ready(function () {
         let sentTo = $('#upload-from-device').val();
         let pname = $('#patient-search').val();
 
-        //If patient is not portal registered
         if (sentTo === '0000') {
             Swal.fire({
                 title: 'Are you sure?',
@@ -190,7 +190,8 @@ $(document).ready(function () {
                             base64: base64,
                             doctype: doctype,
                             sentTo: sentTo,
-                            pname: pname
+                            pname: pname,
+                            fileExt: fileExt
                         },
                         success: function (result) {
                             $('#patient-search').val('');
@@ -202,54 +203,122 @@ $(document).ready(function () {
                             $('.add-document-overlay').fadeOut();
                             $('.document-upload-container').fadeOut();
 
-                            Swal.fire(
-                                'Uploaded!',
-                                'Your file is now in the database.',
-                                'success'
-                            )
+                            if (result.includes("Error while uploading the file: ")) {
+                                alert(result)
+                            } else {
+                                Swal.fire(
+                                    'Uploaded!',
+                                    'Your file is now in the database.',
+                                    'success'
+                                )
+                            }
                         }
                     })
                 }
             })
         }
         else if (sentTo !== '0000') {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "This will upload the file to the database!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Upload!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'php_processes/upload-document.php',
-                        data: {
-                            base64: base64,
-                            doctype: doctype,
-                            sentTo: sentTo
-                        },
-                        success: function (result) {
-                            $('#patient-search').val('');
-                            $('#document-type').val('default');
-                            $('#file').val(null);
-                            $('#file').hide();
-                            $('#upload-from-device').show();
-                            $('#file-to-database').hide();
-                            $('.add-document-overlay').fadeOut();
-                            $('.document-upload-container').fadeOut();
+            //IF PRESCRIPTION, DONT ASK BILL ISUING
+            if (doctype == 'prescription') {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This will upload the file to the database!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Upload!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php_processes/upload-document.php',
+                            data: {
+                                base64: base64,
+                                doctype: doctype,
+                                sentTo: sentTo,
+                                fileExt: fileExt
+                            },
+                            success: function (result) {
+                                $('#patient-search').val('');
+                                $('#document-type').val('default');
+                                $('#file').val(null);
+                                $('#file').hide();
+                                $('#upload-from-device').show();
+                                $('#file-to-database').hide();
+                                $('.add-document-overlay').fadeOut();
+                                $('.document-upload-container').fadeOut();
+                                if (result.includes("Error while uploading the file: ")) {
+                                    alert(result)
+                                } else {
+                                    Swal.fire(
+                                        'Uploaded!',
+                                        'The patient will be notified!',
+                                        'success'
+                                    )
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+            else {
+                Swal.fire({
+                    title: 'Issue a bill?',
+                    icon: 'question',
+                    text: 'Before uploading, you must agree/disagree if the patient shall pay for the lab result',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Issue',
+                    denyButtonText: `Don't Issue`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // IF CONFIRMED, DISPLAY BILL ISSUE WINDOW
+                        appnum = sentTo;
+                        $('#issue-bill-lab').val(appnum)
 
-                            Swal.fire(
-                                'Uploaded!',
-                                'Your file is now in the database.',
-                                'success'
-                            )
-                        }
-                    })
-                }
-            })
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php_processes/get-patient-info.php',
+                            data: {
+                                appointmentNum: appnum,
+                                fromLabRes: 'true'
+                            },
+                            success: function (result) {
+                                $('.issue-details').html(result)
+                            }
+                        })
+                        $('.dim-4').fadeIn()
+                    } else if (result.isDenied) {
+                        //IF DENIED SIMPLY UPLOAD TO DATABASE
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php_processes/upload-document.php',
+                            data: {
+                                base64: base64,
+                                doctype: doctype,
+                                sentTo: sentTo,
+                                fileExt: fileExt
+                            },
+                            success: function (result) {
+                                $('#patient-search').val('');
+                                $('#document-type').val('default');
+                                $('#file').val(null);
+                                $('#file').hide();
+                                $('#upload-from-device').show();
+                                $('#file-to-database').hide();
+                                $('.add-document-overlay').fadeOut();
+                                $('.document-upload-container').fadeOut();
+                                if (result.includes("Error while uploading the file: ")) {
+                                    alert(result)
+                                } else {
+                                    Swal.fire('Sent', 'The patient will be notified and won\'t be required to pay a bill.', 'success')
+                                }
+                            }
+                        })
+                    }
+                })
+            }
         }
     })
 
@@ -280,25 +349,37 @@ $(document).ready(function () {
         }
     }
 
-    $('.download-pdf').on('click', function () {
+    $(document).on('click', '.download-pdf', function () {
         docnum = $(this).val();
 
-        $.ajax({
-            type: "POST",
-            data: {
-                docnum: docnum
-            },
-            url: "php_processes/download-prescription.php",
-            success: function (result) {
-                let base64 = result;
+        Swal.fire(
+            'Disclaimer',
+            'This file is protected by the portal. Upon the download, you are liable of the patients\' confidentiality. Responsibility to prevent unauthorized disclosures of the document shall be a priority.',
+            'warning'
+        ).then((result) => {
+            $.ajax({
+                type: "POST",
+                data: {
+                    docnum: docnum
+                },
+                url: "php_processes/download-prescription.php",
+                success: function (result) {
+                    result = JSON.parse(result);
+                    let base64 = result.base64;
+                    let fileExt = result.file_ext
 
-                if (!base64.includes("data:application/pdf;base64,")) {
-                    base64 = base64 + "data:application/pdf;base64,";
+                    if (!base64.includes('data')) {
+                        base64 = 'data:' + fileExt + ';base64,' + base64;
+                    }
+
+                    var a = document.createElement("a"); //Create <a>
+                    a.href = base64; //Image Base64 Goes here
+                    a.download = result.doctype + "-" + docnum;
+                    a.click(); //Downloaded file
                 }
-
-                downloadPDF(base64, docnum);
-            }
+            })
         })
+
     })
 
 
@@ -379,10 +460,15 @@ $(document).ready(function () {
         window.location.href = 'employee-all-documents.php';
     })
 
+    $('#see-all-documents-nurse').on('click', function () {
+        window.location.href = 'nurse-all-documents.php';
+    })
+
     $('#sort-table-docs').on('click', function () {
         sortValue = $('#sortation-docs').val();
         $(this).val(sortValue);
         sortText = '';
+        pname = '';
 
         switch (sortValue) {
             case 'all-desc':
@@ -406,7 +492,18 @@ $(document).ready(function () {
             case 'thismonth':
                 sortText = 'This Month';
                 break;
+            case 'patientname':
+                sortText = 'Patient Name';
+                break;
+        }
 
+        if (sortValue == 'patientname') {
+            pname = $('#patient-name').val();
+        }
+
+        if (sortValue == 'patientname' && $('#patient-name').val() == '') {
+            $('#patient-error').show();
+            return;
         }
 
         $('.all-docs-header').children('h2').html(sortText);
@@ -415,10 +512,22 @@ $(document).ready(function () {
             type: 'POST',
             url: 'php_processes/employee-all-docs-sort.php',
             data: {
-                sortval: sortValue
+                sortval: sortValue,
+                pname: pname
             },
             success: function (result) {
+                if (result == "<div class = 'empty'>No Documents Found</div>") {
+                    $('#patient-error').hide();
+                }
                 $('.dynamic-tbl').html(result);
+                Swal.fire({
+                    position: 'bottom-right',
+                    icon: 'success',
+                    title: 'Appointments Sorted',
+                    backdrop: 'none',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
             }
         })
 
@@ -426,13 +535,27 @@ $(document).ready(function () {
         $('#offset').html('0');
     })
 
+    $('#sortation-docs').on('change', function () {
+        if ($(this).val() == 'patientname') {
+            $('#patient-name').show();
+        }
+        else {
+            $('#patient-error').hide();
+            $('#patient-name').hide();
+            $('#patient-name').val('');
+        }
+    })
+
     //PAGINATION
 
     $('#next').on('click', function () {
         sortType = $('#sort-table-docs').val();
+        pname = $('#patient-name').val();
+
         if (sortType === '') {
             sortType = 'all-desc';
         }
+
         offset = parseInt($('#offset').html());
         pageNum = parseInt($('#page-num').html());
 
@@ -449,7 +572,8 @@ $(document).ready(function () {
             url: 'php_processes/employee-all-docs-sort.php',
             data: {
                 sortval: sortType,
-                offset: offset
+                offset: offset,
+                pname: pname
             },
             success: function (result) {
                 if (result === "<div class = 'empty'>No Documents Found</div>") {
@@ -467,6 +591,8 @@ $(document).ready(function () {
 
     $('#prev').on('click', function () {
         sortType = $('#sort-table-docs').val();
+        pname = $('#patient-name').val();
+
         if (sortType === '') {
             sortType = 'all-desc';
         }
@@ -485,14 +611,154 @@ $(document).ready(function () {
                 url: 'php_processes/employee-all-docs-sort.php',
                 data: {
                     sortval: sortType,
-                    offset: offset
+                    offset: offset,
+                    pname: pname
                 },
                 success: function (result) {
                     $('.dynamic-tbl').html(result);
                 }
             })
         }
+    })
 
+    $(document).on('click', '.archive-prescription', function () {
+        docnum = $(this).val()
+        doctype = 'prescription'
+        fromAllDocs = $(this).attr("class").split(' ')[1] == 'from-all-docs' ? true : false;
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This will put the prescription into the archives. You can restore it anytime.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Archive'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                if (!fromAllDocs) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/archive-document.php',
+                        data: {
+                            docnum: docnum,
+                            doctype: doctype
+                        },
+                        success: function (result) {
+                            //SWEET ALERT SUCCESS
+                            $('.presc-tbl').html(result)
+                            Swal.fire(
+                                'Archived!',
+                                'The prescription has been archived',
+                                'success'
+                            )
+                        }
+                    })
+                }
+                else {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/archive-document.php',
+                        data: {
+                            docnum: docnum,
+                            doctype: doctype
+                        },
+                        success: function (result) {
+                            var sortval = $('#sort-table-docs').val()
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php_processes/employee-all-docs-sort.php',
+                                data: {
+                                    sortval: sortval
+                                },
+                                success: function (result) {
+                                    //SWEET ALERT SUCCESS
+                                    console.log(result)
+                                    $('.dynamic-tbl').html(result)
+                                    Swal.fire(
+                                        'Archived!',
+                                        'The prescription has been archived',
+                                        'success'
+                                    )
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        })
+    })
+
+    $(document).on('click', '.archive-labresult', function () {
+        docnum = $(this).val()
+        doctype = 'labresult'
+        fromAllDocs = $(this).attr("class").split(' ')[1] == 'from-all-docs' ? true : false;
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This will put the lab result into the archives. You can restore it anytime.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Archive'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (!fromAllDocs) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/archive-document.php',
+                        data: {
+                            docnum: docnum,
+                            doctype: doctype
+                        },
+                        success: function (result) {
+                            //SWEET ALERT SUCCESS
+
+                            $('.lab-tbl').html(result)
+                            Swal.fire(
+                                'Archived!',
+                                'The lab result has been archived',
+                                'success'
+                            )
+                        }
+                    })
+                }
+                else {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/archive-document.php',
+                        data: {
+                            docnum: docnum,
+                            doctype: doctype
+                        },
+                        success: function (result) {
+                            var sortval = $('#sort-table-docs').val()
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php_processes/employee-all-docs-sort.php',
+                                data: {
+                                    sortval: sortval
+                                },
+                                success: function (result) {
+                                    //SWEET ALERT SUCCESS
+                                    console.log(result)
+                                    $('.dynamic-tbl').html(result)
+                                    Swal.fire(
+                                        'Archived!',
+                                        'The prescription has been archived',
+                                        'success'
+                                    )
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        })
     })
 })
 

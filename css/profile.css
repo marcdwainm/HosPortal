@@ -9,7 +9,7 @@
     --blue: #6094C9;
     --green: #AAC46B;
     --graytext: #8B8B8B;
-    --grayoutline: rgb(209, 209, 209);
+    --grayoutline: rgb(230, 230, 230);
 }
 
 body{
@@ -25,21 +25,6 @@ body{
     height: 100%;
     padding-top: 80px;
     background-color: var(--background);
-}
-
-
-.profile-container{
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 350px;
-    height: 92vh;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    color: rgb(104, 104, 104);
-    font-size: 0.8em;
-    border-right: 2px solid var(--grayoutline);
 }
 
 .profile-picture{

@@ -1,7 +1,21 @@
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    if ((charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+}
+
 $(document).ready(function () {
+
+    $("#telnum").on('keypress', function (e) {
+        return isNumberKey(e)
+    })
+
     $('#register').click(function () {
-        $('.login-form').fadeOut(2000);
-        $('.reg-form').fadeIn();
+        $('.login-form').fadeOut(300, function () {
+            $('.reg-form').fadeIn(300);
+        });
     })
 
     $('#back-btn').click(function () {
@@ -38,8 +52,9 @@ $(document).ready(function () {
     let searchParams = new URLSearchParams(window.location.search);
 
     if (searchParams.get('success') == "false") {
-        $('.login-form').hide();
-        $('.reg-form').show();
+        $('.login-form').hide(1, function () {
+            $('.reg-form').show();
+        });
     }
     else if (searchParams.get('success') == "true") {
         $('.login-form').show();

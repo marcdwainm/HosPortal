@@ -1,107 +1,108 @@
-<div class="notification-area">
-    <div class="notification-box">
-        <div class='notif-header'>
-            <span>Notifications</span>
-        </div>
-        <div class="notif-contents">
-            <!--10 People Have booked for appointments-->
-            <?php
-
-            include 'php_processes/db_conn.php';
-
-            $query = "SELECT * FROM notifications WHERE date_booked > DATE_SUB(NOW(), INTERVAL '1' DAY)";
-
-            $result = mysqli_query($conn, $query);
-            $number = mysqli_num_rows($result) - 1;
-            $arrayNames = array();
-
-            while ($row = mysqli_fetch_array($result)) {
-                $fullname = $row['patient_fullname'];
-
-                if (!in_array($fullname, $arrayNames)) {
-                    array_push($arrayNames, $fullname);
-                }
-            }
-
-            if (sizeof($arrayNames) == 1) {
-                echo "
-                        <div class='notif-content book-notif-type'>
-                            <div class='notif-img'></div>
-                            <span>
-                                $arrayNames[0] has booked for appointment
-                            </span>
-                            <div class='seen'>
-                                <div class='seen-circle'></div>
-                            </div> 
-                        </div>
-                    ";
-            } else if (sizeof($arrayNames) == 0) {
-                echo "<span class = 'no-new'>No New Notifications!</span>";
-            } else {
-                $size = sizeof($arrayNames) - 1;
-                echo "
-                        <div class='notif-content book-notif-type'>
-                            <div class='notif-img'></div>
-                            <span>
-                                $arrayNames[0] and $size other/s has booked for appointment
-                            </span>
-                            <div class='seen'>
-                                <div class='seen-circle'></div>
-                            </div> 
-                        </div>
-                    ";
-            }
-
-            ?>
+<?php
+include '../php_processes/db_conn.php';
+session_start();
+$emp_id = $_SESSION['emp_id'];
+$notifs_to_del = array();
+$iteration = 0;
 
 
-            <!-- A patient has settled a bill -->
-            <!-- <div class="notif-content bill-notif-type">
-                    <div class='notif-img'></div>
-                    <span>
-                        Marc Dwain B. Magracia has settled a bill
-                    </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
+$query = "SELECT * FROM notifications WHERE emp_id = '$emp_id' OR emp_id = 'all' ORDER BY notif_id DESC";
+
+$result = mysqli_query($conn, $query);
+
+if (mysqli_num_rows($result) == 0) {
+    echo "<span class = 'no-new'>No New Notifications!</span>";
+} else {
+    while ($row = mysqli_fetch_array($result)) {
+        $appointment_num = $row['appointment_num'];
+        $seen = $row['seen'];
+        $seen_text = '';
+        $date_time = Date("l, M d / H:i A", strtotime($row['date_time']));
+
+        if ($seen == 0) {
+            $seen_text = "<div class='seen'>
+            <div class='seen-circle'></div>
+            </div>";
+        } else {
+            $seen_text = "<div class='seen'></div>";
+        }
+
+        // BOOKED APPOINTMENTS NOTIFICATIONS
+        if ($row['notif_type'] == 'appointment') {
+            $fullname = $row['patient_fullname'];
+            echo "
+                <button class='notif-content book-notif-type notif-doc' value = '$appointment_num'>
+                    <div class='notif-img'>
+                        <i class='far fa-calendar-check fa-lg'></i>
                     </div>
-                </div> -->
-
-            <!--A patient has requested an appointment reschedule. Accept?-->
-            <!-- <div class="notif-content resched-notifgit type">
-                    <div class='notif-img'></div>
                     <span>
-                        Marc Dwain Magracia requested an appointment reschedule. Accept?
+                        $fullname has booked for appointment, dated: $date_time
                     </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
-                    </div>
-                </div> -->
+                    $seen_text
+                </button>
+            ";
+        }
 
-            <!--A patient has settled a bill-->
-            <!-- <div class="notif-content bill-notif-type">
-                    <div class='notif-img'></div>
-                    <span>
-                        Marc Dwain B. Magracia has settled a bill
-                    </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
-                    </div>
-                </div> -->
 
-            <!--A patient has settled a bill-->
-            <!-- <div class="notif-content bill-notif-type">
-                    <div class='notif-img'></div>
-                    <span>
-                        Marc Dwain B. Magracia has settled a bill
-                    </span>
-                    <div class="seen">
-                        <div class="seen-circle"></div>
+        //IF ONLINE REQUEST IS ACCEPTED
+        else if ($row['notif_type'] == 'onlineaccept') {
+            $fullname = $row['patient_fullname'];
+            echo "
+                <button class='notif-content online-req-notif-type notif-doc' value = '$appointment_num'>
+                    <div class='notif-img'>
+                        <i class='fas fa-user-check fa-lg'></i>
                     </div>
-                </div> -->
-        </div>
-    </div>
-    <div class="notification-num"><span>0</span></div>
-    <div class="notification-btn">
-        <i class="far fa-bell"></i>
-    </div>
-</div>
+                    <span>
+                        $fullname has accepted your request for online appointment, dated: $date_time
+                    </span>
+                    $seen_text
+                </button>
+            ";
+        }
+
+        //IF ONLINE REQUEST IS DECLINED
+        else if ($row['notif_type'] == 'onlinedecline') {
+            $fullname = $row['patient_fullname'];
+            echo "
+                <button class='notif-content online-req-notif-type notif-doc' value = '$appointment_num'>
+                    <div class='notif-img'>
+                        <i class='fas fa-user-times fa-lg'></i>
+                    </div>
+                    <span>
+                        $fullname has declined your request for online appointment, dated: $date_time
+                    </span>
+                    $seen_text
+                </button>
+            ";
+        }
+
+        //APPOINTMENT CANCELLATIONS NOTIFICATIONS
+        else if ($row['notif_type'] == 'cancellation') {
+            $fullname = $row['patient_fullname'];
+            echo "
+                <button class='notif-content cancel-notif-type notif-doc' value = '$appointment_num'>
+                    <div class='notif-img'>
+                        <i class='fas fa-ban fa-lg'></i>
+                    </div>
+                    <span>
+                        $fullname has cancelled an appointment dated $date_time
+                    </span>
+                    $seen_text
+                </button>
+            ";
+        }
+
+        $iteration += 1;
+
+        if ($iteration >= 31) {
+            array_push($notifs_to_del, $row['notif_id']);
+        }
+    }
+
+    if (!empty($notifs_to_del)) {
+        foreach ($notifs_to_del as $id) {
+            $del = "DELETE FROM notifications WHERE notif_id = '$id'";
+            mysqli_query($conn, $del);
+        }
+    }
+}

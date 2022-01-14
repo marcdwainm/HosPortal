@@ -9,7 +9,8 @@
     <script src="https://kit.fontawesome.com/f45be26f8c.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Document</title>
+    <title>Twin Care Portal | Login</title>
+    <link rel="icon" href="img/logo.png">
 </head>
 
 <body>
@@ -17,35 +18,97 @@
     <?php
     session_start();
 
-    if (isset($_SESSION['email'])) {
-        header("Location: patient-homepage.php");
+    if (isset($_SESSION['position'])) {
+        $position = $_SESSION['position'];
+        if ($position == 'doctor') {
+            header("Location: employee-homepage.php");
+        } else {
+            header("Location: $position-homepage.php");
+        }
+    }
+
+    if (isset($_GET['resetPassword']) && isset($_GET['resetKey'])) {
+        //IF RESET KEY IS IN TABLE, DISPLAY
+        $reset_key = $_GET['resetKey'];
+        $found = false;
+        include 'php_processes/db_conn.php';
+
+        $result = mysqli_query($conn, "SELECT * FROM reset_pass_keys WHERE reset_key = '$reset_key'");
+        $found = (mysqli_num_rows($result) > 0) ? true : false;
+
+        if ($found) {
+            echo "
+                <div class='dim-reset-pass'>
+                    <div class='reset-pass-window'>
+                        <div class='forgot-pass-header'>
+                            <span>Reset Password</span>
+                        </div>
+                        <div class='forgot-pass-body'>
+                            <span>Enter the new password for your account. You will be using this the next time you log in.</span>
+                            <input type='password' placeholder='New Password' id = 'new-pass'>
+                            <input type='password' placeholder='Confirm New Password' id = 'conf-new-pass'>
+                            <span class='invalid-pass'>Passwords do not match</span>
+                            <button type='button' id='reset-pass-submit'>Reset Password</button>
+                        </div>
+                    </div>
+                </div>
+                ";
+        }
     }
     ?>
+
+    <div class='dim-forgot-pass'>
+        <div class="forgot-pass-window">
+            <div class='forgot-pass-header'>
+                <span>Forgot Password</span>
+                <span class='forgot-pass-exit'>X</span>
+            </div>
+            <div class="forgot-pass-body">
+                <span>Enter your E-mail below and we will be sending you a link to reset your password.</span>
+                <input type='text' placeholder='E-mail' autocomplete="off" id='email-input-forgot'>
+                <span class='email-not-found'>Email not found!</span>
+                <button type='button' id='forgot-pass-submit'>Reset Password</button>
+            </div>
+        </div>
+    </div>
 
     <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
     <!--THIS INVISIBLE IFRAME IS FOR PREVENTING FORM REDIRECTIONS-->
 
-    <div class='background'>
-        <div class='login-form'>
-            <div class='img-mockup'>
-                <img src='img/login-mockup.png'>
-            </div>
-            <div class='header'>
-                <div class='header-logo'>
-                    <img src='img/logo-2.png'>
-                </div>
-                <span class='contact-num'><i class="fas fa-phone-alt"></i> 0998-390-0813</span>
-            </div>
+    <div class='bg'></div>
 
+    <div class='header-index'>
+        <div class='header-logo'>
+            <img src='img/logo-2.png'>
+        </div>
+        <span><i class="fas fa-phone-alt"></i>0925-734-7552</span>
+    </div>
+
+    <div class='first-div'>
+        <div>
+
+            <h1>High quality online care,</h1>
+            <h1>you deserve, we give.</h1>
+            <span class='margin-bottom'>As the pandemic persists, we should use the portal as it gives us: </span>
+            <span>• 24/7 Access</span>
+            <span>• Less travelling</span>
+            <span>• Appointment bookings online</span>
+            <span>• Online bill payments</span>
+            <span>• Storage for your health information needs</span>
+            <span>• Notifications </span>
+        </div>
+    </div>
+    <div class='second-div'>
+        <div class='login-form'>
             <form class='l-form' action='php_processes/login.php' method='POST'>
                 <span class='form-header'>Login to your account</span>
                 <div class='login-inputs'>
                     <?php
                     if (isset($_GET['loginemail'])) {
                         $email = $_GET['loginemail'];
-                        echo "<input type = 'text' placeholder = 'E-mail' name = 'login-email' value = '$email'>";
+                        echo "<input type = 'text' placeholder = 'E-mail' name = 'login-email' value = '$email' autocomplete = 'off'>";
                     } else {
-                        echo "<input type = 'text' placeholder = 'E-mail' name = 'login-email'>";
+                        echo "<input type = 'text' placeholder = 'E-mail' name = 'login-email' autocomplete = 'off'>";
                     }
                     ?>
 
@@ -67,30 +130,17 @@
                 </div>
                 <div class='login-links'>
                     <a href='#' id='register'>Create an Account</a>
-                    <a href='#'>Forgot your Password?</a>
+                    <a href='#' id='forgot-pass'>Forgot your Password?</a>
                 </div>
                 <span class='footer'>Twin Care Portal. Copyright 2021.</span>
             </form>
         </div>
 
 
-
-
         <div class='reg-form'>
-            <div class='img-mockup-reg'>
-                <img src='img/reg-mockup.png'>
-            </div>
-            <div class='header'>
-                <div class='header-logo'>
-                    <img src='img/logo-2.png'>
-                </div>
-                <span class='contact-num'><i class="fas fa-phone-alt"></i> 0998-390-0813</span>
-            </div>
-
             <form class='r-form' action='php_processes/registration.php' method='POST'>
                 <div class='back-header'>
                     <button id='back-btn' type='button'><i class="fas fa-arrow-left"></i></button>
-                    <span class='form-header'>Register Now!</span>
                 </div>
 
                 <div class='login-inputs'>
@@ -99,23 +149,23 @@
                         //FIRSTNAME
                         if (isset($_GET['fname'])) {
                             $fname = $_GET['fname'];
-                            echo "<input type = 'text' placeholder = 'First Name' name = 'firstname' value = '$fname'>";
+                            echo "<input type = 'text' placeholder = 'First Name' name = 'firstname' value = '$fname' autocomplete = 'off'>";
                         } else {
-                            echo "<input type = 'text' placeholder = 'First Name' name = 'firstname'>";
+                            echo "<input type = 'text' placeholder = 'First Name' name = 'firstname' autocomplete = 'off'>";
                         }
                         //MIDDLENAME
                         if (isset($_GET['mname'])) {
                             $mname = $_GET['mname'];
-                            echo "<input type = 'text' placeholder = 'Middle Name' name = 'middlename' value = '$mname'>";
+                            echo "<input type = 'text' placeholder = 'Middle Name' name = 'middlename' value = '$mname' autocomplete = 'off'>";
                         } else {
-                            echo "<input type = 'text' placeholder = 'Middle Name' name = 'middlename'>";
+                            echo "<input type = 'text' placeholder = 'Middle Name' name = 'middlename' autocomplete = 'off'>";
                         }
                         //LASTNAME
                         if (isset($_GET['lname'])) {
                             $lname = $_GET['lname'];
-                            echo "<input type = 'text' placeholder = 'Last Name' name = 'lastname' value = '$lname'>";
+                            echo "<input type = 'text' placeholder = 'Last Name' name = 'lastname' value = '$lname' autocomplete = 'off'>";
                         } else {
-                            echo "<input type = 'text' placeholder = 'Last Name' name = 'lastname'>";
+                            echo "<input type = 'text' placeholder = 'Last Name' name = 'lastname' autocomplete = 'off'>";
                         }
                         ?>
                     </div>
@@ -150,27 +200,29 @@
                     <?php
                     if (isset($_GET['telnum'])) {
                         $telnum = $_GET['telnum'];
-                        echo "<input type = 'tel' name = 'telnum' placeholder = 'Phone Number' value = '$telnum'>";
+                        echo "<input type = 'tel' id = 'telnum' name = 'telnum' placeholder = 'Phone Number (Format: 09983900813)' value = '$telnum' autocomplete = 'off' maxlength = '11'>";
                     } else {
-                        echo "<input type = 'tel' name = 'telnum' placeholder = 'Phone Number'>";
+                        echo "<input type = 'tel' id = 'telnum' name = 'telnum' placeholder = 'Phone Number (Format: 09983900813)' autocomplete = 'off' maxlength = '11'>";
                     }
+
+                    echo "<input type = 'text' name = 'address' placeholder = 'Address' autocomplete = 'off'>";
 
                     if (isset($_GET['email'])) {
                         $email = $_GET['email'];
-                        echo "<input type = 'text' placeholder = 'E-mail' name = 'email' value = '$email'>";
+                        echo "<input type = 'text' placeholder = 'E-mail' name = 'email' value = '$email' autocomplete = 'off'>";
                     } else {
-                        echo "<input type = 'text' placeholder = 'E-mail' name = 'email'>";
+                        echo "<input type = 'text' placeholder = 'E-mail' name = 'email' autocomplete = 'off'>";
                     }
 
                     ?>
 
                     <div class="passwords">
-                        <input type='password' placeholder='Password' name='pass'>
+                        <input type='password' placeholder='Password (Must be 8 characters or more)' name='pass'>
                         <input type='password' placeholder='Confirm Password' name='conf_pass'>
                     </div>
 
                     <div class="employee-code">
-                        <input type="password" placeholder='Employee Code (Only for Employees)' id='employee_code' name='employee_code'>
+                        <input type="password" placeholder='Employee Code (Only for Employees)' id='employee_code' name='employee_code' autocomplete='off'>
                         <div class='employee-dropdown'>
                             <select name='position'>
                                 <option value='' disabled selected>Position</option>
@@ -181,7 +233,6 @@
                         </div>
                     </div>
                     <button type='submit'>Register</button>
-
                     <?php
                     $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
@@ -207,7 +258,44 @@
             </form>
         </div>
     </div>
+
+    <div class='attribution'>
+        <a href='https://www.freepik.com/vectors/family'>Family vector created by pch.vector - www.freepik.com</a>
+    </div>
+    <!-- Messenger Chat Plugin Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Chat Plugin code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "100555252523932");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml: true,
+                version: 'v12.0'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
 </body>
 <script src='js/login-and-register.js'></script>
+<script src="js/forgot-pass.js"></script>
 
 </html>

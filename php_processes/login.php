@@ -38,6 +38,7 @@ else {
     if (mysqli_num_rows($result) > 0 || mysqli_num_rows($result2) > 0) {
         while ($row = mysqli_fetch_array($result)) {
             if (password_verify($pass, $row['password'])) {
+
                 $fname = $row['first_name'];
                 $mname = substr($row['middle_name'], 0, 1) . '.';
                 $lname = $row['last_name'];
@@ -47,6 +48,12 @@ else {
                 $_SESSION['patientid'] = $row['patient_id'];
                 $_SESSION['contact'] = $row['contact_num'];
                 $_SESSION['position'] = 'patient';
+
+                //SET STATUS AS LOGIN
+                $patient_id = $row['patient_id'];
+                $q = "UPDATE user_table SET online = '1' WHERE patient_id = '$patient_id'";
+                mysqli_query($conn, $q);
+
                 header('location: ../patient-homepage.php');
             } else {
                 header("Location: ../index.php?acc=notfound&loginemail=$email");
@@ -63,7 +70,15 @@ else {
                 $_SESSION['fullname'] = "$fname $mname $lname";
                 $_SESSION['contact'] = $row['contact_num'];
                 $_SESSION['position'] = $row['position'];
-                header('location: ../employee-homepage.php');
+                $_SESSION['emp_id'] = $row['employee_id'];
+
+                if ($_SESSION['position'] == 'doctor') {
+                    header('location: ../employee-homepage.php');
+                } else if ($_SESSION['position'] == 'medtech') {
+                    header('location: ../medtech-homepage.php');
+                } else if ($_SESSION['position'] == 'nurse') {
+                    header('location: ../nurse-homepage.php');
+                }
             } else {
                 header("Location: ../index.php?acc=notfound&loginemail=$email");
             }

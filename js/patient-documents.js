@@ -1,17 +1,34 @@
 $(document).ready(function () {
-    $('.download').on('click', function () {
+    $(document).on('click', '.download', function () {
         docnum = $(this).val();
 
-        $.ajax({
-            type: "POST",
-            data: {
-                docnum: docnum
-            },
-            url: "php_processes/download-prescription.php",
-            success: function (result) {
-                let base64 = result;
+        Swal.fire(
+            'Disclaimer',
+            'This file is protected by the portal. Upon your download, Twin Care shall not be liable for any incident that may disclose the confidentiality of this file. It is within your accountability to keep this file confidential.',
+            'warning'
+        ).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        docnum: docnum
+                    },
+                    url: "php_processes/download-prescription.php",
+                    success: function (result) {
+                        result = JSON.parse(result)
+                        let base64 = result.base64;
+                        let fileExt = result.file_ext
 
-                downloadPDF(base64, docnum);
+                        if (!base64.includes('data')) {
+                            base64 = 'data:' + fileExt + ';base64,' + base64;
+                        }
+
+                        var a = document.createElement("a"); //Create <a>
+                        a.href = base64; //Image Base64 Goes here
+                        a.download = result.doctype + "-" + docnum;
+                        a.click(); //Downloaded file
+                    }
+                })
             }
         })
     })
@@ -62,6 +79,8 @@ $(document).ready(function () {
                 type: sortType
             },
             success: function (result) {
+                $('#page-num').html('1');
+                $('#offset').html('0');
                 $('#sorting').html(result)
             }
         })
@@ -74,6 +93,192 @@ $(document).ready(function () {
             showConfirmButton: false,
             timer: 1000
         })
+    })
+
+    $('#next').on('click', function () {
+        sortType = $('#sortation').val();
+        if (sortType === '') {
+            sortType == 'all'
+        }
+        offset = parseInt($('#offset').html());
+        pageNum = parseInt($('#page-num').html());
+
+        if (pageNum >= 1) {
+            $('#prev').prop('disabled', false)
+        }
+
+        offset += 5;
+        $('#offset').html(offset)
+        $('#page-num').html(pageNum + 1)
+
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/patient-sort-docs.php',
+            data: {
+                type: sortType,
+                offset: offset
+            },
+            success: function (result) {
+                if (result == "<div class = 'no-appointments'>Documents Empty</div>") {
+                    pageNum = parseInt($('#page-num').html());
+                    offset -= 5;
+                    $('#offset').html(offset)
+                    $('#page-num').html(pageNum - 1)
+                } else {
+                    $('#sorting').html(result)
+                }
+            }
+        })
+    })
+
+    $('#prev').on('click', function () {
+        sortType = $('#sortation').val();
+        if (sortType === '') {
+            sortType == 'all'
+        }
+        offset = parseInt($('#offset').html());
+        pageNum = parseInt($('#page-num').html());
+
+        if (pageNum == '1') {
+            $(this).prop('disabled', true)
+        }
+        else {
+            offset -= 5;
+            $('#offset').html(offset)
+            $('#page-num').html(pageNum - 1)
+
+            $.ajax({
+                type: 'POST',
+                url: 'php_processes/patient-sort-docs.php',
+                data: {
+                    type: sortType,
+                    offset: offset
+                },
+                success: function (result) {
+                    $('#sorting').html(result)
+                }
+            })
+        }
+    })
+
+    $('#next2').on('click', function () {
+        sortType = 'prescriptions';
+        offset = parseInt($('.reload-all-docs #offset').html());
+        pageNum = parseInt($('.reload-all-docs #page-num').html());
+
+        if (pageNum >= 1) {
+            $('.reload-all-docs #prev2').prop('disabled', false)
+        }
+
+        offset += 5;
+        $('.reload-all-docs #offset').html(offset)
+        $('.reload-all-docs #page-num').html(pageNum + 1)
+
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/patient-sort-docs.php',
+            data: {
+                type: sortType,
+                offset: offset
+            },
+            success: function (result) {
+                if (result === "<div class = 'no-appointments'>Documents Empty</div>") {
+                    pageNum = parseInt($('.reload-all-docs #page-num').html());
+                    offset -= 5;
+                    $('.reload-all-docs #offset').html(offset)
+                    $('.reload-all-docs #page-num').html(pageNum - 1)
+                }
+                else {
+                    $('.dynamic-tbl-docs').html(result);
+                }
+            }
+        })
+    })
+
+    $('#prev2').on('click', function () {
+        sortType = 'prescriptions';
+        offset = parseInt($('.reload-all-docs #offset').html());
+        pageNum = parseInt($('.reload-all-docs #page-num').html());
+
+        if (pageNum == '1') { //DISABLE IF PAGE NUM IS 1
+            $(this).prop('disabled', true)
+        } else {
+            offset -= 5;
+            $('.reload-all-docs #offset').html(offset)
+            $('.reload-all-docs #page-num').html(pageNum - 1)
+
+            $.ajax({
+                type: 'POST',
+                url: 'php_processes/patient-sort-docs.php',
+                data: {
+                    type: sortType,
+                    offset: offset
+                },
+                success: function (result) {
+                    $('.dynamic-tbl-docs').html(result);
+                }
+            })
+        }
+    })
+
+    $('#next3').on('click', function () {
+        sortType = 'labresults';
+        offset = parseInt($('.reload-all-docs #offset-lab').html());
+        pageNum = parseInt($('.reload-all-docs #page-num-lab').html());
+
+        if (pageNum >= 1) {
+            $('.reload-all-docs #prev3').prop('disabled', false)
+        }
+
+        offset += 5;
+        $('.reload-all-docs #offset-lab').html(offset)
+        $('.reload-all-docs #page-num-lab').html(pageNum + 1)
+
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/patient-sort-docs.php',
+            data: {
+                type: sortType,
+                offset: offset
+            },
+            success: function (result) {
+                if (result === "<div class = 'no-appointments'>Documents Empty</div>") {
+                    pageNum = parseInt($('.reload-all-docs #page-num-lab').html());
+                    offset -= 5;
+                    $('.reload-all-docs #offset-lab').html(offset)
+                    $('.reload-all-docs #page-num-lab').html(pageNum - 1)
+                }
+                else {
+                    $('.dynamic-tbl-docs-lab').html(result);
+                }
+            }
+        })
+    })
+
+    $('#prev3').on('click', function () {
+        sortType = 'labresults';
+        offset = parseInt($('.reload-all-docs #offset-lab').html());
+        pageNum = parseInt($('.reload-all-docs #page-num-lab').html());
+
+        if (pageNum == '1') { //DISABLE IF PAGE NUM IS 1
+            $(this).prop('disabled', true)
+        } else {
+            offset -= 5;
+            $('.reload-all-docs #offset-lab').html(offset)
+            $('.reload-all-docs #page-num-lab').html(pageNum - 1)
+
+            $.ajax({
+                type: 'POST',
+                url: 'php_processes/patient-sort-docs.php',
+                data: {
+                    type: sortType,
+                    offset: offset
+                },
+                success: function (result) {
+                    $('.dynamic-tbl-docs-lab').html(result);
+                }
+            })
+        }
     })
 })
 
