@@ -90,7 +90,7 @@
             <h1>High quality online care,</h1>
             <h1>you deserve, we give.</h1>
             <span class='margin-bottom'>As the pandemic persists, we should use the portal as it gives us: </span>
-            <span>• 24/7 Access</span>
+            <span>• 24/7 Accessibility</span>
             <span>• Less travelling</span>
             <span>• Appointment bookings online</span>
             <span>• Online bill payments</span>
