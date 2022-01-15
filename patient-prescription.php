@@ -48,19 +48,22 @@
 
                         $query = "SELECT * FROM documents WHERE doc_num = '$docnum'";
                         $result = mysqli_query($conn, $query);
+
                         $base64 = '';
+                        $file_ext = "";
 
                         while ($row = mysqli_fetch_array($result)) {
                             $base64 = $row['pdf_file'];
+                            $file_ext = $row['file_ext'];
                         }
 
-                        if (!str_contains($base64, "data:application/pdf;base64,")) {
-                            $base64 = "data:application/pdf;base64," . $base64;
+                        if ($file_ext == 'application/pdf') {
+                            $base64 = !str_contains($base64, "data:application/pdf;base64,") ? "data:application/pdf;base64," . $base64 : $base64;
+                            echo "<iframe src='$base64' type='$file_ext'></iframe>";
+                        } else {
+                            $base64 = !str_contains($base64, ";base64,") ? "data:$file_ext;base64," . $base64 : $base64;
+                            echo "<div class = 'image-container'><img src='$base64'></div>";
                         }
-
-                        echo "
-                    <iframe src='$base64' type='application/pdf'></iframe>
-                    ";
                         ?>
                     </div>
                 </div>
