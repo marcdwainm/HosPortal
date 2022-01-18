@@ -232,6 +232,11 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class='new-patient'>
+                        <input type="checkbox" id="new-patient" name="new-patient">
+                        <label for="new-patient">Check if you are a new patient from Twin Care</label><br>
+                    </div>
                     <button type='submit'>Register</button>
                     <?php
                     $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";

@@ -23,6 +23,7 @@ $email = $_POST['email'];
 $password = $_POST['pass'];
 $conf_pass = $_POST['conf_pass'];
 $position = $_POST['position'];
+$new_patient = isset($_POST['new-patient']) ? "1" : "0";
 
 
 $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
@@ -108,11 +109,11 @@ else if (!empty($_POST['employee_code']) && !$emp_code_is_valid) {
 //! IF INPUTS HAVE NO INVALIDATIONS
 else {
     if (empty($_POST['employee_code'])) {
-        $query = "INSERT INTO `user_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `birthdate`) 
-            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$formatted_bdate')";
+        $query = "INSERT INTO `user_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `birthdate`, `new`) 
+            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$formatted_bdate', '$new_patient')";
     } else if (!empty($_POST['employee_code']) && $emp_code_is_valid) {
-        $query = "INSERT INTO `employee_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `position`)
-            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$position')";
+        $query = "INSERT INTO `employee_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `position`, `new`)
+            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$position', '$new_patient')";
     }
 
     $result = mysqli_query($conn, $query);

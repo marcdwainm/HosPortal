@@ -8,7 +8,8 @@ $(document).ready(function () {
 
     $('#search-patient').on('keyup', function () {
         val = $(this).val()
-
+        $('#page-num').html('1');
+        $('#offset').html('0');
         $.ajax({
             type: 'POST',
             url: 'php_processes/patient-list-ajax.php',
@@ -17,6 +18,7 @@ $(document).ready(function () {
             },
             success: function (result) {
                 $('.patient-tbl').html(result);
+                console.log(result)
             }
         })
     })

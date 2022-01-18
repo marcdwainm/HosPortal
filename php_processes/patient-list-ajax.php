@@ -3,12 +3,14 @@ include 'db_conn.php';
 
 $keyword = $_POST['keyword'];
 
-$query = "SELECT * FROM user_table WHERE
-     first_name LIKE '%" . $keyword . "%' OR
-     middle_name LIKE '%" . $keyword . "%' OR
-     last_name LIKE '%" . $keyword . "%' OR
-     contact_num LIKE '%" . $keyword . "%'
-     ";
+$like = "    WHERE first_name LIKE '%$keyword%' OR
+middle_name LIKE '%$keyword%' OR
+last_name LIKE '%$keyword%' OR
+contact_num LIKE '%$keyword%' OR
+sex LIKE '%$keyword%' OR
+address LIKE '%$keyword%'
+";
+$query = $keyword == "" ? "SELECT * FROM user_table LIMIT 0, 10" : "SELECT * FROM user_table $like LIMIT 0, 10";
 
 $result = mysqli_query($conn, $query);
 
@@ -76,8 +78,8 @@ if (mysqli_num_rows($result) > 0) {
                                             <span>$date_time</span>
                                             <div>
                                                 <div class = 'soap-btns'>
-                                                    <button id = 'view-soap' value = '$soap_id'><i class='far fa-eye fa-lg'></i></button>
-                                                    <button id = 'edit-soap' value = '$soap_id' ><i class='far fa-edit fa-lg'></i></button>
+                                                    <button class = 'view-soap' value = '$soap_id'><i class='far fa-eye fa-lg'></i></button>
+                                                    <button class = 'edit-soap' value = '$soap_id' ><i class='far fa-edit fa-lg'></i></button>
                                                     <button class = 'archive-soap' value = '$soap_id'><i class='fas fa-archive fa-lg'></i></button>
                                                 </div>
                                             </div>
@@ -92,7 +94,8 @@ if (mysqli_num_rows($result) > 0) {
 
         echo "
                                 </div>
-                            </div>";
+                            </div>
+                            ";
 
 
         //---------------------------NEW TABLEEEE------------------------------------------------------
@@ -131,7 +134,7 @@ if (mysqli_num_rows($result) > 0) {
                                 <span>$date_time</span>
                                 <div>
                                     <div class = 'soap-btns'>
-                                        <button id = 'view-soap' value = '$soap_id'><i class='far fa-eye fa-lg'></i></button>
+                                        <button class = 'view-soap' value = '$soap_id'><i class='far fa-eye fa-lg'></i></button>
                                         <button class = 'archive-soap' value = '$soap_id'><i class='fas fa-archive fa-lg'></i></button>
                                     </div>
                                 </div>
@@ -146,6 +149,8 @@ if (mysqli_num_rows($result) > 0) {
 
         echo "
                     </div>
+                </div>
+                </div>
                 </div>";
     }
 } else {

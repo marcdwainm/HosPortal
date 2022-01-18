@@ -636,7 +636,6 @@ $(document).ready(function () {
             confirmButtonText: 'Archive'
         }).then((result) => {
             if (result.isConfirmed) {
-
                 if (!fromAllDocs) {
                     $.ajax({
                         type: 'POST',
@@ -675,7 +674,8 @@ $(document).ready(function () {
                                 },
                                 success: function (result) {
                                     //SWEET ALERT SUCCESS
-                                    console.log(result)
+                                    $('#page-num').html('1');
+                                    $('#offset').html('0')
                                     $('.dynamic-tbl').html(result)
                                     Swal.fire(
                                         'Archived!',
@@ -716,7 +716,6 @@ $(document).ready(function () {
                         },
                         success: function (result) {
                             //SWEET ALERT SUCCESS
-
                             $('.lab-tbl').html(result)
                             Swal.fire(
                                 'Archived!',
@@ -736,7 +735,6 @@ $(document).ready(function () {
                         },
                         success: function (result) {
                             var sortval = $('#sort-table-docs').val()
-
                             $.ajax({
                                 type: 'POST',
                                 url: 'php_processes/employee-all-docs-sort.php',
@@ -745,11 +743,12 @@ $(document).ready(function () {
                                 },
                                 success: function (result) {
                                     //SWEET ALERT SUCCESS
-                                    console.log(result)
+                                    $('#page-num').html('1');
+                                    $('#offset').html('0')
                                     $('.dynamic-tbl').html(result)
                                     Swal.fire(
                                         'Archived!',
-                                        'The prescription has been archived',
+                                        'The lab result has been archived',
                                         'success'
                                     )
                                 }

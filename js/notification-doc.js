@@ -41,9 +41,6 @@ $(document).ready(function () {
             url: 'php_processes/seen-notif-doc.php',
             data: {
                 value: value
-            },
-            success: function (result) {
-                console.log(result);
             }
         })
     })

@@ -23,7 +23,7 @@ mysqli_query($conn, $query);
 
 //UPDATE PATIENTS NOTIFICATIONS
 
-$query = "UPDATE patients_notifications SET `notif_type` = 'onlinereqanswered' WHERE `appointment_num` = '$appnum'";
+$query = "UPDATE patients_notifications SET `notif_type` = 'onlinereqanswered' WHERE `appointment_num` = '$appnum' AND notif_type = 'onlinereq'";
 mysqli_query($conn, $query);
 
 

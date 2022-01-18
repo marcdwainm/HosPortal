@@ -81,10 +81,9 @@ $(document).ready(function () {
         })
 
         Swal.fire({
-            position: 'bottom-right',
+            position: 'center',
             icon: 'success',
             title: 'Appointments Sorted',
-            backdrop: 'none',
             showConfirmButton: false,
             timer: 1000
         })

@@ -177,6 +177,23 @@ if (mysqli_num_rows($result) == 0) {
         }
 
 
+        // RESCHEDULED APPOINTMENT
+        else if ($row['notif_type'] == 'resched') {
+            $appnum = $row['appointment_num'];
+            echo "
+                <button class='notif-content app-notif-type' value = '$appnum'>
+                    <div class='notif-img'>
+                        <i class='far fa-clock fa-lg'></i>
+                    </div>
+                    <span>
+                        The doctor rescheduled your appointment to: $appointment_date_time
+                    </span>
+                    $seen
+                </button>
+            ";
+        }
+
+
         $iteration += 1;
 
         if ($iteration >= 31) {

@@ -132,9 +132,6 @@
             eventDrop: function(eventDropInfo) {
                 $('.event-tooltip').hide();
 
-                //FIRST, IF EVENT IS DRAGGED TO DAY, CHECK DATABASE IF THE DATE IS DISABLED
-                //IF DISABLED, CALL revert()
-
                 let start = dateFormatter(eventDropInfo.event.start);
                 let end = dateFormatter(eventDropInfo.event.end);
                 let title = eventDropInfo.event.title;

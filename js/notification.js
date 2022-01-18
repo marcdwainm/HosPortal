@@ -55,7 +55,6 @@ $(document).ready(function () {
                 value: value
             },
             success: function (result) {
-                console.log(result)
             }
         })
     })
@@ -63,7 +62,6 @@ $(document).ready(function () {
     $(document).on('click', ".notif-doc", function () {
         $(this).children('.seen').children(".seen-circle").remove();
         notifnum = $(".notification-num span").html();
-
         if (notifnum !== '0') {
             $(".notification-num span").html(notifnum - 1);
         }

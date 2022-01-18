@@ -155,15 +155,15 @@
 
                 <div class = 'pres-doctor-details'>
                     <div>
-                        <b>PILAR D. TORRES-SALVADOR, MD, FPCP, FPSEDM</b><br />
+                        <b contenteditable = 'true'>PILAR D. TORRES-SALVADOR, MD, FPCP, FPSEDM</b><br />
                         <div>
-                            <i>Internal Medicine-</i>
-                            <b>ENDICRONOLOGIST</b>
+                            <i contenteditable = 'true'>Internal Medicine-</i>
+                            <b contenteditable = 'true'>ENDICRONOLOGIST</b>
                         </div>
                     </div>
                     <div>
-                        <b>ALBERT SALVADOR, MD</b><br/>
-                        <i>Internal Medicine</i>
+                        <b contenteditable = 'true'>ALBERT SALVADOR, MD</b><br/>
+                        <i contenteditable = 'true'>Internal Medicine</i>
                     </div>
                 </div>
 
@@ -221,6 +221,11 @@
                         </div>
                         <div>
                             <div>
+                                <div class = 'e-sig-presc-div'>
+                                    <div class = 'e-sig e-sig-1 e-sig-presc'>
+                                    
+                                    </div>
+                                </div>
                                 <span contenteditable = 'true' class = 'underlined' id = 'doctor'>$fullname_doctor</span>
                                 <span>, M.D.</span>
                             </div>

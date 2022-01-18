@@ -13,7 +13,7 @@
     --green: #AAC46B;
     --graytext: #8B8B8B;
     --grayoutline: rgb(209, 209, 209);
-}
+}   
 
 .buttons{
     width: 21cm;
@@ -498,8 +498,12 @@ body{
 }
 
 .footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
     font-size: 0.8em;
-    padding: 0 30px;
+    padding: 20px 30px;
+    padding-top: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -558,6 +562,22 @@ body{
     height: 150%;
     object-fit: contain;
     border: none;
+}
+
+.e-sig-presc-div{
+    width: 200px;
+    height: 1px;
+    position: relative;
+}
+
+.e-sig-presc{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    width: 200px;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    height: 40px;
 }
 
 #signature-adder-dim{

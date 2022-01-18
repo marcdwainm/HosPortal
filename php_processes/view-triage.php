@@ -3,6 +3,11 @@
 include 'db_conn.php';
 
 $appnum = $_POST['appointmentNum'];
+$pid = substr($appnum, -4);
+
+$result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$pid'");
+$row = mysqli_fetch_array($result);
+$new_patient = $row['new'] == '1' ? "New" : "Old";
 
 $query = "SELECT * FROM triage WHERE appointment_num = '$appnum'";
 
@@ -69,6 +74,10 @@ while ($row = mysqli_fetch_array($result)) {
             <div class='triage-detail'>
                 <span>Travel History:</span>
                 <span>$travel_history</span>
+            </div>
+            <div class = 'triage-detail'>
+                <span>Old/New Patient:</span>
+                <span>$new_patient Patient</span>
             </div>
         ";
 }

@@ -185,7 +185,7 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '#add-div', function () {
-        if (drugNumber >= 17) {
+        if (drugNumber >= 10) {
         } else {
             addDiv();
         }

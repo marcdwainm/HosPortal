@@ -2,20 +2,19 @@
 include 'db_conn.php';
 
 $offset = $_POST['offset'];
-$keyword = isset($_POST['keyword']) ? $_POST['keyword'] : "";
+$keyword = $_POST['keyword'] != '' ? $_POST['keyword'] : "";
 
 $like = $keyword != "" ? "
     WHERE first_name LIKE '%$keyword%' OR
     middle_name LIKE '%$keyword%' OR
     last_name LIKE '%$keyword%' OR
-    email LIKE '%$keyword%' OR
     contact_num LIKE '%$keyword%' OR
     sex LIKE '%$keyword%' OR
-    DATE_FORMAT(birthdate, '%M %d %Y') LIKE '%$keyword%' OR
     address LIKE '%$keyword%'
 " : "";
 
 $query = "SELECT * FROM user_table $like LIMIT $offset, 10";
+
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) > 0) {

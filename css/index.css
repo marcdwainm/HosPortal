@@ -526,6 +526,10 @@ body{
     display: none;
 }
 
+.new-patient{
+    height: auto;
+    font-size: 0.9em;
+}
 
 
 /*BIG DEVICES*/
