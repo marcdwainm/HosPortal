@@ -1,6 +1,20 @@
 document.getElementById("upload-medtech").addEventListener("click", () => {
     const invoice = this.document.getElementById("invoice");
 
+    docnum = $('.invisible-params').html().split(", ")[2];
+    withBill = "";
+    $.ajax({
+        type: 'POST',
+        url: '../php_processes/check-lab-draft-paid.php',
+        data: {
+            'docnum': docnum,
+        },
+        async: false,
+        success: function (result) {
+            withBill = result
+        }
+    })
+
     Swal.fire({
         title: 'Upload File?',
         text: text,
@@ -40,7 +54,7 @@ document.getElementById("upload-medtech").addEventListener("click", () => {
                     }
                     xhttp.open("POST", "../php_processes/blob-to-database.php", true);
                     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xhttp.send("blob=" + encodeURIComponent(base64data) + "&doctype=" + doctype + "&pid=" + pid + "&pname=" + pname + "&fileExt=" + "application/pdf");
+                    xhttp.send("blob=" + encodeURIComponent(base64data) + "&docnum=" + docnum + "&doctype=" + doctype + "&pid=" + pid + "&pname=" + pname + "&fileExt=" + "application/pdf" + withBill);
                 }
             })
 

@@ -91,7 +91,9 @@
                             include 'php_processes/db_conn.php';
                             $pid = $_SESSION['patientid'];
 
-                            $query = "SELECT * FROM documents WHERE sent_to = '$pid' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 0, 5";
+                            $if_paid = "AND ((doc_type = 'prescription' AND paid = '0') OR (doc_type = 'labresult' AND paid = '1'))";
+
+                            $query = "SELECT * FROM documents WHERE sent_to = '$pid' $if_paid ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 0, 5";
 
                             $result = mysqli_query($conn, $query);
 

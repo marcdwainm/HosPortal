@@ -122,7 +122,7 @@ if (mysqli_num_rows($result) == 0) {
                         <i class='fas fa-flask fa-lg'></i>
                     </div>
                     <span>
-                        Your laboratory test results are out including a bill
+                        Your laboratory test results are out. Pay within the bills table to access the result.
                     </span>
                     $seen
                 </button>

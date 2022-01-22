@@ -22,19 +22,21 @@ if (document.getElementById("download")) {
             confirmButtonText: 'Yes, upload it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                uploadToDatabase(invoice)
+                uploadToDatabase(invoice, "")
             }
         })
     })
 }
 
-function uploadToDatabase(invoice) {
+function uploadToDatabase(invoice, withbill) {
     var invoice = invoice
     const params = new URLSearchParams(window.location.search);
     doctype = params.get('docType');
     pid = params.get('pid');
     pname = params.get('pname');
     fileExt = 'application/pdf';
+    withBill = withbill;
+    docnum = $('.bill-num').html() != undefined ? $('.bill-num').html() : "";
 
     var dimensions = [5.5, 8.5]
     if (doctype == 'labresult') {
@@ -59,12 +61,11 @@ function uploadToDatabase(invoice) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(xhttp.responseText);
                 }
             }
             xhttp.open("POST", "../php_processes/blob-to-database.php", true);
             xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhttp.send("blob=" + encodeURIComponent(base64data) + "&doctype=" + doctype + "&pid=" + pid + "&pname=" + pname + "&fileExt=" + fileExt);
+            xhttp.send("blob=" + encodeURIComponent(base64data) + "&docnum=" + docnum + "&doctype=" + doctype + "&pid=" + pid + "&pname=" + pname + "&fileExt=" + fileExt + withBill);
         }
     })
 
@@ -516,7 +517,7 @@ $(document).ready(function () {
                     $('.dim-4').fadeIn()
                 } else if (result.isDenied) {
                     const invoice = document.getElementById("invoice");
-                    uploadToDatabase(invoice)
+                    uploadToDatabase(invoice, "")
                 }
             })
         }

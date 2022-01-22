@@ -8,11 +8,24 @@ $pid = $_POST['pid'];
 $p_name = ucwords($_POST['pname']);
 $emp_id = $_SESSION['emp_id'];
 $file_ext = $_POST['fileExt'];
+$withBill = isset($_POST['withBill']) ? '1' : '0';
+
+$docnum = "";
 
 date_default_timezone_set('Asia/Manila');
 $date_uploaded = date('Y-m-d H:i:s', time());
 $date = date('Ymdhis', time());
-$docnum = $date . $pid;
+
+if ($_POST['docnum'] == "") {
+    $docnum = $date . $pid;
+} else {
+    $docnum = $_POST['docnum'];
+}
+
+$paid_val = '0';
+if ($doctype == 'labresult') {
+    $paid_val = $withBill == '0' ? '1' : '0';
+}
 
 
 $query = "SELECT * FROM user_table WHERE patient_id = '$pid'";
@@ -25,16 +38,18 @@ while ($row = mysqli_fetch_array($result)) {
     $p_name = "$firstname $middlename. $lastname";
 }
 
-$query = "INSERT INTO documents (doc_num, doc_type, pdf_file, sent_to, patient_name, date_uploaded, emp_id, file_ext) 
-VALUES('$docnum', '$doctype', '$base64', '$pid', '$p_name', '$date_uploaded', '$emp_id', '$file_ext')";
+$query = "INSERT INTO documents (doc_num, doc_type, pdf_file, sent_to, patient_name, date_uploaded, emp_id, file_ext, paid) 
+VALUES('$docnum', '$doctype', '$base64', '$pid', '$p_name', '$date_uploaded', '$emp_id', '$file_ext', '$paid_val')";
 
 mysqli_query($conn, $query);
+
+echo mysqli_error($conn);
 
 if ($pid != '0000') {
     $date_convert = strtotime($date);
     $date_notified = date('Y-m-d H:i:s', $date_convert);
 
-    $query = "INSERT INTO patients_notifications (patient_id, notif_type, document_num, date_notified) VALUES('$pid', '$doctype', '$docnum', '$date_notified')";
+    $query = "INSERT INTO patients_notifications (patient_id, notif_type, document_num, date_notified, with_bill) VALUES('$pid', '$doctype', '$docnum', '$date_notified', '$withBill')";
     mysqli_query($conn, $query);
 }
 

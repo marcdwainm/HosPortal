@@ -296,7 +296,8 @@ $(document).ready(function () {
                 doctype: doctype,
                 sentTo: sentTo,
                 fileExt: fileExt,
-                withBill: withBill
+                withBill: withBill,
+                billNum: billNum
             },
             success: function (result) {
                 $('#patient-search').val('');
@@ -344,6 +345,8 @@ $(document).ready(function () {
         collectionDate = $('#collection-date').val();
         resultDate = $('#result-date').val();
         pid = $(this).val();
+        labdraftissue = false;
+        documentissue = false;
 
         let doctype = 'labresult'
         let base64 = base64String;
@@ -366,7 +369,7 @@ $(document).ready(function () {
         //IF FROM CREATE DRAFT, CREATE DRAFT
         if (doc == 'labresult' && patientid != '0000') {
             const invoice = document.getElementById("invoice");
-            uploadToDatabase(invoice)
+            uploadToDatabase(invoice, "&withBill=true")
         }
         else if ($('#collection-date').val() != '') {
             $.ajax({
@@ -378,7 +381,8 @@ $(document).ready(function () {
                     collectionDate: collectionDate,
                     resultDate: resultDate,
                     pid: pid,
-                    issuedByMedtech: 'true'
+                    issuedByMedtech: 'true',
+                    correspondingBill: $('.bill-num').html()
                 },
                 success: function (result) {
                     $('.lab-tbl').html(result);
@@ -408,6 +412,8 @@ $(document).ready(function () {
                     })
                 }
             })
+
+            labdraftissue = true;
         }
         else {
             $.ajax({
@@ -418,7 +424,9 @@ $(document).ready(function () {
                     doctype: doctype,
                     sentTo: sentTo,
                     fileExt: fileExt,
-                    issuedByMedtech: 'true'
+                    issuedByMedtech: 'true',
+                    withBill: 'true',
+                    billNum: billNum
                 },
                 success: function (result) {
                     $('#patient-search-2').val('');
@@ -439,12 +447,14 @@ $(document).ready(function () {
                     }
                 }
             })
+            documentissue = true;
         }
 
         var url = 'php_processes/issue-bill.php'
         if (doc == 'labresult' && patientid != '0000') {
             url = '../php_processes/issue-bill.php'
         }
+        //BEFORE ISSUING
 
         //ISSUE THE BILL
         $.ajax({
@@ -455,7 +465,8 @@ $(document).ready(function () {
                 namesString: namesString,
                 pricesString: pricesString,
                 total: total,
-                billNum: billNum
+                billNum: billNum,
+                labdraftissue: labdraftissue
             }
         })
 

@@ -12,8 +12,19 @@ $issued_to = substr($bill_num, -4);
 $issued_by = $_SESSION['emp_id'];
 $date_issued = Date("Y-m-d", time());
 
-$query = "INSERT INTO bills (bill_num, names, prices, total, issued_to, issued_by, date_issued) 
-VALUES ('$bill_num', '$names', '$prices', '$total', '$issued_to', '$issued_by', '$date_issued')";
+$corresponding_doc = "";
+if ($_POST['labdraftissue'] == 'true') {
+    $query = "SELECT * FROM lab_drafts WHERE corresponding_bill = '$bill_num'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_array($result);
+    $docnum = $row['doc_num'];
+
+    $corresponding_doc = $docnum;
+}
+
+$query = "INSERT INTO bills (bill_num, corresponding_doc, names, prices, total, issued_to, issued_by, date_issued) 
+VALUES ('$bill_num', '$corresponding_doc', '$names', '$prices', '$total', '$issued_to', '$issued_by', '$date_issued')";
+
 mysqli_query($conn, $query);
 
 if ($selected == 'today') {

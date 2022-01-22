@@ -11,6 +11,7 @@ $result_date = $_POST['resultDate'];
 $pid = $_POST['pid'];
 $html = "";
 $base64 = "";
+$corresponding_bill = isset($_POST['correspondingBill']) ? $_POST['correspondingBill'] : '';
 
 $date = date('Ymdhis', time());
 $doc_num = $date . $pid;
@@ -243,15 +244,15 @@ else {
                 <span contenteditable = 'true' id = 'second-med-pos'>Pathologist</span>
                 <span contenteditable = 'true' id = 'second-med-no'>Lic. No. 92087</span>
             </div>
-        </div>
+        </div>x
     </div>
 </div>
         ";
     $base64 = base64_encode($html);
 }
 
-$query = "INSERT INTO lab_drafts (`doc_num`, `emp_id`, `patient_id`, patient_fullname, `test_type`, `status`, `html_draft`, date_uploaded, collection_date, estimated_result)
-    VALUES ('$doc_num', '$emp_id', '$pid', '$pname', '$test_type', 'pending', '$base64', '$date_uploaded', '$collection_date', '$result_date')";
+$query = "INSERT INTO lab_drafts (`doc_num`, `emp_id`, `patient_id`, patient_fullname, `test_type`, `status`, `html_draft`, date_uploaded, collection_date, estimated_result, corresponding_bill)
+    VALUES ('$doc_num', '$emp_id', '$pid', '$pname', '$test_type', 'pending', '$base64', '$date_uploaded', '$collection_date', '$result_date', '$corresponding_bill')";
 
 mysqli_query($conn, $query);
 

@@ -63,7 +63,7 @@
         ?>
     </div>
 </body>
-<script src='../js/pdf-generator.js'></script>
 <script src='../js/upload-medtech.js'></script>
+<script src='../js/pdf-generator.js'></script>
 
 </html>
