@@ -111,7 +111,7 @@
                         <span>PHP</span>
                         <span class='total-price'>0.00</span>
                     </div>
-                    <button type='button' id='issue-bill-lab'>Issue Bill</button>
+                    <button type='button' id='issue-bill-lab' disabled>Issue Bill</button>
                 </div>
             </div>
         </div>

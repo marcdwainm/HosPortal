@@ -19,6 +19,7 @@ $(document).ready(function () {
             url: 'php_processes/count-notifs.php',
             success: function (result) {
                 if (result != '0') {
+                    $('.notification-num').show();
                     $('.notification-num span').html(result);
                 }
                 else {

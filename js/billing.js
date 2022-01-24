@@ -127,10 +127,12 @@ $(document).ready(function () {
         });
 
         if (empty) {
-            $('#issue-bill').prop('disabled', true);
+            $('#issue-bill-lab').prop('disabled', true);
+            $('#issue-bill-medtech').prop('disabled', true);
         }
         else {
-            $('#issue-bill').prop('disabled', false);
+            $('#issue-bill-lab').prop('disabled', false);
+            $('#issue-bill-medtech').prop('disabled', false);
         }
     }, 100)
 

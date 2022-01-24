@@ -35,7 +35,7 @@ function uploadToDatabase(invoice, withbill) {
     pid = params.get('pid');
     pname = params.get('pname');
     fileExt = 'application/pdf';
-    withBill = withbill;
+    withBill = withbill != undefined ? withbill : "";
     docnum = $('.bill-num').html() != undefined ? $('.bill-num').html() : "";
 
     var dimensions = [5.5, 8.5]

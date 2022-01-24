@@ -422,10 +422,43 @@
             </div>
         </div>
     </div>
+
+    <!-- Messenger Chat Plugin Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Chat Plugin code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "100555252523932");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml: true,
+                version: 'v12.0'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <!--SANDBOX-->
-    <script src="https://www.paypal.com/sdk/js?client-id=AaHbmFJW2LslQgEHPVAc8ASwU6pgLw8kyDy-H8OZ8uGXBmrpQiWa-9N3MKtychySNzBcqg0fJsKo0L-x&disable-funding=credit,card&currency=PHP"></script>
+    <!-- <script src="https://www.paypal.com/sdk/js?client-id=AaHbmFJW2LslQgEHPVAc8ASwU6pgLw8kyDy-H8OZ8uGXBmrpQiWa-9N3MKtychySNzBcqg0fJsKo0L-x&disable-funding=credit,card&currency=PHP"></script> -->
     <!--LIVE-->
-    <!--<script src="https://www.paypal.com/sdk/js?client-id=AcOQatDCaLrp7YyymYLrFyukmnadZ5qRg5z2VIWv_qaG4ADENWl1vRgkP5MrNyNH-IRlR5JcvdNQgpbU&disable-funding=credit,card&currency=PHP"></script>-->
+    <script src="https://www.paypal.com/sdk/js?client-id=AcOQatDCaLrp7YyymYLrFyukmnadZ5qRg5z2VIWv_qaG4ADENWl1vRgkP5MrNyNH-IRlR5JcvdNQgpbU&disable-funding=credit,card&currency=PHP"></script>
 </body>
 <script src='js/navbar.js'></script>
 <script src='js/book-appointment.js'></script>

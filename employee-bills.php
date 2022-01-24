@@ -85,7 +85,7 @@
                             $bill_num = $row['bill_num'];
                             $issued_to = $row['issued_to'];
                             $issued_by = $row['issued_by'];
-                            $date_of_payment = $row['date_of_payment'] == null ? "N/A" : $row['date_of_payment'];
+                            $date_of_payment = $row['date_of_payment'] == null ? "N/A" : date('Y, M d h:i A', strtotime($row['date_of_payment']));
                             $date_issued = $row['date_issued'];
                             $paid = $row['paid'] == "0" ? "Unsettled" : "Paid";
                             //GET DETAILS OF PATIENT AND ISSUER
@@ -99,6 +99,8 @@
 
                             $class = $paid == 'Unsettled' ? "red-text" : "green-text";
 
+                            $set_as_paid = $paid == 'Unsettled' ? "<button class = 'set-paid-doctor' value = '$bill_num'><i class='fas fa-check fa-lg'></i></button>" : "";
+
                             echo "
                                 <div class = 'bill-content-div six-fr'>
                                     <span>$fullname_patient</span>
@@ -108,6 +110,7 @@
                                     <span class = '$class'>$paid</span>
                                     <span>
                                         <button class = 'view-bill-doctor' value = '$bill_num'><i class='fas fa-info-circle fa-lg'></i></button>
+                                        $set_as_paid
                                     </span>
                                 </div>
                             ";

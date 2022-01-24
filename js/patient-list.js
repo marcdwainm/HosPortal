@@ -607,6 +607,44 @@ $(document).ready(function () {
         $('.dim-bill').fadeIn();
     })
 
+
+    $(document).on('click', '.set-paid-doctor', function () {
+        let billNum = $(this).val();
+
+        Swal.fire({
+            title: 'Set as paid?',
+            text: "To set the bill as 'Paid', means that the patient will be no longer required to pay this bill. This action cannot be reverted.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Set as Paid'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //CHANGE THE STATUS IN DB
+                $.ajax({
+                    type: 'POST',
+                    url: 'php_processes/set-as-paid.php',
+                    data:{
+                        billnum: billNum
+                    },
+                    success: function(result){
+                        $('#page-num').html('1')
+                        $('#offset').html('0')
+                        $('.bills-tbl').html(result)
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Bill set as Paid',
+                            icon: 'success'
+                        })
+                    }
+                })
+
+                // UPDATE THE TABLE
+            }
+        })
+    })
+
     $(document).on('click', '.exit-2', function () {
         $('.dim-bill').fadeOut()
     })
