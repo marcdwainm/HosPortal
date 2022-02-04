@@ -456,9 +456,9 @@
     </script>
 
     <!--SANDBOX-->
-    <script src="https://www.paypal.com/sdk/js?client-id=AaHbmFJW2LslQgEHPVAc8ASwU6pgLw8kyDy-H8OZ8uGXBmrpQiWa-9N3MKtychySNzBcqg0fJsKo0L-x&disable-funding=credit,card&currency=PHP"></script>
+    <!-- <script src="https://www.paypal.com/sdk/js?client-id=AaHbmFJW2LslQgEHPVAc8ASwU6pgLw8kyDy-H8OZ8uGXBmrpQiWa-9N3MKtychySNzBcqg0fJsKo0L-x&disable-funding=credit,card&currency=PHP"></script> -->
     <!--LIVE-->
-    <!-- <script src="https://www.paypal.com/sdk/js?client-id=AcOQatDCaLrp7YyymYLrFyukmnadZ5qRg5z2VIWv_qaG4ADENWl1vRgkP5MrNyNH-IRlR5JcvdNQgpbU&disable-funding=credit,card&currency=PHP"></script> -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AcOQatDCaLrp7YyymYLrFyukmnadZ5qRg5z2VIWv_qaG4ADENWl1vRgkP5MrNyNH-IRlR5JcvdNQgpbU&disable-funding=credit,card&currency=PHP"></script>
 </body>
 <script src='js/navbar.js'></script>
 <script src='js/book-appointment.js'></script>
