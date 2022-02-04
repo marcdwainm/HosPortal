@@ -52,6 +52,10 @@ $result = mysqli_query($conn, $query);
 $query = "UPDATE user_table SET has_appointment = 1 WHERE patient_id = '$patientid'";
 $result = mysqli_query($conn, $query);
 
+//ADD +1 APPOINTMENT NUMBER TRIES
+$query = "UPDATE user_table SET booking_tries = booking_tries + 1 WHERE patient_id = '$patientid'";
+$result = mysqli_query($conn, $query);
+
 //INSERT APPOINTMENT TO NOTIFICATIONS
 $query = "INSERT INTO `notifications`(`emp_id`, `notif_type`, `appointment_num`, `patient_fullname`, `date_time`, `date_booked`) 
 VALUES ('all', 'appointment', '$appointmentnum', '$fullname', '$datetime', '$date_booked')";

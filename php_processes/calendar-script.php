@@ -137,6 +137,9 @@
                 let title = eventDropInfo.event.title;
                 let id = eventDropInfo.event.id;
                 let dateDragged = start.substring(0, 10);
+                let toDate = new Date()
+
+                
 
                 $.ajax({
                     type: 'POST',
@@ -147,7 +150,16 @@
                     success: function(result) {
                         if (result == 'disabled') {
                             eventDropInfo.revert();
-                        } else if (result == 'enabled') {
+                        }
+                        else if (new Date(start).getTime() <= toDate.getTime()) {
+                            Swal.fire(
+                                'Invalid!',
+                                'Appointments can\'t be rescheduled on past date or time.',
+                                'error'
+                            )
+                            eventDropInfo.revert();
+                        }
+                        else if (result == 'enabled') {
                             Swal.fire({
                                 title: 'Are you sure?',
                                 text: "The patient will be notified with this rescheduling (if patient is portal-registered), but it is recommended to inform the patient through SMS/Call to discuss more about the rescheduling.",

@@ -61,7 +61,7 @@ $(document).ready(function () {
         $('.reg-form').hide();
         Swal.fire(
             'Congrats!',
-            'You are now registered!',
+            'You are now registered! Go to your e-mail and follow the instructions provided for the confirmation of your account.',
             'success'
         )
     }

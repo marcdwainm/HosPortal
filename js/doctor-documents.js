@@ -97,6 +97,15 @@ $(document).ready(function () {
     })
 
     $('#generate-document').on('click', function () {
+        if($("#document-type option:selected").val() == 'otherdocs'){
+            Swal.fire(
+                'Not supported',
+                'This type of document does not support document generation',
+                'error'
+              )
+            return false;
+        }
+
         docType = $('#document-type').val();
         pid = $('#generate-document').val();
         pname = $('#patient-search').val();
@@ -262,6 +271,50 @@ $(document).ready(function () {
                     }
                 })
             }
+            else if(doctype == 'otherdocs'){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This will upload the file to the database!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Upload!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php_processes/insert-other-doc.php',
+                            data: {
+                                patientId: sentTo,
+                                fileBase64: base64,
+                                doctype: doctype,
+                                fileExt: fileExt
+                            },
+                            success: function (result) {
+                                console.log(result)
+                                $('#patient-search').val('');
+                                $('#document-type').val('default');
+                                $('#file').val(null);
+                                $('#file').hide();
+                                $('#upload-from-device').show();
+                                $('#file-to-database').hide();
+                                $('.add-document-overlay').fadeOut();
+                                $('.document-upload-container').fadeOut();
+                                if (result.includes("Error while uploading the file: ")) {
+                                    alert(result)
+                                } else {
+                                    Swal.fire(
+                                        'Uploaded!',
+                                        'The document will be accessed within the patients table',
+                                        'success'
+                                    )
+                                }
+                            }
+                        })
+                    }
+                })
+            }
             else {
                 Swal.fire({
                     title: 'Issue a bill?',
@@ -327,8 +380,9 @@ $(document).ready(function () {
         let empty1 = false;
         let empty2 = false;
         let empty3 = false;
+        let empty4 = false;
 
-
+        
         if ($('#patient-search').val() === '') {
             empty1 = true;
         }
@@ -341,7 +395,12 @@ $(document).ready(function () {
             empty3 = true;
         }
 
-        if (!empty1 && !empty2 && !empty3) {
+        if($("#document-type option:selected").val() == 'otherdocs' && !$('#portal-registered').is(':checked')){
+            $('#or').hide()
+            empty4 = true;
+        }
+
+        if (!empty1 && !empty2 && !empty3 && !empty4) {
             $('.document-upload-btns button').prop('disabled', false)
         }
         else {

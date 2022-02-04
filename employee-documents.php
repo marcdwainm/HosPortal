@@ -74,6 +74,7 @@
                     <option value='default' disabled selected>Choose Document Type</option>
                     <option value='prescription'>Prescription</option>
                     <option value='labresult'>Lab Result</option>
+                    <option value='otherdocs'>Other Documents</option>
                 </select>
                 <input type="File" name="file" id='file' accept='application/pdf, image/png, image/jpeg, image/jpg'>
                 <span class='patient-error2'>File is too big! Maximum size: 5MB</span>

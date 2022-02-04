@@ -1,5 +1,15 @@
 <?php
 
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 include 'db_conn.php';
 
 $required_fields = array('firstname', 'middlename', 'lastname', 'sex', 'bdate', 'telnum', 'address', 'email', 'pass', 'conf_pass');
@@ -109,11 +119,26 @@ else if (!empty($_POST['employee_code']) && !$emp_code_is_valid) {
 //! IF INPUTS HAVE NO INVALIDATIONS
 else {
     if (empty($_POST['employee_code'])) {
-        $query = "INSERT INTO `user_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `birthdate`, `new`) 
-            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$formatted_bdate', '$new_patient')";
+        $query = "INSERT INTO `user_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `birthdate`, `new`, `email_validated`) 
+            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$formatted_bdate', '$new_patient', '0')";
+        
+        $randomString = generateRandomString();
+        $query_nest = "INSERT INTO email_validation_keys (validation_key, email) VALUES ('$randomString', '$email')";
+        
+        $to = $email;
+        $subject = 'TwinCare Portal E-mail Confirmation';
+        $headers = "Good day!";
+        $message = "Go to the link below to confirm your email and start using the portal. Remember to never give the link to anyone.\n\ntwincareportal.online/index.php?evalidation=$randomString";
+    
+        mail($to, $subject, $message, $headers);
+        mysqli_query($conn, $query_nest);
     } else if (!empty($_POST['employee_code']) && $emp_code_is_valid) {
-        $query = "INSERT INTO `employee_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `position`, `new`)
-            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$position', '$new_patient')";
+        $query = "INSERT INTO `employee_table`(`first_name`, `middle_name`, `last_name`, `email`, `password`, `contact_num`, `sex`, `address`, `position`, `new`, `email_validated`)
+            VALUES ('$firstname', '$middlename', '$lastname', '$email', '$hashed_pass', '$telnum', '$sex', '$address', '$position', '$new_patient', '0')";
+        
+        $randomString = generateRandomString();
+        $query_nest = "INSERT INTO email_validation_keys (validation_key, email) VALUES ('$randomString', '$email')";
+        mysqli_query($conn, $query_nest);
     }
 
     $result = mysqli_query($conn, $query);

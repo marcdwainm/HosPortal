@@ -27,11 +27,12 @@
         }
     }
 
+    include 'php_processes/db_conn.php';
+
     if (isset($_GET['resetPassword']) && isset($_GET['resetKey'])) {
         //IF RESET KEY IS IN TABLE, DISPLAY
         $reset_key = $_GET['resetKey'];
         $found = false;
-        include 'php_processes/db_conn.php';
 
         $result = mysqli_query($conn, "SELECT * FROM reset_pass_keys WHERE reset_key = '$reset_key'");
         $found = (mysqli_num_rows($result) > 0) ? true : false;
@@ -53,6 +54,59 @@
                     </div>
                 </div>
                 ";
+        }
+    }
+    //URL PATTERN: ?evalidation=jh2j13h9
+    else if(isset($_GET['evalidation'])){
+        $validation_key = $_GET['evalidation'];
+        $found = false;
+
+        $result = mysqli_query($conn, "SELECT * FROM email_validation_keys WHERE validation_key = '$validation_key'");
+        $found = (mysqli_num_rows($result) > 0) ? true : false;
+        
+        if($found){
+            $row = mysqli_fetch_array($result);
+            $email = $row['email'];
+
+            $query = "SELECT * FROM user_table WHERE email = '$email'";
+            $result = mysqli_query($conn, $query);
+
+            if(mysqli_num_rows($result) > 0){
+                $query_nest = "UPDATE user_table SET email_validated = '1' WHERE email = '$email'";
+                mysqli_query($conn, $query_nest);
+            }
+
+            else if(mysqli_num_rows($result) <= 0){
+                $query = "SELECT * FROM employee_table WHERE email = '$email'";
+                $result = mysqli_query($conn, $query);
+
+                $query_nest = "UPDATE employee_table SET email_validated = '1' WHERE email = '$email'";
+                mysqli_query($conn, $query_nest);
+            }
+
+
+            $query = "DELETE FROM email_validation_keys WHERE email = '$email'";
+            mysqli_query($conn, $query);
+
+            echo "
+                <script>
+                    Swal.fire(
+                        'Success',
+                        'Your e-mail has been successfully validated. You may now log in.',
+                        'success'
+                    )
+                </script>
+            ";
+        } else{
+            echo "
+                <script>
+                    Swal.fire(
+                        'Invalid',
+                        'Unfortunately, this e-mail validation is invalid.',
+                        'error'
+                    )
+                </script>
+            ";
         }
     }
     ?>
@@ -124,6 +178,8 @@
                             echo 'Email input is not an email';
                         } else if (strpos($url, "acc=notfound") == true) {
                             echo 'Such account does not exist';
+                        } else if (strpos($url, "validated=false") == true) {
+                            echo "<span class = 'error-msg'>E-mail not yet validated! Go to your mail and follow the instructions provided.</span>";
                         }
                         ?>
                     </span>

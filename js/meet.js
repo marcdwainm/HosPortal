@@ -7,9 +7,14 @@ randomString = searchParams.get('meetlink');
 var domain = "meet.jit.si";
 var options = {
     "roomName": randomString,
-    "parentNode": container
+    "parentNode": container,
+    userInfo: {
+        displayName: 'Doctor'
+    }
 };
+
 api = new JitsiMeetExternalAPI(domain, options);
+api.executeCommand('toggleRaiseHand')
 
 $(document).ready(function () {
     $('.icd-10-codes').hide();

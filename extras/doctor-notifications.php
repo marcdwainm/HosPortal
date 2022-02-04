@@ -92,6 +92,22 @@ if (mysqli_num_rows($result) == 0) {
             ";
         }
 
+        //IF PAID BILL
+        else if ($row['notif_type'] == 'payment') {
+            $fullname = $row['patient_fullname'];
+            echo "
+                <button class='notif-content book-notif-type notif-doc'>
+                    <div class='notif-img'>
+                    <i class='fab fa-paypal fa-lg'></i>
+                    </div>
+                    <span>
+                        $fullname has settled a bill. Kindly check your bills table.
+                    </span>
+                    $seen_text
+                </button>
+            ";
+        }
+
         $iteration += 1;
 
         if ($iteration >= 31) {

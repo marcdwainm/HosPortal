@@ -38,6 +38,13 @@ $(document).ready(function () {
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
                     ajaxPay();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/paid-bill-notif.php',
+                        success: function(result){
+                            console.log(result)
+                        }
+                    })
                     $('.dim-3').fadeOut();
                 })
             },
@@ -515,6 +522,13 @@ $(document).ready(function () {
                         return actions.order.capture().then(function (details) {
                             labResultPay();
                             $('.exit-2').trigger('click');
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php_processes/paid-bill-notif.php',
+                                success: function(result){
+                                    console.log(result)
+                                }
+                            })
                             Swal.fire(
                                 'Success',
                                 'Your payment was successful!',

@@ -100,58 +100,54 @@ if (mysqli_num_rows($result) > 0) {
 
         //---------------------------NEW TABLEEEE------------------------------------------------------
         echo "<div class = 'patient-progress-header'>
-                        <h2>Other Documents</h2>
-                        <div>
-                            <button class = 'upload-new-other-doc'>Upload New Document <i class='fas fa-upload'></i></button>
-                        </div>
-                    </div>
-                    <div class = 'soap-table'>
-                        <div class = 'other-docs-table-header'>
-                            <span>Date Uploaded</span>
-                            <span></span>
-                        </div>
-                        <div class = 'soap-table-contents' id = 'patient$pid'>";
-        //FIX THISSSSSSSSSSSS 
-        //MAKE NEW TABLE IN PHPMYADMIN FOR OTHER DOCUMENTS
-        //SOAP TABLE FOR THE SELECTED PATIENT
-        $query_nest = "SELECT * FROM soap_notes WHERE patient_id = '$pid' ORDER BY UNIX_TIMESTAMP(date_created) DESC";
+        <h2>Other Documents</h2>
+        <div>
+            <button class = 'upload-new-other-doc'>Upload New Document <i class='fas fa-upload'></i></button>
+        </div>
+    </div>
+    <div class = 'soap-table'>
+        <div class = 'other-docs-table-header'>
+            <span>Date Uploaded</span>
+            <span></span>
+        </div>
+        <div class = 'other-docs-table-contents' id = 'patient-other-$pid'>";
+
+        $query_nest = "SELECT * FROM other_documents WHERE patient_id = '$pid' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC";
         $result2 = mysqli_query($conn, $query_nest);
 
         if (mysqli_num_rows($result2) > 0) {
             while ($row = mysqli_fetch_array($result2)) {
-                $date_time = $row['appointment_date_time'];
-                $date_time = strtotime($date_time);
-                $date_time = date("M d, Y / h:i A", $date_time);
-                $date_created = $row['date_created'];
-                $date_created = strtotime($date_created);
-                $date_created = date("M d, Y / h:i A", $date_created);
-                $app_num = $row['appointment_num'];
-                $soap_id = $row['soap_id'];
+                $date_uploaded = strtotime($row['date_uploaded']);
+                $date_uploaded = date("M d, Y / h:i A", $date_uploaded);
+                $doc_num = $row['docnum'];
 
                 echo "
-                            <div class = 'soap-table-content'>
-                                <span>$date_created</span>
-                                <span>$date_time</span>
-                                <div>
-                                    <div class = 'soap-btns'>
-                                        <button class = 'view-soap' value = '$soap_id'><i class='far fa-eye fa-lg'></i></button>
-                                        <button class = 'archive-soap' value = '$soap_id'><i class='fas fa-archive fa-lg'></i></button>
-                                    </div>
-                                </div>
+                    <div class = 'other-docs-table-content'>
+                        <span>$date_uploaded</span>
+                        <div>
+                            <div class = 'soap-btns'>
+                                <button class = 'view-other' value = '$doc_num'><i class='far fa-eye fa-lg'></i></button>
+                                <button class = 'archive-other' value = '$doc_num'><i class='fas fa-archive fa-lg'></i></button>
                             </div>
-                            ";
+                        </div>
+                    </div>
+                    ";
             }
         } else {
             echo '
-                    <span class = "no-appointments font-size-bigger">No records yet</span>
+                <span class = "no-appointments font-size-bigger">No records yet</span>
                 ';
         }
 
         echo "
-                    </div>
-                </div>
-                </div>
-                </div>";
+            </div>
+        </div>";
+        //END OF SECOND TABLE
+
+
+        echo "
+            </div>
+            </div>";
     }
 } else {
     echo "<span class = 'no-appointments'>No Patients Found</span>";

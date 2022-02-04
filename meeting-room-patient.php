@@ -52,8 +52,55 @@
     var domain = "meet.jit.si";
     var options = {
         "roomName": randomString,
-        "parentNode": container
+        "parentNode": container,
+        userInfo: {
+            displayName: 'Patient'
+        },
+        configOverwrite: {
+            remoteVideoMenu: {
+                // If set to true the 'Kick out' button will be disabled.
+                disableKick: true,
+                // If set to true the 'Grant moderator' button will be disabled.
+                disableGrantModerator: true
+            },
+            disableRemoteMute: true,
+                toolbarButtons: [
+                    'camera',
+                    'chat',
+                    'closedcaptions',
+                    'desktop',
+                    // 'download',
+                    // 'embedmeeting',
+                    'etherpad',
+                    // 'feedback',
+                    'filmstrip',
+                    'fullscreen',
+                    'hangup',
+                    'help',
+                    // 'invite',
+                    // 'livestreaming',
+                    'microphone',
+                    // 'mute-everyone',
+                    // 'mute-video-everyone',
+                    // 'participants-pane',
+                    // 'profile',
+                    'raisehand',
+                    // 'recording',
+                    // 'security',
+                    'select-background',
+                    // 'settings',
+                    'shareaudio',
+                    'sharedvideo',
+                    // 'shortcuts',    
+                    'stats',
+                    'tileview',
+                    'toggle-camera',
+                    'videoquality',
+                    '__end'
+                ],
+        }
     };
+    
     api = new JitsiMeetExternalAPI(domain, options);
 </script>
 

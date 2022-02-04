@@ -25,7 +25,30 @@ $(document).ready(function () {
         $('#book-appointment').prop('disabled', false);
     }
 
-    $('#book-appointment, #see-all-appt').click(function () {
+    $('#book-appointment').on('click', function(){
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/check-appt-num.php',
+            success: function(result){
+                if(result == '1'){
+                    Swal.fire(
+                        'Exceeded!',
+                        'You have exceeded booked 4 times today, which exceeds the limit of bookings a day. Please try again tomorrow.',
+                        'error'
+                      )
+                }
+                else{
+                    disabledDatesArr = disabledDates()
+                    $('.dim').fadeIn();
+                    $('.date-time-input').val('');
+                    $('#book').prop('disabled', true)
+                    interval = setInterval(checkInputs, 100);
+                }
+            }
+        })
+    })
+
+    $('#see-all-appt').click(function () {
         disabledDatesArr = disabledDates()
         $('.dim').fadeIn();
         $('.date-time-input').val('');

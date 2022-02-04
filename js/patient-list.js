@@ -6,6 +6,18 @@ $(document).ready(function () {
     var selectedPatientId;
     $('.icd-10-codes').hide();
 
+    $(document).on('keypress', "#p-contact", function (e) {
+        return isNumberKey(e)
+    })
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if ((charCode < 48 || charCode > 57))
+            return false;
+    
+        return true;
+    }
+
     $('#search-patient').on('keyup', function () {
         val = $(this).val()
         $('#page-num').html('1');

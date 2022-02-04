@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/f45be26f8c.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel='stylesheet' type='text/css' href='../css/prescription.css'>
+    <link rel='stylesheet' type='text/css' href='../css/labresult.css'>
     <title>Twin Care Portal | Document Generator</title>
     <link rel="icon" href="../  img/logo.png">
 </head>

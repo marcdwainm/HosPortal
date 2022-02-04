@@ -135,7 +135,7 @@
                 <input id='p-fname' type='text' placeholder='Enter First Name'>
                 <input id='p-mname' type='text' placeholder='Enter Middle Name'>
                 <input id='p-lname' type='text' placeholder='Enter Last Name'>
-                <input id='p-contact' type='text' placeholder='Enter Contact Number'>
+                <input id='p-contact' type='tel' placeholder='Enter Contact Number' maxlength="11">
                 <select id='p-gender'>
                     <option selected disabled>Select Gender</option>
                     <option value='Male'>Male</option>

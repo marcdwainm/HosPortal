@@ -37,7 +37,11 @@ else {
 
     if (mysqli_num_rows($result) > 0 || mysqli_num_rows($result2) > 0) {
         while ($row = mysqli_fetch_array($result)) {
-            if (password_verify($pass, $row['password'])) {
+            if($row['email_validated'] == '0'){
+                header("Location: ../index.php?validated=false");
+                exit();
+            }
+            else if (password_verify($pass, $row['password'])) {
 
                 $fname = $row['first_name'];
                 $mname = substr($row['middle_name'], 0, 1) . '.';
@@ -61,7 +65,11 @@ else {
         }
 
         while ($row = mysqli_fetch_array($result2)) {
-            if (password_verify($pass, $row['password'])) {
+            if($row['email_validated'] == '0'){
+                header("Location: ../index.php?validated=false");
+                exit();
+            }
+            else if (password_verify($pass, $row['password'])) {
                 $fname = $row['first_name'];
                 $mname = substr($row['middle_name'], 0, 1) . '.';
                 $lname = $row['last_name'];

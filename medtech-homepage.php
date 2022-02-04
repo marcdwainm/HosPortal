@@ -188,6 +188,7 @@
                                 <span>$collection_date</span>
                                 <span>$estimated_result</span>
                                 <div class = 'medtech-btns'>
+                                    <button id = 'upload-medtech' value = '$doc_num'><i class='fas fa-upload'></i></button>
                                     <button class = 'edit-draft' value = '$doc_num'><i class='fas fa-edit'></i></button>
                                     <button class = 'delete-draft' value = '$doc_num'><i class='fas fa-trash'></i></button>
                                 </div>
@@ -261,5 +262,4 @@
 <script src='js/navbar.js'></script>
 <script src='js/medtech.js'></script>
 <script src='js/billing.js'></script>
-
 </html>

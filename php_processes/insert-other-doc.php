@@ -13,14 +13,14 @@ $date = date("Y-m-d H:i:s", time());
 $emp_id = $_SESSION['emp_id'];
 
 //INSERT FILE TO TABLE
-mysqli_query($conn, "INSERT INTO other_documents (patient_id, docnum, pdf_file, date_uploaded, emp_id, file_ext) 
-VALUES ('$patient_id', '$docnum', '$file_base_64', '$date', '$emp_id', '$file_ext')");
+$query = "INSERT INTO other_documents (patient_id, docnum, pdf_file, date_uploaded, emp_id, file_ext) 
+VALUES ('$patient_id', '$docnum', '$file_base_64', '$date', '$emp_id', '$file_ext')";
+mysqli_query($conn, $query);
 
 
 //UPDATE THE OTHER DOCUMENTS TABLE
 $query_nest = "SELECT * FROM other_documents WHERE patient_id = '$patient_id' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC";
 $result2 = mysqli_query($conn, $query_nest);
-echo mysqli_error($conn);
 
 if (mysqli_num_rows($result2) > 0) {
     while ($row = mysqli_fetch_array($result2)) {
