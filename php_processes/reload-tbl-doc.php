@@ -29,7 +29,7 @@ if (mysqli_num_rows($result) == 0) {
             <div class='e-contents three-fr'>
                 <span>$pname</span>
                 <span>$date_up_formatted</span>
-                <div>
+                <div class = 'test'>
                     <button class = 'view' value = '$doc_num'><i class='far fa-eye fa-lg'></i></button>
                     <button class = 'download-pdf' value = '$doc_num'><i class='fas fa-download'></i></button>
                     <button class = 'archive-$class' value = '$doc_num'><i class='fas fa-archive'></i></button>

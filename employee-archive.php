@@ -142,7 +142,7 @@
                                             <span>$patient_name</span>
                                             <span>$date_uploaded</span>
                                             <span>$date_archived</span>
-                                            <div>
+                                            <div class = 'test'>
                                                 <button class = 'view-prescription' value = '$doc_num'><i class='far fa-eye fa-lg'></i></button>
                                                 <button class = 'restore-prescription' value = '$doc_num'><i class='fas fa-trash-restore fa-lg'></i></button>
                                             </div>
@@ -205,7 +205,7 @@
                                             <span>$patient_name</span>
                                             <span>$date_uploaded</span>
                                             <span>$date_archived</span>
-                                            <div>
+                                            <div class = 'test'>
                                                 <button class = 'view-labresult' value = '$doc_num'><i class='far fa-eye fa-lg'></i></button>
                                                 <button class = 'restore-labresult' value = '$doc_num'><i class='fas fa-trash-restore fa-lg'></i></button>
                                             </div>

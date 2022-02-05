@@ -249,6 +249,23 @@
                 <h3 class='header-table'>
                     <span>Upcoming Appointments</span>
                 </h3>
+                
+                <?php
+                    include 'php_processes/db_conn.php';
+                    
+                    $pid = $_SESSION['patientid'];
+                    
+
+                    $query = "SELECT * FROM appointments WHERE (patient_id = '$pid' AND date(date_and_time) = CURDATE()) AND (status = 'onlinereq' || status = 'pending' || status = 'ongoing')";
+                    $result = mysqli_query($conn, $query);
+                    if(mysqli_num_rows($result) > 0){
+                        echo "
+                            <span class = 'reminder red-text'>
+                            Reminder: You have an appointment today!
+                            </span>
+                        ";
+                    }
+                ?>
 
                 <div class='table'>
                     <!--APPOINTMENT TABLE HEADER-->

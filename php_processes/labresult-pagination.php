@@ -18,7 +18,7 @@ if (mysqli_num_rows($result) == 0) {
             <div class='e-contents three-fr'>
                 <span>$pname</span>
                 <span>$date_uploaded</span>
-                <div>
+                <div class = 'test'>
                     <button class = 'view-document' value = '$docnum'><i class='fas fa-eye'></i></button>
                     <button class = 'download-pdf' value = '$docnum'><i class='fas fa-download'></i></button>
                 </div>

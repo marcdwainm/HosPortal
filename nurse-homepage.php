@@ -399,8 +399,10 @@
                     <span id='offset'>0</span>
                     <button id='next'><i class="fas fa-arrow-right fa-lg"></i></button>
                 </div>
-                <button type='button' id='reload-tbl' value='today'>Reload Table</button>
-                <button id='see-all-appt'>Add an Appointment</button>
+                <div>
+                    <button type='button' id='reload-tbl' value='today'>Reload Table</button>
+                    <button id='see-all-appt'>Add an Appointment</button>
+                </div>
 
             </div>
         </div>

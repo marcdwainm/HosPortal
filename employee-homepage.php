@@ -256,6 +256,18 @@
 
         <div class='header-intro'>
             <h1>Welcome, Dr. <?php echo ucwords($_SESSION['fullname']) ?></h1>
+            
+            <?php
+                $query = "SELECT * FROM appointments WHERE (status = 'pending' || status = 'ongoing') AND date(date_and_time) = CURDATE()";
+                $result = mysqli_query($conn, $query);
+
+                if(mysqli_num_rows($result) > 0){
+                    $apptnumber = mysqli_num_rows($result);
+                    echo "
+                        <div class = 'red-text'>Reminder: You have $apptnumber appointment/s today.</div>
+                    ";
+                }
+            ?>  
         </div>
 
         <div class='employee-contents'>
@@ -410,8 +422,10 @@
                     <span id='offset'>0</span>
                     <button id='next'><i class="fas fa-arrow-right fa-lg"></i></button>
                 </div>
-                <button type='button' id='reload-tbl' value='today'>Reload Table</button>
-                <button id='see-all-appt'>Add an Appointment</button>
+                <div>
+                    <button type='button' id='reload-tbl' value='today'>Reload Table</button>
+                    <button id='see-all-appt'>Add an Appointment</button>
+                </div>
             </div>
         </div>
     </div>

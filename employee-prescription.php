@@ -36,7 +36,7 @@
     <div class='background-container'>
 
         <div class='contents'>
-            <div class='container'>
+            <div class='container container-2'>
                 <span class='header'>Document No. <?php echo $docnum ?></span>
                 <div class='details'>
                     <!--PDF VIEWER HERE-->

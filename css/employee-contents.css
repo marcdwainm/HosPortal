@@ -1,5 +1,5 @@
 body{
-    font-size: 17px;
+    font-size: 18px;
 }
 
 :root{
@@ -580,7 +580,7 @@ body{
 
 .reload-all{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: auto;
     margin-bottom: 30px;
     position: relative;
@@ -615,15 +615,11 @@ body{
 }
 
 .reload-all div{
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100px;
+    gap: 4px;
 }
 
 .reload-all div span{
@@ -635,7 +631,7 @@ body{
 .reload-all div button{
     width: auto;
     margin: 0;
-    padding: 7px;
+    padding: 10px;
     border: 2px solid var(--blue);
     color: var(--blue);
     background: white;
@@ -2670,8 +2666,16 @@ border-bottom: none;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-@media (max-width: 1199.98px) {
 
+
+@media (max-width: 1199.98px) {
+    .view-triage-container{
+        min-width: 400px;
+    }
+
+    .view-bill-doctor{
+        margin-bottom: 5px;
+    }
 }
 
 
@@ -2716,6 +2720,138 @@ border-bottom: none;
         display: flex;
         flex-wrap: wrap;
     }
+
+    .view-triage-container{
+        min-width: 400px;
+    }
+
+    .employee-contents{
+        padding: 30px;
+    }
+
+    #search-patient{
+        width: 50%;
+    }
+
+    .patient-details div{
+        padding: 0;
+    }
+
+    .patient-details button{
+        width: 100%;
+    }
+
+    .patient-progress-header div button{
+        width: 100%;
+    }
+
+    .create-new-soap{
+        width: 100%;
+    }
+
+    .soap-table-content div{
+        display: flex;
+        gap: 3px;    
+    }
+
+    .soap-table-content div button{
+        width: auto;
+        margin: 0;
+    }
+
+    .soap-container{
+        height: 600px;
+    }
+
+    .soap-column-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .soap-column-container > div{
+        height: 100%;   
+    }
+
+    .add-a-patient-window{
+        width: 400px;
+    }
+
+    .document-upload-container-2{
+        width: 300px;
+    }
+
+    .e-contents-header-app > div{
+        display: flex;
+    }
+
+    .header-btn-btns{
+        display: flex;
+    }
+
+    .header-btn-btns button{
+        width: 100%;
+    }
+
+    .test{
+        padding: 5px;
+    }
+
+    .test button{
+        padding: 7px;
+    }
+
+    .document-upload-container{
+        width: 400px;
+    }
+
+    .reload-tbl-doc{
+        border: 1px solid black;
+    }
+
+    .view-bill-doctor{
+        margin-bottom: 5px;
+    }
+
+    .bill-container{
+        width: 400px;
+    }
+
+    .logo-container{
+        height: 50px;
+        width: 100%;
+        padding: 0;
+        padding-left: 10px;
+        display: flex;
+        justify-content: flex-start;
+    }
+    
+    .logo-container img{
+        margin: 0;
+        height: auto;
+        max-width: 150px;
+    }
+
+    .e-contents-header-archive{
+        padding: 25px;
+    }
+
+    .hidden-patient-progress-div{
+        padding: 30px;
+    }
+
+    .h2-sortation{
+        margin: 20px 0px;
+        margin-bottom: 30px;
+    }
+
+    .medtech-btns{
+        display: flex;
+    }
+
+    .medtech-btns button{
+        padding: 5px;
+    }
 }
 
 
@@ -2723,4 +2859,5 @@ border-bottom: none;
     body{
         font-size: 14px;
     }
+
 }

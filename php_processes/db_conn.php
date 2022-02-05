@@ -1,9 +1,14 @@
 <?php
 
 $host = 'localhost';
-$username = 'u991711642_twincareportal';
-$password = 'TwinCarePortal_0';
-$database = 'u991711642_twincareportal';
+$username = 'root';
+$password = 'root';
+$database = 'twincare_db';
+
+// $host = 'localhost';
+// $username = 'u991711642_twincareportal';
+// $password = 'TwinCarePortal_0';
+// $database = 'u991711642_twincareportal';
 
 $conn = new mysqli($host, $username, $password, $database);
 

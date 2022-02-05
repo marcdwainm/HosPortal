@@ -1,5 +1,5 @@
 body{
-    font-size: 17px;
+    font-size: 18px;
 }
 
 
@@ -1209,6 +1209,10 @@ legend{
     background: rgb(228, 228, 228);
     color: rgb(190, 190, 190);
     cursor: default;
+}
+
+.reminder{
+    margin-bottom: 20px;
 }
 
 

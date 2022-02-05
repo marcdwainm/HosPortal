@@ -128,7 +128,7 @@
                                 <span>$doc_type</span>
                                 <span>$pname</span>
                                 <span>$date_up_formatted</span>
-                                <div>
+                                <div class = 'test'>
                                     <button class = 'view' value = '$doc_num'><i class='far fa-eye fa-lg'></i></button>
                                     <button class = 'download-pdf' value = '$doc_num'><i class='fas fa-download'></i></button>
                                     <button class = 'archive-$class from-all-docs' value = '$doc_num'><i class='fas fa-archive'></i></button>
