@@ -66,4 +66,14 @@ $(document).ready(function () {
         )
     }
 
+
+    $(document).on('click', '.eye-div', function(){
+        let textfield = $(this).parent().find('input');
+        if(textfield.attr('type') == 'password'){
+            textfield.prop('type', 'text');
+        }
+        else{
+            textfield.prop('type', 'password');
+        }
+    })
 })

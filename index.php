@@ -166,7 +166,12 @@
                     }
                     ?>
 
-                    <input type='password' placeholder='Password' name='login-pass'>
+                    <div class="password-div">
+                        <input type='password' placeholder='Password' name='login-pass'>
+                        <div class="eye-div">
+                            <i class="far fa-eye"></i>
+                        </div>
+                    </div>
                     <button>Login</button>
                     <span class="error-span">
                         <?php
@@ -273,8 +278,18 @@
                     ?>
 
                     <div class="passwords">
-                        <input type='password' placeholder='Password (Must be 8 characters or more)' name='pass'>
-                        <input type='password' placeholder='Confirm Password' name='conf_pass'>
+                        <div class = 'password-div'>
+                            <input type='password' placeholder='Password (Must be 8 characters or more)' name='pass'>
+                            <div class = 'eye-div'>
+                                <i class="far fa-eye"></i>
+                            </div>
+                        </div>
+                        <div class="password-div">
+                            <input type='password' placeholder='Confirm Password' name='conf_pass'>
+                            <div class="eye-div">
+                                <i class="far fa-eye"></i>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="employee-code">

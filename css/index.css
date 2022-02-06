@@ -531,6 +531,23 @@ body{
     font-size: 0.9em;
 }
 
+.password-div{
+    position: relative;
+}
+
+.password-div > input{
+    width: 100%;
+}
+
+.eye-div{
+    top: 30%;
+    right: 0;
+    transform: translateY(-30%);
+    margin-right: 10px;
+    position: absolute;
+    cursor: pointer;
+}
+
 
 /*BIG DEVICES*/
 @media (max-width: 1199.98px) {
