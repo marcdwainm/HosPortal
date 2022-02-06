@@ -1,29 +1,22 @@
 <?php
 
 include 'db_conn.php';
+session_start();
 
-$bill_num = $_POST['billnum'];
+$names = $_POST['namesString'];
+$prices = $_POST['pricesString'];
+$total = $_POST['total'];
+$issued_to = $_POST['billNum'];
+$issued_by = $_SESSION['emp_id'];
+$date_issued = Date("Y-m-d", time());
 
-date_default_timezone_set('Asia/Manila');
-$date_paid = date("Y-m-d H:i:s", time());
+$date = date("Ymdhis", time());
+$bill_num = $date . $_POST['billNum'];
 
-$query = "SELECT * FROM bills WHERE bill_num = '$bill_num'";
-$result = mysqli_query($conn, $query);
+$query = "INSERT INTO bills (bill_num, names, prices, total, issued_to, issued_by, date_issued) 
+VALUES ('$bill_num', '$names', '$prices', '$total', '$issued_to', '$issued_by', '$date_issued')";
 
-$row = mysqli_fetch_array($result);
-$tied_to_online = $row['tied_to_online_appt'];
-
-if($tied_to_online == '1'){
-    $query = "UPDATE appointments SET app_type = 'online', `status` = 'pending' WHERE appointment_num = '$bill_num'";
-    mysqli_query($conn, $query);
-
-    $query = "UPDATE bills SET paid = '1', date_of_payment = '$date_paid' WHERE bill_num = '$bill_num'";
-    mysqli_query($conn, $query);
-}
-else{
-    $query = "UPDATE bills SET paid = '1', date_of_payment = '$date_paid' WHERE bill_num = '$bill_num'";
-    mysqli_query($conn, $query);
-}
+mysqli_query($conn, $query);
 
 $query = "SELECT * FROM bills ORDER BY UNIX_TIMESTAMP(bill_num) DESC LIMIT 0, 10";
 $result = mysqli_query($conn, $query);
@@ -66,3 +59,4 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     echo "<span class = 'no-appointments'>Bills Empty</span>";
 }
+

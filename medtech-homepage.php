@@ -61,9 +61,37 @@
                 <input type='text' placeholder='Enter Test Type' id='test-type'>
                 <input type='text' placeholder='Date of Collection' id='collection-date' onfocus="(this.type='date')" onblur="(this.type='text')">
                 <input type='text' placeholder='Estimated Date of Results' id='result-date' onfocus="(this.type='date')" onblur="(this.type='text')">
-                <span class='patient-error2'>File is too big! Maximum size: 5MB</span>
                 <div class='document-upload-btns one-btn'>
                     <button id='generate-document' name='submit' type='button' value='0000' disabled>Create Draft</button>
+                </div>
+            </form>
+        </div>
+
+        <!--ADD ONGOING-->
+        <div class="document-upload-container medtech-draft-container-2">
+            <div class='document-upload-exit'>
+                <span>Add Ongoing Test</span>
+                <span class='exit exit-add-ongoing'>X</span>
+            </div>
+            <form class='upload-document-content' method='GET'>
+                <div class="p-name-documents">
+                    <div class='portal-registered-checkbox'>
+                        <div class='checkbox'>
+                            <label for="portal-registered">Portal Registered Patient</label>
+                            <input type="checkbox" name="portal-registered" id='portal-registered-3' value="p-registered">
+                        </div>
+                    </div>
+                    <input type='text' id='patient-search-3' placeholder="Enter Patient's Name" autocomplete="off">
+                    <div class="p-name-documents-autocomplete autocomplete-3">
+                        <!--Dynamic Results Here-->
+                    </div>
+                </div>
+                <span id='patient-error-3'>Note: This patient is not portal-registered</span>
+                <input type='text' placeholder='Enter Test Type' id='test-type-3'>
+                <input type='text' placeholder='Date of Collection' id='collection-date-3' onfocus="(this.type='date')" onblur="(this.type='text')">
+                <input type='text' placeholder='Estimated Date of Results' id='result-date-3' onfocus="(this.type='date')" onblur="(this.type='text')">
+                <div class='document-upload-btns one-btn'>
+                    <button id='add-ongoing-test' name='submit' type='button' value='0000' disabled>Add Test</button>
                 </div>
             </form>
         </div>
@@ -129,12 +157,28 @@
             </form>
         </div>
 
+        <!--ONGOING LAB TEST UPLOAD WINDOW-->
+        <div class="document-upload-container upload-ongoing-window">
+            <div class='document-upload-exit'>
+                <span>Upload Lab Result</span>
+                <span class='exit exit-upload-ongoing'>X</span>
+            </div>
+            <form class='upload-document-content' method='GET'>
+                <input type="File" name="file" id='file-ongoing' accept='application/pdf, image/jpeg, image/jpg, image/png' style="display:block;">
+                <span class='patient-error2'>File is too big! Maximum size: 5MB</span>
+                <div class='document-upload-btns one-btn'>
+                    <button id='upload-ongoing-btn' type='button' value='0000' disabled>Upload</button>
+                </div>
+            </form>
+        </div>
+
         <div class='employee-contents' id='con'>
             <!--WORK DOCUMENTS-->
             <div class='e-contents-header-app header-margin-top'>
                 <div class='document-header-btn'>
                     <h1>Tests</h1>
                     <div class='header-btn-btns'>
+                        <button id = 'add-ongoing'>Add Ongoing Test</button>
                         <button id='create-draft'>Create a Draft</button>
                         <button id='upload-document'>Direct Upload<i class="fas fa-upload"></i></button>
                     </div>
@@ -171,8 +215,10 @@
                             $status = ucwords($row['status']);
                             $doc_num = $row['doc_num'];
                             $collection_date = $row['collection_date'];
-                            $estimated_result = $row['estimated_result'];
-                            $textcolor = '';
+                                $estimated_result = $row['estimated_result'];
+                                $textcolor = '';
+                            
+                            $ongoing_test = $row['html_draft'] == '' ? "<button class = 'upload-ongoing' value = '$doc_num'><i class = 'fas fa-upload'></i></button>" : "<button class = 'edit-draft' value = '$doc_num'><i class='fas fa-edit'></i></button>";
 
                             switch ($status) {
                                 case 'Pending':
@@ -181,19 +227,18 @@
                             }
 
                             echo "
-                            <div class='e-contents six-fr'>
-                                <span>$pname</span>
-                                <span>$test_type</span>
-                                <span class = '$textcolor'>$status</span>
-                                <span>$collection_date</span>
-                                <span>$estimated_result</span>
-                                <div class = 'medtech-btns'>
-                                    <button id = 'upload-medtech' value = '$doc_num'><i class='fas fa-upload'></i></button>
-                                    <button class = 'edit-draft' value = '$doc_num'><i class='fas fa-edit'></i></button>
-                                    <button class = 'delete-draft' value = '$doc_num'><i class='fas fa-trash'></i></button>
+                                <div class='e-contents six-fr'>
+                                    <span>$pname</span>
+                                    <span>$test_type</span>
+                                    <span class = '$textcolor'>$status</span>
+                                    <span>$collection_date</span>
+                                    <span>$estimated_result</span>
+                                    <div class = 'medtech-btns'>
+                                        $ongoing_test
+                                        <button class = 'delete-draft' value = '$doc_num'><i class='fas fa-trash'></i></button>
+                                    </div>
                                 </div>
-                            </div>
-                        ";
+                            ";
                         }
                     }
 

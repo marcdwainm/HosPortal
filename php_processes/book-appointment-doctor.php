@@ -63,6 +63,13 @@ if (mysqli_num_rows($result) > 0) {
             VALUES('$pid', 'appointment', '$appointmentnum', '$date_booked', '$appointment_date_time')";
             mysqli_query($conn, $query);
 
+            $to = $email;
+            $subject = 'Twin Care Portal | New Appointment';
+            $headers = "Good day, our dear patient!";
+            $message = "The doctor has booked an appointment for you. Kindly visit www.twincareportal.online for more details.";
+        
+            mail($to, $subject, $message, $headers);
+
             //UPDATE HAS_APPOINTMENT TO TRUE
             $query = "UPDATE user_table SET has_appointment = 1 WHERE CONCAT(first_name, ' ', LEFT(middle_name, 1), '. ', last_name) = '$patient_name' AND contact_num = '$patient_contact'";
             mysqli_query($conn, $query);

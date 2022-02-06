@@ -117,7 +117,7 @@ if (mysqli_num_rows($result) == 0) {
         else if ($row['notif_type'] == 'labresult' && $row['with_bill'] == '1') {
             $docnum = $row['document_num'];
             echo "
-                <button class='notif-content doc-notif-type' value = '$docnum'>
+                <div class='notif-content'>
                     <div class='notif-img'>
                         <i class='fas fa-flask fa-lg'></i>
                     </div>
@@ -125,14 +125,14 @@ if (mysqli_num_rows($result) == 0) {
                         Your laboratory test results are out. Pay within the bills table to access the result.
                     </span>
                     $seen
-                </button>
+                </div>
             ";
         }
 
         // LAB DRAFTS FROM MEDTECH WITH BILL
         else if ($row['notif_type'] == 'draftbill') {
             echo "
-                <button class='notif-content doc-notif-type'>
+                <button class='notif-content'>
                     <div class='notif-img'>
                         <i class='fas fa-flask fa-lg'></i>
                     </div>

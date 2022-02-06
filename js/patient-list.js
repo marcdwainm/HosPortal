@@ -51,6 +51,37 @@ $(document).ready(function () {
         }
     })
 
+    $(document).on('click', '.progress-and-del .del', function(){
+        pid = $(this).val()
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You are about to remove this manually added patient. After deletion, all documents within this patient will be archived.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'I\'m sure'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'php_processes/delete-patient.php',
+                    data:{
+                        pid: pid
+                    },
+                    success: function(result){
+                        Swal.fire(
+                            'Success',
+                            'The patient has been removed.',
+                            'success'
+                        )
+                    }
+                })
+            }
+          })
+    })
+
     $(document).on('click', '#exit-soap', function () {
         $('.dim-soap').fadeOut();
     })
@@ -474,6 +505,81 @@ $(document).ready(function () {
         })
     })
 
+    $(document).on('click', '.archive-presc', function () {
+        docNum = $(this).val();
+        pid = selectedPatientId;
+        doctype = 'prescription'
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This document will be put onto the archives and will still be recoverable",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Archive'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'php_processes/archive-document-patient.php',
+                    data: {
+                        docnum: docNum,
+                        pid: pid,
+                        doctype: doctype
+                    },
+                    success: function (result) {
+                        $('#patient-presc-' + pid).html(result)
+                    }
+                })
+
+                Swal.fire(
+                    'Archived!',
+                    'Your file has been archived',
+                    'success'
+                )
+            }
+        })
+    })
+
+    $(document).on('click', '.archive-lab', function () {
+        docNum = $(this).val();
+        pid = selectedPatientId;
+        doctype = 'labresult'
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This document will be put onto the archives and will still be recoverable",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Archive'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'php_processes/archive-document-patient.php',
+                    data: {
+                        docnum: docNum,
+                        pid: pid,
+                        doctype: doctype
+                    },
+                    success: function (result) {
+                        console.log(result)
+                        $('#patient-lab-' + pid).html(result)
+                    }
+                })
+
+                Swal.fire(
+                    'Archived!',
+                    'Your file has been archived',
+                    'success'
+                )
+            }
+        })
+    })
+
     $(document).on('click', '#prev', function () {
         var page = $(this).parent().find('#page-num').html()
         var keyword = $('#search-patient').val();
@@ -659,5 +765,14 @@ $(document).ready(function () {
 
     $(document).on('click', '.exit-2', function () {
         $('.dim-bill').fadeOut()
+    })
+
+    $('.issue-a-bill').on('click', function(){
+        $('.dim-4').fadeIn()
+    })
+
+    $(document).on('click', '.view-doc', function () {
+        docnum = $(this).val()
+        window.location.href = 'employee-prescription.php?docnum=' + docnum;
     })
 })

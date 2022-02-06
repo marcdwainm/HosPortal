@@ -15,4 +15,13 @@ if (isset($_POST["id"])) {
 
     $query = "INSERT INTO patients_notifications (patient_id, notif_type, appointment_num, date_notified, appointment_date) VALUES ('$pid', 'resched', '$id', '$date', '$start')";
     mysqli_query($conn, $query);
+
+    $docmsg = $doc_type == 'labresult' ? "Lab Result" : "Prescription";
+    $to = $email;
+
+    $subject = "Twin Care Portal | Appointment Rescheduling";
+    $headers = "Good day, our dear patient!";
+    $message = "Your appointment has been rescheduled to another day. Kindly visit www.twincareportal.online or contact 0925-734-7552 to further dicuss the matter.";
+
+    mail($to, $subject, $message, $headers);
 }

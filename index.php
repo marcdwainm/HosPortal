@@ -282,7 +282,7 @@
                         <div class='employee-dropdown'>
                             <select name='position'>
                                 <option value='' disabled selected>Position</option>
-                                <option value='doctor'>Doctor</option>
+                                <!-- <option value='doctor'>Doctor</option> -->
                                 <option value='medtech'>MedTech</option>
                                 <option value='nurse'>Nurse</option>
                             </select>

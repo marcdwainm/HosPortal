@@ -40,10 +40,13 @@ while ($row = mysqli_fetch_array($result)) {
 
 $query = "INSERT INTO documents (doc_num, doc_type, pdf_file, sent_to, patient_name, date_uploaded, emp_id, file_ext, paid) 
 VALUES('$docnum', '$doctype', '$base64', '$pid', '$p_name', '$date_uploaded', '$emp_id', '$file_ext', '$paid_val')";
-
 mysqli_query($conn, $query);
 
-echo mysqli_error($conn);
+$query = "INSERT INTO documents_patient_copy (doc_num, doc_type, pdf_file, sent_to, patient_name, date_uploaded, emp_id, file_ext, paid) 
+VALUES('$docnum', '$doctype', '$base64', '$pid', '$p_name', '$date_uploaded', '$emp_id', '$file_ext', '$paid_val')";
+mysqli_query($conn, $query);
+
+echo $docnum;
 
 if ($pid != '0000') {
     $date_convert = strtotime($date);
@@ -51,6 +54,15 @@ if ($pid != '0000') {
 
     $query = "INSERT INTO patients_notifications (patient_id, notif_type, document_num, date_notified, with_bill) VALUES('$pid', '$doctype', '$docnum', '$date_notified', '$withBill')";
     mysqli_query($conn, $query);
+
+    $docmsg = $doctype == 'labresult' ? "Lab Result" : "Prescription";
+    $to = $email;
+
+    $subject = "Twin Care Portal | New $docmsg";
+    $headers = "Good day, our dear patient!";
+    $message = "The doctor has sent you a $docmsg. Visit www.twincareportal.online to view your document.";
+
+    mail($to, $subject, $message, $headers);
 }
 
 mysqli_close($conn);

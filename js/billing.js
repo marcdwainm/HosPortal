@@ -133,13 +133,23 @@ $(document).ready(function () {
             }
         });
 
+        if($('#issue-bill-manual').length){
+            if($('#issue-bill-manual').val() == ''){
+                empty = true;
+            }
+        }
+
         if (empty) {
+            $('#issue-bill').prop('disabled', true);
             $('#issue-bill-lab').prop('disabled', true);
             $('#issue-bill-medtech').prop('disabled', true);
+            $('#issue-bill-manual').prop('disabled', true)
         }
         else {
+            $('#issue-bill').prop('disabled', false);
             $('#issue-bill-lab').prop('disabled', false);
             $('#issue-bill-medtech').prop('disabled', false);
+            $('#issue-bill-manual').prop('disabled', false)
         }
     }, 100)
 
@@ -149,6 +159,11 @@ $(document).ready(function () {
         $('.fill-up-field').not(':first').remove();
         $('.fill-up-item, .fill-up-price').val('');
         $('.total-price').html('0.00')
+
+        if($('.bill-manual-input').length){
+            $('.bill-manual-input').val('')
+            $('#issue-bill-manual').val('')
+        }
     })
 
     $('#add-bill-item').on('click', function () {
@@ -262,13 +277,96 @@ $(document).ready(function () {
                         namesString: namesString,
                         pricesString: pricesString,
                         total: total,
-                        billNum: billNum
+                        billNum: billNum,
+                        fromOnline: 'true'
                     }
                 })
 
                 Swal.fire(
                     'Requested',
                     'Awaiting for patient\'s approval',
+                    'success'
+                )
+            }
+        })
+
+        $('#exit-issue').trigger('click');
+    })
+
+    $(document).on('keyup', '.bill-manual-input', function(){
+        let keyword = $(this).val()
+        $('#issue-bill-manual').prop('disabled', true)
+        $('#issue-bill-manual').val('')
+
+        if(keyword == ''){
+            $('.bill-manual-autocomplete').hide();
+        } else{
+            $.ajax({
+                url: 'php_processes/documents-patient-search.php',
+                type: 'POST',
+                data:{
+                    query: keyword
+                },
+                success: function(result){
+                    if(result == ''){
+                        $('.bill-manual-autocomplete').hide();
+                    }
+                    else{
+                        $('.bill-manual-autocomplete').show();
+                        $('.bill-manual-autocomplete').html(result);
+                    }
+                }
+            })
+        }
+    })
+
+    $(document).on('click', '.result-autocomplete', function(){
+        pid = $(this).val()
+        pname = $(this).find('span:first-child()').html()
+        $('.bill-manual-input').val(pname)
+        $('.bill-manual-autocomplete').hide();
+        $('#issue-bill-manual').val(pid)
+    })
+
+    $('#issue-bill-manual').on('click', function () {
+        var names = $('.fill-up-item').map((i, e) => e.value).get();
+        var prices = $('.fill-up-price').map((i, e) => e.value).get();
+        var total = $('.total-price').html();
+        var billNum = $(this).val();
+
+        var namesString = names.join(", ");
+        var pricesString = prices.join(", ");
+
+        Swal.fire({
+            title: 'Issue bill?',
+            text: "The patient will be notified and will be issued with a bill.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                $.ajax({
+                    url: 'php_processes/issue-bill-manual.php',
+                    type: 'POST',
+                    data: {
+                        total: total,
+                        billNum: billNum,
+                        namesString: namesString,
+                        pricesString: pricesString
+                    },
+                    success: function(result){
+                        $('.bills-tbl').html(result)
+                        $('#page-num').html('1')
+                        $('#offset').html('0')
+                    }
+                })
+
+                Swal.fire(
+                    'Issued',
+                    'Awaiting for the patient\'s payment',
                     'success'
                 )
             }
@@ -317,26 +415,23 @@ $(document).ready(function () {
                 $('#file-to-database').hide();
                 $('.add-document-overlay').fadeOut();
                 $('.document-upload-container').fadeOut();
-                if (result.includes("Error while uploading the file: ")) {
-                    alert(result)
-                } else {
-
-                }
+                //ISSUE THE BILL
+                $.ajax({
+                    type: 'POST',
+                    url: 'php_processes/issue-bill.php',
+                    data: {
+                        selected: selected,
+                        namesString: namesString,
+                        pricesString: pricesString,
+                        total: total,
+                        billNum: billNum,
+                        correspondingDoc: result
+                    }
+                })
+                
             }
         })
 
-        //ISSUE THE BILL
-        $.ajax({
-            type: 'POST',
-            url: 'php_processes/issue-bill.php',
-            data: {
-                selected: selected,
-                namesString: namesString,
-                pricesString: pricesString,
-                total: total,
-                billNum: billNum
-            }
-        })
 
         Swal.fire(
             'Success',
@@ -351,8 +446,11 @@ $(document).ready(function () {
     $('#issue-bill-medtech').on('click', function () {
         pname = $('#patient-search').val();
         testType = $('#test-type').val();
+        testType3 = $('#test-type-3').val();
         collectionDate = $('#collection-date').val();
+        collectionDate3 = $('#collection-date-3').val();
         resultDate = $('#result-date').val();
+        resultDate3 = $('#result-date-3').val();
         pid = $(this).val();
         labdraftissue = false;
         documentissue = false;
@@ -422,6 +520,34 @@ $(document).ready(function () {
                 }
             })
 
+            labdraftissue = true;
+        }
+        else if($('#collection-date-3').val() != ''){
+            $.ajax({
+                type: 'POST',
+                url: 'php_processes/insert-ongoing-test.php',
+                data: {
+                    pname: pname,
+                    testType: testType3,
+                    collectionDate: collectionDate3,
+                    resultDate: resultDate3,
+                    pid: pid,
+                    issuedByMedtech: 'true',
+                    correspondingBill: $('.bill-num').html()
+                },
+                success: function(result){
+                    $('#generate-document').prop('disabled', true);
+                    $('.add-document-overlay').fadeOut();
+                    $('.medtech-draft-container-2').fadeOut();
+                    $('#portal-registered, #portal-registered-3').prop('checked', false);
+                    $('#patient-search').val('');
+                    $('#patient-search-2, #patient-search-3').val('');
+                    $('#test-type, #test-type-3').val('');
+                    $('#collection-date, #collection-date-3').val('');
+                    $('#result-date, #result-date-3').val('');
+                    clearInterval(intervalOngoing)
+                }
+            })
             labdraftissue = true;
         }
         else {
@@ -534,6 +660,10 @@ $(document).ready(function () {
                                 'Your payment was successful!',
                                 'success'
                             )
+
+                            setTimeout(function(){
+                                window.location.reload()
+                            }, 3000)
                         })
                     },
                     onCancel: function (data) {

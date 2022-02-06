@@ -24,7 +24,6 @@ while ($row = mysqli_fetch_array($result)) {
     $file_ext = $row['file_ext'];
 }
 
-// INSERT INTO DOCUMENTS TABLE
 $query = "INSERT INTO other_documents (patient_id, docnum, pdf_file, date_uploaded, file_ext) 
 VALUES ('$patient_id', '$restore_id', '$pdf_file', '$date_uploaded', '$file_ext')";
 mysqli_query($conn, $query);

@@ -74,9 +74,9 @@
                 </div>
                 <form class='book-content' target='dummyframe'>
                     <div class='row-0'>
-                        <input type='text' class='date-time-input appointment-date-time' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date (Required)" autocomplete='off'>
+                        <input type='text' class='date-time-input appointment-date-time' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date (Required)" style = 'border: 1px solid var(--blue);' autocomplete='off'>
                         <div>
-                            <input type='text' id='appointment-time' placeholder='Enter Appointment Time (Required)' autocomplete='off' readonly>
+                            <input type='text' id='appointment-time' placeholder='Enter Appointment Time (Required)' autocomplete='off' style = 'border: 1px solid var(--blue);' readonly>
                             <div id='autocomplete-contain'>
                                 <div class='time-autocomplete'>
                                     <button type='button' id='i09-00-00' class='chosen-time'>9:00 AM</button>
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type='text' maxLength="100" id='chief-complaint' placeholder="Chief Complaint (e.g. Cough, Headache) (Required)" autocomplete="off">
+                        <input type='text' maxLength="100" id='chief-complaint' placeholder="Chief Complaint (e.g. Cough, Headache) (Required)" style = 'border: 1px solid var(--blue);' autocomplete="off">
                     </div>
                     <div class='row-1'>
                         <input type='text' maxLength="4" id='height' placeholder="Height (e.g. 5'4)">
@@ -133,7 +133,7 @@
                         <input type='text' maxLength="2" id='temperature' placeholder="Temperature (in degrees) (e.g. 36)">
                         <input type='text' maxLength="100" id='past-surgery' placeholder="Past Surgery/Hospitalization">
                     </div>
-                    <fieldset class='row-3'>
+                    <fieldset class='row-3' style = 'border: 1px solid var(--blue);'>
                         <legend>Family History (Required)</legend>
                         <div id='family-history-checkboxes'>
                             <div class='inline-block'><input type="checkbox" name="none-family-history" id='none-fam-history' value="None/Unknown"> None/Unknown</div>
@@ -148,7 +148,7 @@
                         <input type='text' maxlength='100' id='others-fam-history' placeholder='(Others) Type Here'>
                     </fieldset>
                     <div class='row-4'>
-                        <fieldset class='row-4-1'>
+                        <fieldset class='row-4-1' style = 'border: 1px solid var(--blue);'>
                             <legend>Allergies (Required)</legend>
                             <div>
                                 <div class='inline-block'><input type="checkbox" name="none-allergies" id='none-allergies' value="None/Unknown"> None/Unknown</div>
@@ -158,7 +158,7 @@
                             <input type='text' maxLength="100" id='others-allergies' placeholder='(Others) Type Here'>
                         </fieldset>
 
-                        <fieldset class='row-4-2'>
+                        <fieldset class='row-4-2' style = 'border: 1px solid var(--blue);'>
                             <legend>Social History (Required)</legend>
                             <div>
                                 <div class='inline-block'><input type="checkbox" name="none-social-history" id='none-social-history' value="None/Unknown"> None/Unknown</div>
@@ -190,7 +190,7 @@
 
         <div class="dim-2">
             <div class="bill-container">
-
+                
             </div>
         </div>
 
@@ -248,12 +248,38 @@
             <div class='appointment-container'>
                 <h3 class='header-table'>
                     <span>Upcoming Appointments</span>
+                    <div class = "reload-book-btns">
+                        <?php
+                            include 'php_processes/db_conn.php';
+
+                            $pid = $_SESSION['patientid'];
+
+                            $query = "SELECT has_appointment FROM user_table WHERE patient_id = '$pid'";
+                            $result = mysqli_query($conn, $query);
+                            $row = mysqli_fetch_array($result);
+
+                            $result2 = mysqli_query($conn, 'SELECT toggle FROM appointment_booking_toggle');
+                            $row2 = mysqli_fetch_array($result2);
+
+                            if ($row2['toggle'] == '0') {
+                                echo "<button id = 'reload'>Reload Tables</button>";
+                            } else if ($row[0] == 1) {
+                                echo "
+                                    <button id = 'reload'>Reload Tables</button>
+                                    <button id='book-appointment' disabled>Book Appointments</button>
+                                ";
+                            } else {
+                                echo "
+                                    <button id = 'reload'>Reload Tables</button>
+                                    <button id='book-appointment'>Book Appointments</button>
+                                ";
+                            }
+                        ?>
+                    </div>
                 </h3>
                 
                 <?php
                     include 'php_processes/db_conn.php';
-                    
-                    $pid = $_SESSION['patientid'];
                     
 
                     $query = "SELECT * FROM appointments WHERE (patient_id = '$pid' AND date(date_and_time) = CURDATE()) AND (status = 'onlinereq' || status = 'pending' || status = 'ongoing')";
@@ -381,31 +407,6 @@
                     <button id='next5'><i class="fas fa-arrow-right fa-lg"></i></button>
                 </div>
                 <!-- <button id='hard-next'>&gt;&gt;</button> -->
-
-                <div>
-                    <?php
-                    $query = "SELECT has_appointment FROM user_table WHERE patient_id = '$patientid'";
-                    $result = mysqli_query($conn, $query);
-                    $row = mysqli_fetch_array($result);
-
-                    $result2 = mysqli_query($conn, 'SELECT toggle FROM appointment_booking_toggle');
-                    $row2 = mysqli_fetch_array($result2);
-
-                    if ($row2['toggle'] == '0') {
-                        echo "<button id = 'reload'>Reload Tables</button>";
-                    } else if ($row[0] == 1) {
-                        echo "
-                            <button id = 'reload'>Reload Tables</button>
-                            <button id='book-appointment' disabled>Book Appointments</button>
-                        ";
-                    } else {
-                        echo "
-                            <button id = 'reload'>Reload Tables</button>
-                            <button id='book-appointment'>Book Appointments</button>
-                        ";
-                    }
-                    ?>
-                </div>
             </div>
 
             <!--END OF SECOND TABLE-->

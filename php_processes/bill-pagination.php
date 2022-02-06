@@ -3,7 +3,7 @@ include 'db_conn.php';
 
 $offset = $_POST['offset'];
 
-$query = "SELECT * FROM bills ORDER BY UNIX_TIMESTAMP(date_issued) DESC LIMIT $offset, 10";
+$query = "SELECT * FROM bills ORDER BY UNIX_TIMESTAMP(bill_num) DESC LIMIT $offset, 10";
 $result = mysqli_query($conn, $query);
 
 

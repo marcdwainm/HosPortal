@@ -24,6 +24,13 @@ $query = "INSERT INTO patients_notifications (patient_id, notif_type, appointmen
 VALUES ('$pid', 'chatroom', '$appnum', '$date', '$appointment_date')";
 mysqli_query($conn, $query);
 
+$to = $email;
+$subject = 'Twin Care Portal | Online Appointment';
+$headers = "Good day, our dear patient!";
+$message = "The doctor has set-up a meeting room. Kindly log in to www.twincareportal.online and join the meeting room.";
+
+mail($to, $subject, $message, $headers);
+
 if ($selected == 'today') {
     $query = "SELECT * FROM appointments WHERE date(date_and_time) = CURDATE() ORDER BY date_and_time ASC LIMIT 0, 5";
 } else if ($selected == 'upcoming') {

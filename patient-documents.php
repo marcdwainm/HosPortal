@@ -132,7 +132,7 @@
                         include 'php_processes/db_conn.php';
                         $pid = $_SESSION['patientid'];
 
-                        $query = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'prescription' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 0, 5";
+                        $query = "SELECT * FROM documents_patient_copy WHERE sent_to = '$pid' AND doc_type = 'prescription' ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 0, 5";
 
                         $result = mysqli_query($conn, $query);
 
@@ -191,7 +191,7 @@
                         include 'php_processes/db_conn.php';
                         $pid = $_SESSION['patientid'];
 
-                        $query = "SELECT * FROM documents WHERE sent_to = '$pid' AND (doc_type = 'labresult' AND paid = '1') ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 0, 5";
+                        $query = "SELECT * FROM documents_patient_copy WHERE sent_to = '$pid' AND (doc_type = 'labresult' AND paid = '1') ORDER BY UNIX_TIMESTAMP(date_uploaded) DESC LIMIT 0, 5";
 
                         $result = mysqli_query($conn, $query);
 

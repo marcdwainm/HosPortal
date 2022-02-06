@@ -7,6 +7,9 @@ $selected = $_POST['selected'];
 $query = "UPDATE appointments SET status = 'appointed' WHERE appointment_num = '$app_num'";
 $result = mysqli_query($conn, $query);
 
+$pid = substr($app_num, -4);
+mysqli_query($conn, "UPDATE user_table SET has_appointment = '0' WHERE patient_id = '$pid'");
+
 if ($selected == 'today') {
     $query = "SELECT * FROM appointments WHERE date(date_and_time) = CURDATE() ORDER BY date_and_time ASC LIMIT 0, 5";
 } else if ($selected == 'upcoming') {

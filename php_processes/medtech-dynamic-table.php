@@ -20,6 +20,8 @@ if (mysqli_num_rows($result) == 0) {
         $estimated_result = $row['estimated_result'];
         $textcolor = '';
 
+        $ongoing_test = $row['html_draft'] == '' ? "<button class = 'upload-ongoing' value = '$doc_num'><i class = 'fas fa-upload'></i></button>" : "<button class = 'edit-draft' value = '$doc_num'><i class='fas fa-edit'></i></button>";
+
         switch ($status) {
             case 'Pending':
                 $textcolor = 'orange-text';
@@ -34,7 +36,7 @@ if (mysqli_num_rows($result) == 0) {
                 <span>$collection_date</span>
                 <span>$estimated_result</span>
                 <div class = 'medtech-btns'>
-                    <button class = 'edit-draft' value = '$doc_num'><i class='fas fa-edit'></i></button>
+                    $ongoing_test
                     <button class = 'delete-draft' value = '$doc_num'><i class='fas fa-trash'></i></button>
                 </div>
             </div>

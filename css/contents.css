@@ -1137,6 +1137,8 @@ legend{
     transition: 0.3s ease-in-out;
 }
 
+
+
 .download{
     padding: 10px;
     background-color: var(--green);
@@ -1282,7 +1284,11 @@ legend{
 
     .reload-book-btns{
         display: flex;
-        flex-direction: column;
+        align-items: center;
+    }
+
+    .reload-book-btns button{
+        padding: 6px;
     }
 
     .reload-book-btns div:nth-child(2){

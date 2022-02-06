@@ -84,9 +84,9 @@
                         </div>
                     </div>
                     <div class='row-0'>
-                        <input type='text' class='date-time-input' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date (Required)" autocomplete='off'>
+                        <input type='text' class='date-time-input' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date (Required)" autocomplete='off' style = 'border: 1px solid var(--blue);'>
                         <div class='app-time'>
-                            <input type='text' id='appointment-time' placeholder='Enter Appointment Time (Required)' autocomplete='off' readonly>
+                            <input type='text' id='appointment-time' placeholder='Enter Appointment Time (Required)' autocomplete='off' style = 'border: 1px solid var(--blue);' readonly>
                             <div id='autocomplete-contain'>
                                 <div class='time-autocomplete'>
                                     <button type='button' id='i09-00-00' class='chosen-time'>9:00 AM</button>
@@ -129,13 +129,13 @@
                             </div>
                         </div>
                         <div class='search-patient'>
-                            <input type='text' id='pname-search' placeholder="Patient's Name (Required)" autocomplete="off">
+                            <input type='text' id='pname-search' placeholder="Patient's Name (Required)" autocomplete="off" style = 'border: 1px solid var(--blue);'>
                             <div id='plist-search'>
                                 <!--Autocomplete search results here-->
                             </div>
                         </div>
                         <input type='text' id='pcontact' placeholder="Contact Number" maxlength="11">
-                        <input type='text' id='chief-complaint' placeholder='Chief Complaint (Required)' autocomplete="off">
+                        <input type='text' id='chief-complaint' placeholder='Chief Complaint (Required)' autocomplete="off" style = 'border: 1px solid var(--blue);'>
                     </div>
                     <div class='row-1'>
                         <input type='text' maxLength="4" id='height' placeholder="Height (e.g. 5'4)" autocomplete='off'>
@@ -150,7 +150,7 @@
                         <input type='text' maxLength="2" id='temperature' placeholder="Temperature (in degrees) (e.g. 36)" autocomplete='off'>
                         <input type='text' maxLength="100" id='past-surgery' placeholder="Past Surgery/Hospitalization" autocomplete='off'>
                     </div>
-                    <fieldset class='row-3'>
+                    <fieldset class='row-3' style = 'border: 1px solid var(--blue);'>
                         <legend>Family History (Required)</legend>
                         <div id='family-history-checkboxes'>
                             <div class='inline-block'><input type="checkbox" name="none-family-history" id='none-fam-history' value="None/Unknown"> None/Unknown</div>
@@ -165,7 +165,7 @@
                         <input type='text' maxlength='100' id='others-fam-history' placeholder='(Others) Type Here'>
                     </fieldset>
                     <div class='row-4'>
-                        <fieldset class='row-4-1'>
+                        <fieldset class='row-4-1' style = 'border: 1px solid var(--blue);'>
                             <legend>Allergies (Required)</legend>
                             <div>
                                 <div class='inline-block'><input type="checkbox" name="none-allergies" id='none-allergies' value="None/Unknown"> None/Unknown</div>
@@ -175,7 +175,7 @@
                             <input type='text' maxLength="100" id='others-allergies' placeholder='(Others) Type Here'>
                         </fieldset>
 
-                        <fieldset class='row-4-2'>
+                        <fieldset class='row-4-2' style = 'border: 1px solid var(--blue);'>
                             <legend>Social History (Required)</legend>
                             <div>
                                 <div class='inline-block'><input type="checkbox" name="none-social-history" id='none-social-history' value="None/Unknown"> None/Unknown</div>
@@ -272,6 +272,7 @@
 
         <div class='employee-contents'>
             <div class='calendar-legend'>
+            <button id='see-all-appt'>Add an Appointment</button>
                 <div class='legends'>
                     <div class="legend-appointed">
                         <div></div>
@@ -424,7 +425,6 @@
                 </div>
                 <div>
                     <button type='button' id='reload-tbl' value='today'>Reload Table</button>
-                    <button id='see-all-appt'>Add an Appointment</button>
                 </div>
             </div>
         </div>

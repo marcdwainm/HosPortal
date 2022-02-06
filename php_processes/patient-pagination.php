@@ -34,31 +34,31 @@ if (mysqli_num_rows($result) > 0) {
 
 
         echo "
-                            <div class='e-contents-patients'>
-                                <div class = 'patient-details'>
-                                    <span class = 'patient-fullname'>$fullname</span>
-                                    <span>$sex</span>
-                                    <span>$age</span>
-                                    <span>$contact</span>
+                        <div class='e-contents-patients'>
+                            <div class = 'patient-details'>
+                                <span class = 'patient-fullname'>$fullname</span>
+                                <span>$sex</span>
+                                <span>$age</span>
+                                <span>$contact</span>
+                                <div class = 'progress-and-del'>
+                                    <button class = 'patient-progress-btn' value = '$pid'>Records</button>";
+                                echo "</div>
+                            </div>
+                            <div class = 'hidden-patient-progress-div'>
+                                <i class='fas fa-angle-double-down center-i'></i>
+                                <div class = 'patient-progress-header'>
+                                    <h2>SOAP Notes</h2>
                                     <div>
-                                        <button class = 'patient-progress-btn' value = '$pid'>Records</button>
+                                        <button class = 'create-new-soap'>Create New SOAP <i class='far fa-plus-square'></i></button>
                                     </div>
                                 </div>
-                                <div class = 'hidden-patient-progress-div'>
-                                    <i class='fas fa-angle-double-down center-i'></i>
-                                    <div class = 'patient-progress-header'>
-                                        <h2>SOAP Notes</h2>
-                                        <div>
-                                            <button class = 'create-new-soap'>Create New SOAP <i class='far fa-plus-square'></i></button>
-                                        </div>
+                                <div class = 'soap-table'>
+                                    <div class = 'soap-table-header'>
+                                        <span>Date Created</span>
+                                        <span>Appointment Date</span>
+                                        <span></span>
                                     </div>
-                                    <div class = 'soap-table'>
-                                        <div class = 'soap-table-header'>
-                                            <span>Date Created</span>
-                                            <span>Appointment Date</span>
-                                            <span></span>
-                                        </div>
-                                        <div class = 'soap-table-contents' id = 'patient$pid'>";
+                                    <div class = 'soap-table-contents' id = 'patient$pid'>";
 
         //SOAP TABLE FOR THE SELECTED PATIENT
         $query_nest = "SELECT * FROM soap_notes WHERE patient_id = '$pid' ORDER BY UNIX_TIMESTAMP(date_created) DESC";
@@ -100,12 +100,104 @@ if (mysqli_num_rows($result) > 0) {
                                 </div>";
 
 
+         //--------------------Prescriptions--------------------
+                    
+
+         echo "
+         <div class = 'patient-progress-header'>
+             <h2>Prescriptions</h2>
+         </div>
+
+         <div class = 'soap-table'>
+             <div class = 'other-docs-table-header'>
+                 <span>Date Uploaded</span>
+                 <span></span>
+             </div>
+             <div class = 'other-docs-table-contents' id = 'patient-presc-$pid'>";
+
+             $query2 = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'prescription'";
+             $result2 = mysqli_query($conn, $query2);
+
+             if(mysqli_num_rows($result2) > 0){
+                 while($row = mysqli_fetch_array($result2)){
+                     $docnum = $row['doc_num'];
+                     $date_uploaded = strtotime($row['date_uploaded']);
+                     $date_uploaded = date("M d, Y / h:i A", $date_uploaded);
+
+                     echo "  
+                         <div class = 'other-docs-table-content'>
+                             <span>$date_uploaded</span>
+                             <div>
+                                 <div class = 'soap-btns'>
+                                     <button class = 'view-doc' value = '$docnum'><i class='far fa-eye fa-lg'></i></button>
+                                     <button class = 'archive-presc' value = '$docnum'><i class='fas fa-archive fa-lg'></i></button>
+                                 </div>
+                             </div>
+                         </div>
+                     ";
+                 }
+             }
+             else{
+                 echo '<span class = "no-appointments font-size-bigger">No records yet</span>';
+             }
+
+             echo" 
+             </div>
+         </div>
+     ";
+     //------------------End of Prescriptions------------------
+
+
+     //--------------------Lab results--------------------
+         echo "
+         <div class = 'patient-progress-header'>
+             <h2>Lab Results</h2>
+         </div>
+
+         <div class = 'soap-table'>
+             <div class = 'other-docs-table-header'>
+                 <span>Date Uploaded</span>
+                 <span></span>
+             </div>
+             <div class = 'other-docs-table-contents' id = 'patient-lab-$pid'>";
+
+             $query2 = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'labresult'";
+             $result2 = mysqli_query($conn, $query2);
+
+             if(mysqli_num_rows($result2) > 0){
+                 while($row = mysqli_fetch_array($result2)){
+                     $docnum = $row['doc_num'];
+                     $date_uploaded = strtotime($row['date_uploaded']);
+                     $date_uploaded = date("M d, Y / h:i A", $date_uploaded);
+
+                     echo "  
+                         <div class = 'other-docs-table-content'>
+                             <span>$date_uploaded</span>
+                             <div>
+                                 <div class = 'soap-btns'>
+                                     <button class = 'view-doc' value = '$docnum'><i class='far fa-eye fa-lg'></i></button>
+                                     <button class = 'archive-lab' value = '$docnum'><i class='fas fa-archive fa-lg'></i></button>
+                                 </div>
+                             </div>
+                         </div>
+                     ";
+                 }
+             }
+             else{
+                 echo '<span class = "no-appointments font-size-bigger">No records yet</span>';
+             }
+
+             echo" 
+             </div>
+         </div>
+     ";
+     //------------------End of Lab results------------------
+
+
+
         //---------------------------NEW TABLEEEE------------------------------------------------------
         echo "<div class = 'patient-progress-header'>
                             <h2>Other Documents</h2>
-                            <div>
-                                <button class = 'upload-new-other-doc'>Upload New Document <i class='fas fa-upload'></i></button>
-                            </div>
                         </div>
                         <div class = 'soap-table'>
                             <div class = 'other-docs-table-header'>

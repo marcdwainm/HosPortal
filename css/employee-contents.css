@@ -1321,6 +1321,15 @@ legend{
     box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
 }
 
+.e-contents-patients button{
+    margin: 0 3px;
+}
+
+.progress-and-del > .del{
+    padding: 8px;
+    width: 20%;
+}
+
 .e-contents-patients button:hover{
     border: 2px solid var(--green);
     color: var(--green);
@@ -1335,6 +1344,9 @@ legend{
     display: none;
     padding: 30px 50px;
     padding-top: 20px;
+    -webkit-box-shadow: inset 0px 0px 25px -8px rgba(0,0,0,0.22);
+    -moz-box-shadow: inset 0px 0px 25px -8px rgba(0,0,0,0.22);
+    box-shadow: inset 0px 0px 25px -8px rgba(0,0,0,0.22);
 }
 
 .patient-progress-header {
@@ -2097,6 +2109,15 @@ legend{
     display: none;
 }
 
+#patient-error-3{
+    width: 100%;
+    text-align: center;
+    color: red;
+    font-size: 14px;
+    padding-bottom: 15px;
+    display: none;
+}
+
 .patient-error2{
     width: 100%;
     text-align: center;
@@ -2117,10 +2138,6 @@ legend{
 
 #file{
     display: none;
-}
-
-#file-other-doc{
-
 }
 
 #patient-name{
@@ -2186,6 +2203,26 @@ legend{
 .calendar-legend{
     width: 100%;
     margin-bottom: 50px; 
+}
+
+.calendar-legend button{
+    padding: 10px 10px;
+    border: none;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    font-weight: 800;
+    cursor: pointer;
+    background: white;
+    border-radius: 5px;
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    transition: 0.2s ease-in-out;
+}
+
+.calendar-legend button:hover{
+    border: 2px solid var(--green);
+    color: var(--green);
 }
 
 #calendar{
@@ -2557,6 +2594,27 @@ border-bottom: none;
     color: var(--green);
 }
 
+.issue-a-bill{
+    padding: 10px 10px;
+    border: none;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    font-weight: 800;
+    cursor: pointer;
+    background: white;
+    border-radius: 5px;
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    transition: 0.2s ease-in-out;
+}
+
+.issue-a-bill:hover{
+    transition: 0.2s ease-in-out;
+    border-color: var(--green);
+    color: var(--green);
+}
+
 .bill-content{
     width: 100%;
     height: 100%;
@@ -2667,6 +2725,40 @@ border-bottom: none;
 }
 
 
+.issue-bill-autocomplete{
+    width: 100%;
+    position: relative;
+}
+
+.issue-bill-autocomplete input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-bottom: -10px;
+    outline: none;
+}
+
+.issue-bill-autocomplete div{
+    width: 100%;
+    max-height: 180px;
+    overflow-y: scroll;
+    margin-top: 10px;
+    position: absolute;
+    border: 1px solid var(--grayoutline);
+    background: white;
+    color: black;
+    display: none;
+}
+
+.medtech-btns > button:hover{
+    color: var(--blue);
+    border: 2px solid var(--blue);
+}
+
+#create-draft{
+    margin-right: 10px;
+}
 
 @media (max-width: 1199.98px) {
     .view-triage-container{
@@ -2675,6 +2767,20 @@ border-bottom: none;
 
     .view-bill-doctor{
         margin-bottom: 5px;
+    }
+
+    .calendar-legend button{
+        margin-bottom: 20px;
+    }
+
+    .progress-and-del > .del{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .issue-bill-container{
+        width: 70%;
     }
 }
 
@@ -2851,6 +2957,17 @@ border-bottom: none;
 
     .medtech-btns button{
         padding: 5px;
+    }
+
+    .header-intro{
+        padding-left: 30px;
+    }
+
+    .progress-and-del > .del{
+        padding: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 

@@ -23,6 +23,13 @@ if (isset($_POST['issuedByMedtech'])) {
     //IF ISSUED BY MEDTECH NOTIFY PATIENT ABOUT BILL ISSUE
     mysqli_query($conn, "INSERT INTO patients_notifications (emp_id, patient_id, notif_type, date_notified, seen) 
     VALUES ('$emp_id', '$pid', 'draftbill', '$date_uploaded', '0')");
+
+    $to = $email;
+    $subject = 'Twin Care Portal | Laboratory Testing';
+    $headers = "Good day, our dear patient!";
+    $message = "Twin Care has issued you a bill for your laboratory testing. To proceed with your payment, kindly visit www.twincareportal.online, or contact 0925-734-7552 to further discuss your preferred mode of payment.";
+
+    mail($to, $subject, $message, $headers);
 }
 
 //IF PATIENT IS PORTAL REGISTERED

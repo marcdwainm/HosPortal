@@ -5,7 +5,6 @@ include 'db_conn.php';
 $docnum = $_POST['docnum'];
 $doctype = $_POST['doctype'];
 
-//GET DETAILS OF PRESCRIPTION
 $query = "SELECT * FROM documents WHERE doc_num = '$docnum'";
 $result = mysqli_query($conn, $query);
 $pdf_file = "";

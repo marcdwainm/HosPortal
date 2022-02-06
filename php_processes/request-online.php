@@ -38,6 +38,13 @@ else {
     $query = "INSERT INTO patients_notifications (emp_id, patient_id, notif_type, appointment_num, date_notified, appointment_date) 
     VALUES ('$emp_id', '$userid', 'onlinereq', '$appnum', '$date', '$app_date')";
     mysqli_query($conn, $query);
+
+    $to = $email;
+    $subject = 'Twin Care Portal | Online Appointment Request';
+    $headers = "Good day, our dear patient!";
+    $message = "The doctor has requested you for an appointment to be conducted online. Kindly visit www.twincareportal.online to accept or decline the doctor's request.";
+
+    mail($to, $subject, $message, $headers);
 }
 
 //UPDATE TABLE

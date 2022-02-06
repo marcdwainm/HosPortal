@@ -1,6 +1,18 @@
 $(document).ready(function () {
     var interval;
     var directUploadInterval;
+    var intervalOngoing;
+
+    // DYNAMIC UPDATE TABLE
+    setInterval(function(){
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/medtech-dynamic-table.php',
+            success: function(result){
+                $('.lab-tbl').html(result)
+            }
+        })
+    }, 500)
 
     $('#create-draft').on('click', function () {
         $('.add-document-overlay').fadeIn();
@@ -20,6 +32,23 @@ $(document).ready(function () {
         clearInterval(interval)
     })
 
+    $('.exit-add-ongoing').on('click', function () {
+        $('.add-document-overlay').fadeOut();
+        $('.medtech-draft-container-2').fadeOut();
+        $('#portal-registered-3').prop('checked', false);
+        $('#patient-search-3').val('');
+        $('#test-type-3').val('');
+        $('#collection-date-3').val('');
+        $('#result-date-3').val('');
+        clearInterval(intervalOngoing)
+    })
+
+    $('#add-ongoing').on('click', function(){
+        $('.add-document-overlay').fadeIn();
+        $('.medtech-draft-container-2').fadeIn();
+        intervalOngoing = setInterval(checkInputs3, 100)
+    })
+
     $('#upload-document').on('click', function () {
         $('.add-document-overlay').fadeIn();
         $('.direct-upload-medtech').fadeIn();
@@ -30,7 +59,7 @@ $(document).ready(function () {
                 disabled = true;
             }
             if ($('#patient-search-2').val() == '' || $('#test-type-2').val() == '') {
-                disabled = true
+                disabled = true                
             }
             if ($('#portal-registered-2').is(':checked') && $('#generate-document-2').val() == '0000') {
                 disabled = true;
@@ -59,6 +88,7 @@ $(document).ready(function () {
         $('#file-to-database').hide();
         $('#upload-from-device').show();
         $('#file').val(null)
+        $('.patient-error2').hide()
     })
 
 
@@ -125,6 +155,198 @@ $(document).ready(function () {
         }
     })
 
+    //PATIENT SEARCHING 3
+    $('#patient-search-3').on('keyup', function () {
+        keyword = $(this).val();
+        $('#add-ongoing-test').val('0000')
+
+        if ($('#portal-registered-3').is(':checked')) {
+            $.ajax({
+                type: 'POST',
+                url: 'php_processes/search.php',
+                data: {
+                    query: keyword
+                },
+                success: function (result) {
+                    if (keyword == '') {
+                        $('.autocomplete-3').hide()
+                        $('#patient-error-3').hide();
+                    } else if (result == '') {
+                        $('.autocomplete-3').hide()
+                        $('#patient-error-3').show();
+                    } else {
+                        $('.autocomplete-3').show()
+                        $('.autocomplete-3').html(result);
+                        $('#patient-error-3').show();
+                    }
+                }
+            })
+        }
+        else {
+            $('.p-name-documents-autocomplete').hide()
+        }
+    })
+
+    $('#portal-registered-3').on('click', function(){
+        if($(this).is(':checked')){
+            $('.autocomplete-3').show()
+        }
+    })
+
+    //IF ONGOING TEST ADD
+    $('#add-ongoing-test').on('click', function () {
+        pname = $('#patient-search-3').val();
+        testType = $('#test-type-3').val();
+        collectionDate = $('#collection-date-3').val();
+        resultDate = $('#result-date-3').val();
+        pid = $(this).val();
+        $('#issue-bill-medtech').val(pid)
+
+        if (pid == '0000') {
+            $.ajax({
+                type: 'POST',
+                url: 'php_processes/insert-ongoing-test.php',
+                data: {
+                    pname: pname,
+                    testType: testType,
+                    collectionDate: collectionDate,
+                    resultDate: resultDate,
+                    pid: pid
+                },
+                success: function (result) {
+                    $('#generate-document').prop('disabled', true);
+                    $('.add-document-overlay').fadeOut();
+                    $('.medtech-draft-container-2').fadeOut();
+                    $('#portal-registered, #portal-registered-3').prop('checked', false);
+                    $('#patient-search').val('');
+                    $('#patient-search-2, #patient-search-3').val('');
+                    $('#test-type, #test-type-3').val('');
+                    $('#collection-date, #collection-date-3').val('');
+                    $('#result-date, #result-date-3').val('');
+                    clearInterval(intervalOngoing)
+                }
+            })
+        }
+        //IF PATIENT IS REGISTERED, ASK FIRST IF BILL
+        else {
+            Swal.fire({
+                title: 'Issue a bill?',
+                icon: 'question',
+                text: 'Before uploading, you must agree/disagree if the patient shall pay for the lab result',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Issue',
+                denyButtonText: `Don't Issue`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // IF CONFIRMED, DISPLAY BILL ISSUE WINDOW
+                    appnum = pid;
+                    $('#issue-bill-lab').val(appnum)
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/get-patient-info.php',
+                        data: {
+                            appointmentNum: appnum,
+                            fromLabRes: 'true'
+                        },
+                        success: function (result) {
+                            $('.issue-details').html(result)
+                        }
+                    })
+                    $('.dim-4').fadeIn()
+                } else if (result.isDenied) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/insert-ongoing-test.php',
+                        data: {
+                            pname: pname,
+                            testType: testType,
+                            collectionDate: collectionDate,
+                            resultDate: resultDate,
+                            pid: pid
+                        },
+                        success: function (result) {
+                            $('#generate-document').prop('disabled', true);
+                            $('.add-document-overlay').fadeOut();
+                            $('.medtech-draft-container-2').fadeOut();
+                            $('#portal-registered, #portal-registered-3').prop('checked', false);
+                            $('#patient-search').val('');
+                            $('#patient-search-2, #patient-search-3').val('');
+                            $('#test-type, #test-type-3').val('');
+                            $('#collection-date, #collection-date-3').val('');
+                            $('#result-date, #result-date-3').val('');
+                            clearInterval(intervalOngoing)
+                        }
+                    })
+
+                    Swal.fire(
+                        'Success!',
+                        'Ongoing Lab Test has been added!',
+                        'success'
+                    )
+                }
+            })
+        }
+    })
+
+    globalFullname = ""
+    //IF ONGOING TEST UPLOAD\
+    $(document).on('click', '.upload-ongoing', function(){
+        $('.add-document-overlay').fadeIn();
+        $('.upload-ongoing-window').fadeIn();
+        let id = $(this).val()
+        $('#upload-ongoing-btn').val(id)
+        globalFullname = $(this).parent().parent().find('span:first-child').html()
+    })
+
+    
+    $(document).on('change', '#file-ongoing', function(){
+        if(this.files[0].size > 5242880){
+            this.value = "";
+            $('.patient-error2').show();
+            $('#upload-ongoing-btn').prop('disabled', true)
+         }
+         else{
+             $('.patient-error2').hide();
+             $('#upload-ongoing-btn').prop('disabled', false);
+            }
+    })
+
+    $(document).on('click', '.exit-upload-ongoing', function(){
+        $('.add-document-overlay').fadeOut();
+        $('.upload-ongoing-window').fadeOut();
+    })
+    
+    $(document).on('click', '#upload-ongoing-btn', function(){
+        let docnum = $(this).val()
+        let base64 = base64String;
+        let extension = fileExt;
+        let fullname = globalFullname
+        
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/update-ongoing.php',
+            data:{
+                doc_num: docnum,
+                base64: base64,
+                file_ext: extension,
+                fullname: fullname
+            },
+            success: function(result){
+                $('.add-document-overlay').fadeOut();
+                $('.upload-ongoing-window').fadeOut();
+                $('.lab-tbl-2').html(result);
+                Swal.fire(
+                    'Success!',
+                    'The laboratory result has been uploaded! The patient will be notified.',
+                    'success'
+                  )
+            }
+        })
+    })
+
+
     //IF AUTOCOMPLETE BUTTON CLICKED
     $(document).on('click', '.search-results-medtech', function () {
         pid = $(this).val();
@@ -151,7 +373,9 @@ $(document).ready(function () {
         pid = $(this).val();
 
         $('.autocomplete-2').hide();
+        $('.autocomplete-3').hide();
         $('#generate-document-2').val(pid);
+        $('#add-ongoing-test').val(pid)
 
         $.ajax({
             type: 'POST',
@@ -162,9 +386,11 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 $('#patient-search-2').val(data.fullname)
+                $('#patient-search-3').val(data.fullname)
                 $('#upload-from-device').val(pid)
                 $('#file-to-database').val(pid)
                 $('#patient-error-2').hide();
+                $('#patient-error-3').hide();
             }
         })
     })
@@ -200,8 +426,17 @@ $(document).ready(function () {
     })
 
     $('#file').on('change', function () {
-        $('#upload-from-device').hide();
-        $('#file-to-database').show();
+        if(this.files[0].size > 5242880){
+            this.value = "";
+            $('.patient-error2').show()
+            $('#upload-from-device').show();
+            $('#file-to-database').hide();
+         }
+         else{
+            $('.patient-error2').hide()
+            $('#upload-from-device').hide();
+            $('#file-to-database').show();
+         }
     })
 
     $('#generate-document-2').on('click', function () {
@@ -226,6 +461,7 @@ $(document).ready(function () {
     base64String = "";
     fileExt = "";
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    document.getElementById('file-ongoing').addEventListener('change', handleFileSelect, false);
 
     function handleFileSelect(evt) {
         var f = evt.target.files[0]; // FileList object
@@ -505,6 +741,33 @@ $(document).ready(function () {
         }
 
         $('#generate-document').prop('disabled', empty);
+    }
+
+    function checkInputs3() {
+        empty = false;
+
+        input1 = $('#patient-search-3').val();
+        input2 = $('#test-type-3').val();
+        input3 = $('#collection-date-3').val();
+        input4 = $('#result-date-3').val();
+
+        if (input1 == '' || input2 == '' || input3 == '' || input4 == '') {
+            empty = true;
+        }
+
+        if(!$('#portal-registered-3').is(':checked')){
+            $('#add-ongoing-test').val('0000')
+        }
+
+        if ($('#portal-registered-3').is(':checked') && $('#add-ongoing-test').val() == '0000') {
+            empty = true;
+        }
+
+        if ($('#patient-error-3').css('display') != 'none') {
+            empty = true;
+        }
+
+        $('#add-ongoing-test').prop('disabled', empty);
     }
 
     $(document).on('click', '.edit-draft', function () {

@@ -53,6 +53,41 @@
         </div>
     </div>
 
+    <div class="dim-4">
+        <div class='issue-bill-container'>
+            <div class='book-header-exit'>
+                <span>Bill Issuing</span>
+                <span class='exit' id='exit-issue'>X</span>
+            </div>
+            <div class="issue-details" style = "width: 100%;">
+                <div class = "issue-bill-autocomplete" style = 'width: 100%;'>
+                    <input type='text' class = 'bill-manual-input' placeholder="Enter Patient's Name" autocomplete="off">
+                    <div class = "bill-manual-autocomplete">
+                        <!--Ajax results-->
+                    </div>
+                </div>
+            </div>
+            <div class="issue-fillup">
+                <button id='add-bill-item'>Add Item</button>
+                <div class="fill-up-fields">
+                    <div class='fill-up-field'>
+                        <input type='text' placeholder='Enter a description' class='fill-up-item'>
+                        <input type='number' placeholder='Enter price' class='fill-up-price'>
+                        <button class='delete-item'><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="total-and-button">
+                <div>
+                    <b>Total Due:</b>
+                    <span>PHP</span>
+                    <span class='total-price'>0.00</span>
+                </div>
+                <button type='button' id='issue-bill-manual' disabled>Issue Bill</button>
+            </div>
+        </div>
+    </div>
+
     <div class='background-container'>
 
         <div class='employee-contents margin-top'>
@@ -60,6 +95,7 @@
             <h1>Bills</h1>
             <div class='e-contents-header'>
                 <h2>History</h2>
+                <button class = 'issue-a-bill'>Issue a Bill</button>
             </div>
 
             <div class='e-contents-table-patients'>
@@ -77,7 +113,7 @@
                     <?php
                     include 'php_processes/db_conn.php';
 
-                    $query = "SELECT * FROM bills ORDER BY UNIX_TIMESTAMP(date_issued) DESC LIMIT 0, 10";
+                    $query = "SELECT * FROM bills ORDER BY UNIX_TIMESTAMP(bill_num) DESC LIMIT 0, 10";
                     $result = mysqli_query($conn, $query);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -135,5 +171,7 @@
 <script src='js/navbar.js'></script>
 <script src='js/patient-list.js'></script>
 <script src="js/notification-doc.js"></script>
+<script src='js/billing.js'></script>
+<script src="js/doctor-documents.js"></script>
 
 </html>

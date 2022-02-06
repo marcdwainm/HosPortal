@@ -6,6 +6,7 @@ $base64 = $_POST['base64'];
 $doc_type = $_POST['doctype'];
 $sent_to = $_POST['sentTo'];
 $doc_num = isset($_POST['billNum']) ? $_POST['billNum'] : date('Ymdhis', time()) . $sent_to;
+echo $doc_num;
 $date_uploaded = date('Y-m-d H:i:s', time());
 $file_ext = $_POST['fileExt'];
 $emp_id = $_SESSION['emp_id'];
@@ -32,10 +33,6 @@ if ($sent_to == '0000') {
 VALUES('$doc_num', '$doc_type', '$base64', '0000', '$p_name', '$date_uploaded', '$file_ext', '$paid_val')";
 
     $result = mysqli_query($conn, $query);
-
-    if ($result === false) {
-        echo "Error while uploading the file: " . mysqli_error($conn);
-    }
 } else {
     $query = "SELECT * FROM user_table WHERE patient_id = '$sent_to'";
 
@@ -49,23 +46,31 @@ VALUES('$doc_num', '$doc_type', '$base64', '0000', '$p_name', '$date_uploaded', 
     }
 
     $p_name = $fullname;
-    $query = "INSERT INTO documents (doc_num, doc_type, pdf_file, sent_to, patient_name, date_uploaded, emp_id, file_ext, paid) 
-VALUES('$doc_num', '$doc_type', '$base64', '$sent_to', '$p_name', '$date_uploaded', '$emp_id', '$file_ext', '$paid_val')";
+    $query = "INSERT INTO documents (doc_num, doc_type, pdf_file, sent_to, patient_name, date_uploaded, emp_id, file_ext, paid) VALUES('$doc_num', '$doc_type', '$base64', '$sent_to', '$p_name', '$date_uploaded', '$emp_id', '$file_ext', '$paid_val')";
     $result = mysqli_query($conn, $query);
 
-    if (!$result) {
-        echo "Error while uploading the file: " . mysqli_error($conn);
-    }
+    $query = "INSERT INTO documents_patient_copy (doc_num, doc_type, pdf_file, sent_to, patient_name, date_uploaded, emp_id, file_ext, paid) VALUES('$doc_num', '$doc_type', '$base64', '$sent_to', '$p_name', '$date_uploaded', '$emp_id', '$file_ext', '$paid_val')";
+    $result = mysqli_query($conn, $query);
 
     if (isset($_POST['issuedByMedtech'])) {
         //IF ISSUED BY MEDTECH NOTIFY PATIENT ABOUT BILL ISSUE
         mysqli_query($conn, "INSERT INTO patients_notifications (emp_id, patient_id, notif_type, date_notified, seen, with_bill) 
         VALUES ('$emp_id', '$sent_to', '$doc_type', '$date_uploaded', '0', '$withBill')");
+        
     } else {
         $query = "INSERT INTO patients_notifications (patient_id, notif_type, document_num, date_notified, with_bill)
     VALUES  ('$sent_to', '$doc_type', '$doc_num', '$date_uploaded', '$withBill')";
         mysqli_query($conn, $query);
     }
+
+    $docmsg = $doc_type == 'labresult' ? "Lab Result" : "Prescription";
+    $to = $email;
+
+    $subject = "Twin Care Portal | New $docmsg";
+    $headers = "Good day, our dear patient!";
+    $message = "The doctor has sent you a $docmsg. Visit www.twincareportal.online to view your document.";
+
+    mail($to, $subject, $message, $headers);
 }
 
 mysqli_close($conn);

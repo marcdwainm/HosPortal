@@ -11,8 +11,9 @@ $selected = $_POST['selected'];
 $issued_to = substr($bill_num, -4);
 $issued_by = $_SESSION['emp_id'];
 $date_issued = Date("Y-m-d", time());
+$from_online = isset($_POST['fromOnline']) ? '1' : '0';
 
-$corresponding_doc = "";
+$corresponding_doc = isset($_POST['correspondingDoc']) ? $_POST['correspondingDoc'] : "";
 if ($_POST['labdraftissue'] == 'true') {
     $query = "SELECT * FROM lab_drafts WHERE corresponding_bill = '$bill_num'";
     $result = mysqli_query($conn, $query);
@@ -22,8 +23,8 @@ if ($_POST['labdraftissue'] == 'true') {
     $corresponding_doc = $docnum;
 }
 
-$query = "INSERT INTO bills (bill_num, corresponding_doc, names, prices, total, issued_to, issued_by, date_issued) 
-VALUES ('$bill_num', '$corresponding_doc', '$names', '$prices', '$total', '$issued_to', '$issued_by', '$date_issued')";
+$query = "INSERT INTO bills (bill_num, corresponding_doc, names, prices, total, issued_to, issued_by, date_issued, tied_to_online_appt) 
+VALUES ('$bill_num', '$corresponding_doc', '$names', '$prices', '$total', '$issued_to', '$issued_by', '$date_issued', '$from_online')";
 
 mysqli_query($conn, $query);
 
