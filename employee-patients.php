@@ -322,6 +322,7 @@
                                                 <div>
                                                     <div class = 'soap-btns'>
                                                         <button class = 'view-doc' value = '$docnum'><i class='far fa-eye fa-lg'></i></button>
+                                                        <button class = 'download-pdf' value = '$docnum'><i class='fas fa-download'></i></button>
                                                         <button class = 'archive-presc' value = '$docnum'><i class='fas fa-archive fa-lg'></i></button>
                                                     </div>
                                                 </div>
@@ -368,6 +369,7 @@
                                                 <div>
                                                     <div class = 'soap-btns'>
                                                         <button class = 'view-doc' value = '$docnum'><i class='far fa-eye fa-lg'></i></button>
+                                                        <button class = 'download-pdf' value = '$docnum'><i class='fas fa-download'></i></button>
                                                         <button class = 'archive-lab' value = '$docnum'><i class='fas fa-archive fa-lg'></i></button>
                                                     </div>
                                                 </div>
@@ -416,6 +418,7 @@
                                         <div>
                                             <div class = 'soap-btns'>
                                                 <button class = 'view-other' value = '$doc_num'><i class='far fa-eye fa-lg'></i></button>
+                                                <button class = 'download-other' value = '$doc_num'><i class='fas fa-download'></i></button>
                                                 <button class = 'archive-other' value = '$doc_num'><i class='fas fa-archive fa-lg'></i></button>
                                             </div>
                                         </div>
@@ -456,4 +459,5 @@
 <script src='js/navbar.js'></script>
 <script src='js/patient-list.js'></script>
 <script src="js/notification-doc.js"></script>
+
 </html>

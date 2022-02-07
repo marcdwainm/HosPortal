@@ -24,7 +24,10 @@ $query = "INSERT INTO patients_notifications (patient_id, notif_type, appointmen
 VALUES ('$pid', 'chatroom', '$appnum', '$date', '$appointment_date')";
 mysqli_query($conn, $query);
 
-$to = $email;
+$result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$pid'");
+$row = mysqli_fetch_array($result);
+
+$to = $row['email'];
 $subject = 'Twin Care Portal | Online Appointment';
 $headers = "Good day, our dear patient!";
 $message = "The doctor has set-up a meeting room. Kindly log in to www.twincareportal.online and join the meeting room.";

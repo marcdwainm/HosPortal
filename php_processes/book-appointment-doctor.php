@@ -63,7 +63,10 @@ if (mysqli_num_rows($result) > 0) {
             VALUES('$pid', 'appointment', '$appointmentnum', '$date_booked', '$appointment_date_time')";
             mysqli_query($conn, $query);
 
-            $to = $email;
+            $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$pid'");
+            $row = mysqli_fetch_array($result);
+        
+            $to = $row['email'];
             $subject = 'Twin Care Portal | New Appointment';
             $headers = "Good day, our dear patient!";
             $message = "The doctor has booked an appointment for you. Kindly visit www.twincareportal.online for more details.";

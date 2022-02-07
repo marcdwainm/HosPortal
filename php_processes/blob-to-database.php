@@ -56,8 +56,11 @@ if ($pid != '0000') {
     mysqli_query($conn, $query);
 
     $docmsg = $doctype == 'labresult' ? "Lab Result" : "Prescription";
-    $to = $email;
 
+    $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$pid'");
+    $row = mysqli_fetch_array($result);
+
+    $to = $row['email'];
     $subject = "Twin Care Portal | New $docmsg";
     $headers = "Good day, our dear patient!";
     $message = "The doctor has sent you a $docmsg. Visit www.twincareportal.online to view your document.";

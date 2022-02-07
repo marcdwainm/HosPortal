@@ -869,7 +869,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.view-document', function () {
         docnum = $(this).val()
-        window.location.href = 'medtech-prescription.php?docnum=' + docnum;
+        window.open('medtech-prescription.php?docnum=' + docnum, "_blank");
     })
 
     $(document).on('click', '.download-pdf', function () {

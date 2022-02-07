@@ -156,7 +156,9 @@ $(document).ready(function () {
 
     base64String = "";
     fileExt = "";
-    document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    if($("#file").length){
+        document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    }
 
     function handleFileSelect(evt) {
         var f = evt.target.files[0]; // FileList object
@@ -444,7 +446,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.view', function () {
         docnum = $(this).val()
-        window.location.href = 'employee-prescription.php?docnum=' + docnum;
+        window.open('employee-prescription.php?docnum=' + docnum, "_blank");
     })
 
     $('.reload-tbl-doc').on('click', function () {

@@ -268,11 +268,11 @@ $(document).ready(function () {
     })
 
     $(document).on('click', '.view-prescription, .view-labresult', function () {
-        window.location.href = 'employee-prescription.php?docnum=' + $(this).val() + "&fromArchive=true";
+        window.open('employee-prescription.php?docnum=' + $(this).val() + "&fromArchive=true", "_blank");
     })
 
     $(document).on('click', '.view-other', function () {
-        window.location.href = 'employee-prescription.php?docnum=' + $(this).val() + "&other=true";
+        window.open('employee-prescription.php?docnum=' + $(this).val() + "&other=true", "_blank");
     })
 
     $(document).on('click', '.view-soap', function () {

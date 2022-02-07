@@ -484,18 +484,27 @@ $(document).ready(function () {
                     data: { app_num: appointmentNum },
                     success: function (result) {
                         $("#appt-table-all").html(result)
-                    }
-                })
 
-                $.ajax({
-                    type: "POST",
-                    url: 'php_processes/table-live-update-patient-first.php',
-                    success: function (result) {
-                        $('#appt-table').html(result)
-                        console.log(result)
-                        if (result == "<span class = 'no-appointments'>You currently have no appointments</span>") {
-                            $('#book-appointment').prop('disabled', false);
-                        }
+
+                        // BUGGED //
+                        $.ajax({
+                            type: "POST",
+                            url: 'php_processes/table-live-update-patient-first.php',
+                            success: function (result) {
+                                $('#appt-table').html(result)
+                                console.log(result)
+                                if (result == "<span class = 'no-appointments'>You currently have no appointments</span>") {
+                                    $('#book-appointment').prop('disabled', false);
+                                }
+                            }
+                        })
+                        // BUGGED END //
+
+                        //IRELOAD NALANG PARA DI MAKITA BUG//
+                        setTimeout(function(){
+                            window.location.reload()
+                        }, 2000)
+
                     }
                 })
 
@@ -504,6 +513,8 @@ $(document).ready(function () {
                     'Your appointment has been cancelled.',
                     'success'
                 )
+
+
             }
         })
     })

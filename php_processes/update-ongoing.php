@@ -40,7 +40,10 @@ if($pid != '0000'){
 
     $wb = $withBill == '1' ? ' including a bill' : "";
 
-    $to = $email;
+    $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$pid'");
+    $row = mysqli_fetch_array($result);
+
+    $to = $row['email'];
     $subject = 'Twin Care Portal | Laboratory Result';
     $headers = "Good day, our dear patient!";
     $message = "Your lab results are out$wb. Kindly visit www.twincareportal.online to view your document.";

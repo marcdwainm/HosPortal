@@ -64,8 +64,11 @@ VALUES('$doc_num', '$doc_type', '$base64', '0000', '$p_name', '$date_uploaded', 
     }
 
     $docmsg = $doc_type == 'labresult' ? "Lab Result" : "Prescription";
-    $to = $email;
+    
+    $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$sent_to'");
+    $row = mysqli_fetch_array($result);
 
+    $to = $row['email'];
     $subject = "Twin Care Portal | New $docmsg";
     $headers = "Good day, our dear patient!";
     $message = "The doctor has sent you a $docmsg. Visit www.twincareportal.online to view your document.";

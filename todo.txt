@@ -1,0 +1,19 @@
+Update video edit
+
+
+
+
+DONE:
+Appointment fill-up form "save medical history" feature (para di na paulit ulit mag fill-up)
+Download Button in Patient List
+Viewing a document opens a new tab
+Fixed E-mail Notifications
+patient, if appointments in table below are many, not cancelling
+
+
+
+
+GCASH API comes from paymongo
+- Initially, our decision was to integrate GCASH as the payment gateway, but as soon as we researched
+more about it, GCash doesn't provide their own API. BUT Paymongo has an API that can collect GCASH payments.
+It turns out that paymongo requires a business permit, and still wait for around 20 days to be verified.

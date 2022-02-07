@@ -467,7 +467,7 @@ $(document).ready(function () {
     })
 
     $(document).on('click', '.view-other', function () {
-        window.location.href = 'employee-prescription.php?docnum=' + $(this).val() + "&fromOthers=true";
+        window.open('employee-prescription.php?docnum=' + $(this).val() + "&fromOthers=true", "_blank");
     })
 
     $(document).on('click', '.archive-other', function () {
@@ -773,6 +773,70 @@ $(document).ready(function () {
 
     $(document).on('click', '.view-doc', function () {
         docnum = $(this).val()
-        window.location.href = 'employee-prescription.php?docnum=' + docnum;
+        window.open('employee-prescription.php?docnum=' + docnum, "_blank");
+    })
+
+    $(document).on('click', '.download-pdf', function () {
+        docnum = $(this).val();
+
+        Swal.fire(
+            'Disclaimer',
+            'This file is protected by the portal. Upon the download, you are liable of the patients\' confidentiality. Responsibility to prevent unauthorized disclosures of the document shall be a priority.',
+            'warning'
+        ).then((result) => {
+            $.ajax({
+                type: "POST",
+                data: {
+                    docnum: docnum
+                },
+                url: "php_processes/download-prescription.php",
+                success: function (result) {
+                    result = JSON.parse(result);
+                    let base64 = result.base64;
+                    let fileExt = result.file_ext
+
+                    if (!base64.includes('data')) {
+                        base64 = 'data:' + fileExt + ';base64,' + base64;
+                    }
+
+                    var a = document.createElement("a"); //Create <a>
+                    a.href = base64; //Image Base64 Goes here
+                    a.download = result.doctype + "-" + docnum;
+                    a.click(); //Downloaded file
+                }
+            })
+        })
+    })
+
+    $(document).on('click', '.download-other', function(){
+        docnum = $(this).val();
+
+        Swal.fire(
+            'Disclaimer',
+            'This file is protected by the portal. Upon the download, you are liable of the patients\' confidentiality. Responsibility to prevent unauthorized disclosures of the document shall be a priority.',
+            'warning'
+        ).then((result) => {
+            $.ajax({
+                type: "POST",
+                data: {
+                    docnum: docnum
+                },
+                url: "php_processes/download-other.php",
+                success: function (result) {
+                    result = JSON.parse(result);
+                    let base64 = result.base64;
+                    let fileExt = result.file_ext
+
+                    if (!base64.includes('data')) {
+                        base64 = 'data:' + fileExt + ';base64,' + base64;
+                    }
+
+                    var a = document.createElement("a"); //Create <a>
+                    a.href = base64; //Image Base64 Goes here
+                    a.download = "file-" + docnum;
+                    a.click(); //Downloaded file
+                }
+            })
+        })
     })
 })

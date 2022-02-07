@@ -39,7 +39,10 @@ else {
     VALUES ('$emp_id', '$userid', 'onlinereq', '$appnum', '$date', '$app_date')";
     mysqli_query($conn, $query);
 
-    $to = $email;
+    $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$userid'");
+    $row = mysqli_fetch_array($result);
+
+    $to = $row['email'];
     $subject = 'Twin Care Portal | Online Appointment Request';
     $headers = "Good day, our dear patient!";
     $message = "The doctor has requested you for an appointment to be conducted online. Kindly visit www.twincareportal.online to accept or decline the doctor's request.";

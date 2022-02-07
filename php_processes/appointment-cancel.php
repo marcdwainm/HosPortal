@@ -13,7 +13,10 @@ if ($cancel_type == 'cancel') {
     $query = "INSERT INTO patients_notifications (`notif_type`, `patient_id`, `appointment_num`, `date_notified`) VALUES('cancellation', '$userid','$app_num', '$date_notified')";
     $result = mysqli_query($conn, $query);
 
-    $to = $email;
+    $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$userid'");
+    $row = mysqli_fetch_array($result);
+
+    $to = $row['email'];
     $subject = 'Twin Care Portal | Appointment Cancellation';
     $headers = "Good day, our dear patient!";
     $message = "We are sorry to have your current appointment cancelled. Contact 0925-734-7552 for more information.";
@@ -26,7 +29,10 @@ if ($cancel_type == 'cancel') {
     $query = "INSERT INTO patients_notifications (`notif_type`, `patient_id`, `appointment_num`, `date_notified`) VALUES('miss', '$userid','$app_num', '$date_notified')";
     $result = mysqli_query($conn, $query);
 
-    $to = $email;
+    $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$userid'");
+    $row = mysqli_fetch_array($result);
+
+    $to = $row['email'];
     $subject = 'Twin Care Portal | Appointment Missed';
     $headers = "Good day, our dear patient!";
     $message = "You have received this e-mail due to your missed appointment. We are here to remind you that you may book again and pursue the missed appointment with your doctor. Regards.";

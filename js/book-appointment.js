@@ -39,6 +39,68 @@ $(document).ready(function () {
                 }
                 else{
                     disabledDatesArr = disabledDates()
+
+                    //PROGRAMATICALLY CHECK THE CHECKBOX
+                    // $(":checkbox[value=Asthma]").prop("checked","true");
+                    
+                    // FIRST, GET FROM DATABASE IF USER HAS TRIAGE DATA
+                    // IF NO DATA, MAKE ONE
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php_processes/get_patient_history.php',
+                        success: function(result){
+                            if(result != ""){
+                                result = JSON.parse(result) 
+                                let famHistoryCb = result.fam_history_cb
+                                let famHistoryOthers = result.fam_history_others
+
+                                let allergiesCb = result.allergies_cb
+                                let allergiesOthers = result.allergies_others
+
+                                let socHistoryCb = result.soc_history_cb
+                                let socHistoryOthers = result.soc_history_others
+
+                                let famHistoryArr = famHistoryCb.split(", ");
+                                let allergiesArr = allergiesCb.split(", ");
+                                let socHistoryArr = socHistoryCb.split(", ");
+
+                                $("#others-fam-history").val(famHistoryOthers)
+                                for(let value of famHistoryArr){
+                                    if(value == 'None/Unknown'){
+
+                                        $("#none-fam-history").trigger("click")
+                                    }
+                                    else {
+                                        $(`:checkbox[value="${value}"]`).prop("checked", true);
+                                    }
+                                }
+
+                                $("#others-allergies").val(allergiesOthers)
+                                for(let value of allergiesArr){
+                                    if(value == 'None/Unknown'){
+                                        $("#none-allergies").trigger("click")
+                                    } 
+                                    else {
+                                        $(`:checkbox[value="${value}"]`).prop("checked", true);
+                                    }    
+                                    
+                                }
+
+                                $("#others-social-history").val(socHistoryOthers)
+                                for(let value of socHistoryArr){
+                                    if (value == 'None/Unknown'){
+                                        $("#none-social-history").trigger("click")   
+                                    }
+                                    else {
+                                        $(`:checkbox[value="${value}"]`).prop("checked", true);   
+                                    }
+                                }
+                            }
+                        }
+                    })
+
+
                     $('.dim').fadeIn();
                     $('.date-time-input').val('');
                     $('#book').prop('disabled', true)
@@ -59,12 +121,22 @@ $(document).ready(function () {
     $('.exit').click(function () {
         $('.dim').fadeOut();
         $('.date-time-input').val('');
-        $('.book-content input').val('');
-        $('.book-content input').prop('checked', false);
-        $('.book-content input').prop('disabled', false);
+        $('.book-content input').each(function () {
+            if($(this).type == 'text'){
+                $(this).val('')
+            }
+            else{
+                $(this).prop('checked', false);
+                $(this).prop('disabled', false);
+            }
+        })
         clearInterval(interval);
-        $('.book-content-doctor input').each(function () {
+        $('.book-content-doctor input[type=text]').each(function () {
             $(this).val('')
+        })
+        $('.book-content-doctor input[type=checkbox]').each(function () {
+            $(this).prop('checked', false);
+            $(this).prop('disabled', false);
         })
         // $("#appointment-type").val($("#appointment-type option:first").val());
         $('#portal-registered').prop('checked', false)
@@ -219,6 +291,10 @@ $(document).ready(function () {
             })
         }
 
+        famHistorySave = [...familyHistory]
+        allergiesSave = [...allergies]
+        socHistorySave = [...socialHistory]
+
         famHistoryOthers = $('#others-fam-history').val().charAt(0).toUpperCase() + $('#others-fam-history').val().slice(1);
         allergiesOthers = $('#others-allergies').val().charAt(0).toUpperCase() + $('#others-allergies').val().slice(1);
         socialHistoryOthers = $('#others-social-history').val().charAt(0).toUpperCase() + $('#others-social-history').val().slice(1);
@@ -259,9 +335,6 @@ $(document).ready(function () {
                 $('.book-content-doctor input').each(function () {
                     $(this).val('')
                 })
-                $('.book-content input').each(function () {
-                    $(this).val('')
-                })
                 $('#family-history-checkboxes div input').each(function () {
                     $(this).prop('checked', false)
                 })
@@ -271,6 +344,17 @@ $(document).ready(function () {
                 $('.row-4-2 > div div input').each(function () {
                     $(this).prop('checked', false)
                 })
+
+                $('.book-content input[type=text]').each(function () {
+                    $(this).val('')
+                })
+
+                $('.book-content input[type=checkbox]').each(function () {
+                    $(this).prop('checked', false);
+                    $(this).prop('disabled', false);
+                })
+
+                    
                 // $("#appointment-type").val($("#appointment-type option:first").val());
 
                 Swal.fire(
@@ -282,6 +366,24 @@ $(document).ready(function () {
             },
             error: function (result) {
                 alert('error');
+            }
+        })
+        
+
+        //--------------------------HISTORY INPUTS-----------------------//
+        $.ajax({
+            type: 'POST',
+            url: 'php_processes/save-medical-history.php',
+            data:{
+                familyHistoryCb: famHistorySave.join(", "),
+                allergiesCb: allergiesSave.join(", "),
+                socHistoryCb: socHistorySave.join(", "),
+                familyHistoryOthers: famHistoryOthers,
+                allergiesOthers: allergiesOthers,
+                socialHistoryOthers: socialHistoryOthers
+            },
+            success: function(result){
+                console.log(result)
             }
         })
     })
@@ -388,9 +490,7 @@ $(document).ready(function () {
                     $('#book-doctor').prop('disabled', true);
                     $('#book-appointment').prop('disabled', true);
                     $('.dim').fadeOut();
-                    $('.book-content-doctor input').each(function () {
-                        $(this).val('')
-                    })
+                
                     $('#family-history-checkboxes div input').each(function () {
                         $(this).prop('checked', false)
                     })
@@ -399,6 +499,15 @@ $(document).ready(function () {
                     })
                     $('.row-4-2 > div div input').each(function () {
                         $(this).prop('checked', false)
+                    })
+
+                    $('.book-content-doctor input[type=text]').each(function () {
+                        $(this).val('')
+                    })
+    
+                    $('.book-content-doctor input[type=checkbox]').each(function () {
+                        $(this).prop('checked', false);
+                        $(this).prop('disabled', false);
                     })
 
                     Swal.fire(
@@ -579,7 +688,6 @@ $(document).ready(function () {
     })
 
 
-
     $(document).on('click', '.search-results', function () {
         userid = $(this).val();
 
@@ -598,7 +706,72 @@ $(document).ready(function () {
                 $('#pname-search').val(data.fullname);
                 $('#pcontact').val(data.contact);
                 $('#book-doctor').val(data.pid)
-                // $('#appointment-type').show();
+            
+                // CHECK FIELDS OF PATIENT
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'php_processes/get_patient_history.php',
+                    data:{
+                        pid: data.pid
+                    },
+                    success: function(result){
+                        if(result != ""){
+                            result = JSON.parse(result) 
+                            let famHistoryCb = result.fam_history_cb
+                            let famHistoryOthers = result.fam_history_others
+
+                            let allergiesCb = result.allergies_cb
+                            let allergiesOthers = result.allergies_others
+
+                            let socHistoryCb = result.soc_history_cb
+                            let socHistoryOthers = result.soc_history_others
+
+                            let famHistoryArr = famHistoryCb.split(", ");
+                            let allergiesArr = allergiesCb.split(", ");
+                            let socHistoryArr = socHistoryCb.split(", ");
+
+                            $(".book-content-doctor input[type=checkbox]").each(function(){
+                                if($(this).attr('id') == 'portal-registered'){
+                                    return;
+                                }
+                                else{
+                                    $(this).prop("checked", false);
+                                }
+                            })
+
+                            $("#others-fam-history").val(famHistoryOthers)
+                            for(let value of famHistoryArr){
+                                if(value == 'None/Unknown'){
+                                    $("#none-fam-history").trigger("click")
+                                }
+                                else {
+                                    $(`:checkbox[value="${value}"]`).prop("checked", true);
+                                }
+                            }
+
+                            $("#others-allergies").val(allergiesOthers)
+                            for(let value of allergiesArr){
+                                if(value == 'None/Unknown'){
+                                    $("#none-allergies").trigger("click")
+                                }
+                                else {
+                                    $(`:checkbox[value="${value}"]`).prop("checked", true);   
+                                }
+                            }
+
+                            $("#others-social-history").val(socHistoryOthers)
+                            for(let value of socHistoryArr){
+                                if (value == 'None/Unknown'){
+                                    $("#none-social-history").trigger("click")
+                                } 
+                                else {
+                                    $(`:checkbox[value="${value}"]`).prop("checked", true);   
+                                }
+                            }
+                        }
+                    }
+                })
             }
         })
     })

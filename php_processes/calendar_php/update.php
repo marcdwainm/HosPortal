@@ -17,8 +17,10 @@ if (isset($_POST["id"])) {
     mysqli_query($conn, $query);
 
     $docmsg = $doc_type == 'labresult' ? "Lab Result" : "Prescription";
-    $to = $email;
+    $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$pid'");
+    $row = mysqli_fetch_array($result);
 
+    $to = $row['email'];
     $subject = "Twin Care Portal | Appointment Rescheduling";
     $headers = "Good day, our dear patient!";
     $message = "Your appointment has been rescheduled to another day. Kindly visit www.twincareportal.online or contact 0925-734-7552 to further dicuss the matter.";
