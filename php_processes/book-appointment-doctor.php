@@ -69,8 +69,8 @@ if (mysqli_num_rows($result) > 0) {
         
             $to = $row['email'];
             $subject = 'Twin Care Portal | New Appointment';
-            $headers = "Good day, our dear patient!";
-            $message = "The doctor has booked an appointment for you. Kindly visit www.twincareportal.online for more details.";
+            $headers = "Greetings of Peace and Love!";
+            $message = "This is to inform you that the Doctor has booked an appointment for you. To know more about the details or if you want to reschedule your appointment, please login to your account at twincareportal.online or you can send us a private message on our Facebook page, https://www.facebook.com/twincaremedicalclinic/";
         
             mail($to, $subject, $message, $headers);
 

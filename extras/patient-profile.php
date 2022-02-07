@@ -21,6 +21,7 @@
     </div>
     <button id='appointments'><i class="far fa-calendar-check fa-lg"></i><span>Appointments</span></button>
     <button id='documents'><i class="far fa-file-word fa-lg"></i><span>Documents</span></button>
+    <button id='faqs'><i class="fas fa-question-circle"></i><span>FAQs</span></button>
     <div class='settings-div'>
         <button id='settings-doctor'><i class="fas fa-cog fa-lg"></i><span>Settings</span></button>
         <div class='settings-dropdown'>

@@ -757,6 +757,16 @@ legend{
     margin-bottom: 15px;
 }
 
+.question{
+    margin-bottom: 10px;
+    color: var(--darktext);
+}
+
+.answer-span{
+    line-height: 30px;
+    color: var(--darktext);
+}
+
 .here{
     border: 2px solid var(--blue);
     background: white;

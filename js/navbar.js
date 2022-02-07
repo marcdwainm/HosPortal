@@ -15,11 +15,11 @@ function displayClock() {
     } else {
         textGreeting = "Good Evening It's"
     }
-
+    
     span.innerHTML = display.toLocaleTimeString();
     greetingSpan.innerHTML = textGreeting;
     liveClockDate.innerHTML = display.toLocaleDateString("en-US", options);
-
+    
     setTimeout(displayClock, 1000);
 }
 
@@ -35,7 +35,11 @@ $(document).ready(function () {
         window.location.href = 'nurse-homepage.php';
     })
 
-
+    $("#faqs").on('click', function(){
+        window.location.href = 'patient-faqs.php'
+    })
+    
+    
     $("#patients-doctor").on("click", function () {
         window.location.href = 'employee-patients.php';
     })
