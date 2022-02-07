@@ -25,6 +25,8 @@ FIX triage layout
 POPULATE DATABASE
 
 
+/IF APPOINTMENT CANCELLED, ALSO CANCEL THE BILL
+
 
 
 GCASH API comes from paymongo

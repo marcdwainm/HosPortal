@@ -36,6 +36,9 @@ if ($has_appointment == '0') {
     $query = "UPDATE appointments SET status = 'cancelled' WHERE appointment_num = '$app_num'";
     mysqli_query($conn, $query);
 
+    $query = "DELETE FROM bills WHERE bill_num = '$app_num'";
+    mysqli_query($conn, $query);
+
     //IF APPOINTMENT IS ONLINE REQ, THE ONLINE REQ NOTIF MUST BE DELETED
     mysqli_query($conn, "DELETE FROM patients_notifications WHERE appointment_num = '$app_num' AND notif_type = 'onlinereq'");
 }

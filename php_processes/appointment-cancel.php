@@ -13,6 +13,9 @@ if ($cancel_type == 'cancel') {
     $query = "INSERT INTO patients_notifications (`notif_type`, `patient_id`, `appointment_num`, `date_notified`) VALUES('cancellation', '$userid','$app_num', '$date_notified')";
     $result = mysqli_query($conn, $query);
 
+    $query = "DELETE FROM bills WHERE bill_num = '$app_num'";
+    mysqli_query($conn, $query);
+
     $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$userid'");
     $row = mysqli_fetch_array($result);
 
@@ -25,9 +28,14 @@ if ($cancel_type == 'cancel') {
 
     $query = "UPDATE appointments SET `status` = 'cancelled' WHERE appointment_num = '$app_num'";
     $result = mysqli_query($conn, $query);
+
+    
 } else if ($cancel_type == 'miss') {
     $query = "INSERT INTO patients_notifications (`notif_type`, `patient_id`, `appointment_num`, `date_notified`) VALUES('miss', '$userid','$app_num', '$date_notified')";
     $result = mysqli_query($conn, $query);
+
+    $query = "DELETE FROM bills WHERE bill_num = '$app_num'";
+    mysqli_query($conn, $query);
 
     $result = mysqli_query($conn, "SELECT * FROM user_table WHERE patient_id = '$userid'");
     $row = mysqli_fetch_array($result);
