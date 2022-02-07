@@ -24,13 +24,13 @@ if (mysqli_num_rows($result2) > 0) {
                     <span>$date_time</span>
                     <div>
                         <div class = 'soap-btns'>
-                            <button id = 'view-soap' value = '$soap_id'>View</button>
-                            <button id = 'edit-soap' value = '$soap_id'>Edit</button>
-                            <button class = 'archive-soap' value = '$soap_id'>Archive</button>
+                            <button class = 'view-soap' value = '$soap_id'><i class='far fa-eye fa-lg'></i></button>
+                            <button class = 'edit-soap' value = '$soap_id' ><i class='far fa-edit fa-lg'></i></button>
+                            <button class = 'archive-soap' value = '$soap_id'><i class='fas fa-archive fa-lg'></i></button>
                         </div>
                     </div>
                 </div>
-                ";
+                "; 
     }
 } else {
     echo '
