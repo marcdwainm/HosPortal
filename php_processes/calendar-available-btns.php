@@ -47,6 +47,7 @@ if ($_POST['appointment_num'] == "") {
     if (0 < mysqli_num_rows($result)) {
         while ($row = mysqli_fetch_array($result)) {
             $appointmentnum = $row['appointment_num'];
+            $pid = substr($appointmentnum, -4);
             $status = ucwords($row['status']);
             $app_type = ucfirst($row['app_type']);
 
@@ -72,6 +73,11 @@ if ($_POST['appointment_num'] == "") {
                 $call_btn = "";
                 $online_btn = "";
             }
+            
+            if($pid == '0000'){
+                $online_btn = "";
+            }
+            
 
             if ($_SESSION['position'] == 'nurse') {
                 $call_btn = "";

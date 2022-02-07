@@ -144,6 +144,21 @@ if (mysqli_num_rows($result) == 0) {
             ";
         }
 
+        // LAB DRAFTS FROM MEDTECH WITH BILL
+        else if ($row['notif_type'] == 'ongoingtest') {
+            echo "
+                <button class='notif-content'>
+                    <div class='notif-img'>
+                        <i class='fas fa-flask fa-lg'></i>
+                    </div>
+                    <span>
+                        You have a new ongoing lab test. Check the documents section for further details.
+                    </span>
+                    $seen
+                </button>
+            ";
+        }
+
         // APPOINTMENTS FROM DOCTOR
         else if ($row['notif_type'] == 'appointment') {
             $docnum = $row['document_num'];

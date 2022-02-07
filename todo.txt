@@ -1,15 +1,16 @@
 Update video edit
+Update Script
+
+Add FAQs
+Add age in triage in patient
+When Doctor unchecks portal registered checkbox, clear all checbox fiels
+after booking, clear value of "#book-doctor" button
+NOTIF "add ongoing test"
+Tooltip details not appearing after booking doctor
 
 
 
-
-DONE:
-Appointment fill-up form "save medical history" feature (para di na paulit ulit mag fill-up)
-Download Button in Patient List
-Viewing a document opens a new tab
-Fixed E-mail Notifications
-patient, if appointments in table below are many, not cancelling
-
+FIX triage layout
 
 
 

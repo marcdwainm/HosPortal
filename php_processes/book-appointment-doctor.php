@@ -11,6 +11,7 @@ $date_booked = date('Y-m-d H:i:s', time());
 
 // Triage Details
 $chief_complaint = ucfirst($_POST['chief-complaint']);
+$age = $_POST['patient-age'];
 $height = $_POST['height'];
 $weight = $_POST['weight'];
 $blood_pressure = $_POST['blood-pressure'];
@@ -54,8 +55,8 @@ if (mysqli_num_rows($result) > 0) {
             mysqli_query($conn, $query);
 
             //INSERT DETAILS TO TRIAGE
-            $query = "INSERT INTO `triage`(`appointment_num`, `chief_complaint`, `height`, `weight`, `blood_pressure`, `temperature`, `past_surgery`, `family_history`, `allergies`, `social_history`, `current_medications`, `travel_history`) 
-            VALUES('$appointmentnum', '$chief_complaint', \"$height\", '$weight', '$blood_pressure', '$temperature', '$past_surgery', '$family_history', '$allergies', '$social_history', '$current_medications', '$travel_history')";
+            $query = "INSERT INTO `triage`(`appointment_num`, `chief_complaint`, `age`, `height`, `weight`, `blood_pressure`, `temperature`, `past_surgery`, `family_history`, `allergies`, `social_history`, `current_medications`, `travel_history`) 
+            VALUES('$appointmentnum', '$chief_complaint', '$age', \"$height\", '$weight', '$blood_pressure', '$temperature', '$past_surgery', '$family_history', '$allergies', '$social_history', '$current_medications', '$travel_history')";
             mysqli_query($conn, $query);
 
             //NOTIFY THE PATIENT
@@ -88,8 +89,8 @@ if (mysqli_num_rows($result) > 0) {
     $result2 = mysqli_query($conn, $query);
 
     //INSERT DETAILS TO TRIAGE
-    $query = "INSERT INTO `triage`(`appointment_num`, `chief_complaint`, `height`, `weight`, `blood_pressure`, `temperature`, `past_surgery`, `family_history`, `allergies`, `social_history`, `current_medications`, `travel_history`) 
-    VALUES('$appointmentnum', '$chief_complaint', \"$height\", '$weight', '$blood_pressure', '$temperature', '$past_surgery', '$family_history', '$allergies', '$social_history', '$current_medications', '$travel_history')";
+    $query = "INSERT INTO `triage`(`appointment_num`, `chief_complaint`, `age`, `height`, `weight`, `blood_pressure`, `temperature`, `past_surgery`, `family_history`, `allergies`, `social_history`, `current_medications`, `travel_history`) 
+    VALUES('$appointmentnum', '$chief_complaint', '$age', \"$height\", '$weight', '$blood_pressure', '$temperature', '$past_surgery', '$family_history', '$allergies', '$social_history', '$current_medications', '$travel_history')";
     $result = mysqli_query($conn, $query);
 }
 

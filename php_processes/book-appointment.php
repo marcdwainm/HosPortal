@@ -37,6 +37,11 @@ $social_history = $_POST['social-history'];
 $current_medications = ucfirst($_POST['current-medications']);
 $travel_history = ucfirst($_POST['travel-history']);
 
+$birthdate = $_SESSION['birthdate'];
+$from = new DateTime($birthdate);
+$to = new DateTime('today');
+$age = $from->diff($to)->y;
+
 //INSERT APPOINTMENT TO DATABSE
 $query = "INSERT INTO `appointments`(`appointment_num`, `patient_id`, `patient_fullname`, `date_and_time`, `date_and_time_finish`, `contact`, `app_type`, `appointed_by`, `status`) 
             VALUES ('$appointmentnum', '$patientid', '$fullname', '$datetime', '$datetime_finish', '$contact', 'f2f', 'user', 'pending')";
@@ -44,8 +49,8 @@ $result = mysqli_query($conn, $query);
 
 
 //INSERT DETAILS TO TRIAGE
-$query = "INSERT INTO `triage`(`appointment_num`, `chief_complaint`, `height`, `weight`, `blood_pressure`, `temperature`, `past_surgery`, `family_history`, `allergies`, `social_history`, `current_medications`, `travel_history`) 
-            VALUES('$appointmentnum', '$chief_complaint', \"$height\", '$weight', '$blood_pressure', '$temperature', '$past_surgery', '$family_history', '$allergies', '$social_history', '$current_medications', '$travel_history')";
+$query = "INSERT INTO `triage`(`appointment_num`, `chief_complaint`, `age`, `height`, `weight`, `blood_pressure`, `temperature`, `past_surgery`, `family_history`, `allergies`, `social_history`, `current_medications`, `travel_history`) 
+            VALUES('$appointmentnum', '$chief_complaint', '$age', \"$height\", '$weight', '$blood_pressure', '$temperature', '$past_surgery', '$family_history', '$allergies', '$social_history', '$current_medications', '$travel_history')";
 $result = mysqli_query($conn, $query);
 
 //UPDATE HAS_APPOINTMENT TO 1

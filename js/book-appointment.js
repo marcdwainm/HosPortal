@@ -131,13 +131,14 @@ $(document).ready(function () {
             }
         })
         clearInterval(interval);
-        $('.book-content-doctor input[type=text]').each(function () {
+        $('.book-content-doctor input[type=text], .book-content-doctor input[type=number]').each(function () {
             $(this).val('')
         })
         $('.book-content-doctor input[type=checkbox]').each(function () {
             $(this).prop('checked', false);
             $(this).prop('disabled', false);
         })
+        $('#book-doctor').val('0000')
         // $("#appointment-type").val($("#appointment-type option:first").val());
         $('#portal-registered').prop('checked', false)
         $('.time-autocomplete').parent().hide();
@@ -394,6 +395,7 @@ $(document).ready(function () {
         // apptype is always f2f
         dt = $("#appointment-date-time").val();
         time = $("#appointment-time").val();
+        age = $("#patient-age").val();
         ndt = dt + " " + time;
         patientName = $('#pname-search').val();
         patientContact = $('#pcontact').val() || "Not Specified";
@@ -459,6 +461,7 @@ $(document).ready(function () {
             data: {
                 'appointment-date-time': ndt,
                 'patient-name': patientName,
+                'patient-age': age,
                 'patient-contact': patientContact,
                 'chief-complaint': chiefComplaint,
                 'height': height,
@@ -494,14 +497,16 @@ $(document).ready(function () {
                     $('#family-history-checkboxes div input').each(function () {
                         $(this).prop('checked', false)
                     })
+
                     $('.row-4-1 > div div input').each(function () {
                         $(this).prop('checked', false)
                     })
+
                     $('.row-4-2 > div div input').each(function () {
                         $(this).prop('checked', false)
                     })
 
-                    $('.book-content-doctor input[type=text]').each(function () {
+                    $('.book-content-doctor input[type=text], .book-content-doctor input[type=number]').each(function () {
                         $(this).val('')
                     })
     
@@ -509,6 +514,8 @@ $(document).ready(function () {
                         $(this).prop('checked', false);
                         $(this).prop('disabled', false);
                     })
+
+                    $("#book-doctor").val('0000')
 
                     Swal.fire(
                         'Success!',
@@ -611,6 +618,12 @@ $(document).ready(function () {
         $('.time-autocomplete').parent().show();
     })
 
+    $("#patient-age").on("keypress", function(e){
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+          return false;
+    })
+
 
     $('#pname-search').on('keyup', function () {
         query = $(this).val()
@@ -650,6 +663,19 @@ $(document).ready(function () {
 
     $('#portal-registered').on('click', function () {
         query = $('#pname-search').val();
+
+        $(".book-content-doctor input[type=text]").each(function(){
+            $(this).prop('disabled', false)
+        }) //STOPPED HERE CLEAR INPUTS OF TRIAGE
+        $(".book-content-doctor input[type=checkbox]").each(function(){
+            if($(this).attr('id') == 'portal-registered'){
+                return;
+            }
+            else{
+                $(this).prop('disabled', false)
+                $(this).prop('checked', false)
+            }
+        })
 
         if ($(this).is(':checked')) {
             if (query === '') {
@@ -706,7 +732,7 @@ $(document).ready(function () {
                 $('#pname-search').val(data.fullname);
                 $('#pcontact').val(data.contact);
                 $('#book-doctor').val(data.pid)
-            
+                $('#patient-age').val(data.age)
                 // CHECK FIELDS OF PATIENT
 
                 $.ajax({

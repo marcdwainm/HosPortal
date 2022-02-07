@@ -42,14 +42,15 @@ else {
                 exit();
             }
             else if (password_verify($pass, $row['password'])) {
-
+                
                 $fname = $row['first_name'];
                 $mname = substr($row['middle_name'], 0, 1) . '.';
                 $lname = $row['last_name'];
-
+                
                 $_SESSION['email'] = $email;
                 $_SESSION['fullname'] = "$fname $mname $lname";
                 $_SESSION['patientid'] = $row['patient_id'];
+                $_SESSION['birthdate'] = $row['birthdate'];
                 $_SESSION['contact'] = $row['contact_num'];
                 $_SESSION['position'] = 'patient';
 

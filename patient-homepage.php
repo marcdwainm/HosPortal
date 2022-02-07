@@ -73,6 +73,9 @@
                     <span class='exit'>X</span>
                 </div>
                 <form class='book-content' target='dummyframe'>
+                    <div class = 'triage-fill-up-warning'>
+                        <label>*Input boxes in gray can be left blank</label>
+                    </div>
                     <div class='row-0'>
                         <input type='text' class='date-time-input appointment-date-time' id='appointment-date-time' name='appointment-date-time' placeholder="Select Appointment Date (Required)" style = 'border: 1px solid var(--blue);' autocomplete='off'>
                         <div>

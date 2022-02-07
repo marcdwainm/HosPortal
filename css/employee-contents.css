@@ -788,7 +788,7 @@ body{
 
 .row-0{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     column-gap: 5px;
     position: relative;
 }
@@ -945,7 +945,7 @@ legend{
     justify-content: space-between;
     background-color: white;
     border: none;
-    padding: 15px;
+    padding: 10px;
     cursor: pointer;
 }
 
@@ -1018,7 +1018,7 @@ legend{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:30%;
+    width: 500px;
     height: auto;
     background-color: white;
     display: flex;
@@ -1044,8 +1044,8 @@ legend{
     padding: 30px;
     padding-top:20px;
     display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(auto-fill, 150px);
+    grid-gap: 5px;
+    grid-template-columns: repeat(auto-fill, 210px);
 }
 
 .issue-details{
@@ -1168,12 +1168,14 @@ legend{
     cursor: default;
 }
 
-.triage-detail{
+.triage-detail{ 
     height: auto;
+    margin-bottom: 8px;
 }
 
 .triage-detail span{
     display: block;
+    word-break: break-all; 
 }
 
 .triage-detail span:nth-child(1){
@@ -1922,7 +1924,13 @@ legend{
 
 .portal-registered-checkbox{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+}
+
+.triage-fill-up-warning{
+    color: var(--blue);
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .portal-registered-checkbox .checkbox{
@@ -1984,6 +1992,13 @@ legend{
     font-size: 0.8em;
     color: var(--graytext);
 }
+
+.book-content-doctor input{
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.07);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.07);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.07);
+}
+
 
 .upload-document-content input{
     padding: 15px;
@@ -2760,9 +2775,9 @@ border-bottom: none;
     margin-right: 10px;
 }
 
-@media (max-width: 1199.98px) {
+@media (max-width: 1250.98px) {
     .view-triage-container{
-        min-width: 400px;
+        width: 80%;
     }
 
     .view-bill-doctor{
@@ -2786,9 +2801,20 @@ border-bottom: none;
 
 
 @media (max-width: 767.98px) {
+    
     body{
         font-size: 15.5px;
     }
+
+    .triage-details{
+        font-size: 0.9em;
+        padding: 30px;
+        padding-top:20px;
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: repeat(auto-fill, 130px);
+    }
+    
 
     .notification-area{
         top: 70px;
