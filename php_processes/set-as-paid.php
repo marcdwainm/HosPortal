@@ -19,6 +19,9 @@ if($tied_to_online == '1'){
 
     $query = "UPDATE bills SET paid = '1', date_of_payment = '$date_paid' WHERE bill_num = '$bill_num'";
     mysqli_query($conn, $query);
+
+    $query = "UPDATE patients_notifications SET notif_type = 'onlinereqanswered' WHERE appointment_num = '$bill_num'";
+    mysqli_query($conn, $query);
 }
 else{
     $query = "UPDATE bills SET paid = '1', date_of_payment = '$date_paid' WHERE bill_num = '$bill_num'";

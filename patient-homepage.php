@@ -294,6 +294,21 @@
                             </span>
                         ";
                     }
+
+                    $query = "SELECT * FROM appointments WHERE patient_id = '$pid' AND status = 'ongoing'";
+                    $result = mysqli_query($conn, $query);
+
+                    if(mysqli_num_rows($result) > 0){
+                        $row = mysqli_fetch_array($result);
+                        $status = $row['status'];
+                        $apptnum = $row['appointment_num'];
+    
+                        if($status == 'ongoing'){
+                            echo "<div class = 'click-to-join'>
+                                    <span class = 'red-text'>Your online appointment has been set-up. Click <button class = 'here' id = 'join-chatroom' value = '$apptnum'>here</button> to join!</span>
+                                </div>";
+                        }
+                    }
                 ?>
 
                 <div class='table'>
@@ -481,6 +496,7 @@
     <!--LIVE-->
     <script src="https://www.paypal.com/sdk/js?client-id=AcOQatDCaLrp7YyymYLrFyukmnadZ5qRg5z2VIWv_qaG4ADENWl1vRgkP5MrNyNH-IRlR5JcvdNQgpbU&disable-funding=credit,card&currency=PHP"></script>
 </body>
+
 <script src='js/navbar.js'></script>
 <script src='js/book-appointment.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

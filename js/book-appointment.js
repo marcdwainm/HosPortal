@@ -763,7 +763,12 @@ $(document).ready(function () {
                                 }
                                 else{
                                     $(this).prop("checked", false);
+                                    $(this).prop("disabled", false);
                                 }
+                            })
+
+                            $(".book-content-doctor input[type=text]").each(function(){
+                                $(this).prop("disabled", false)
                             })
 
                             $("#others-fam-history").val(famHistoryOthers)

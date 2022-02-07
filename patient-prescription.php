@@ -46,7 +46,7 @@
                         <?php
                         include 'php_processes/db_conn.php';
 
-                        $query = "SELECT * FROM documents WHERE doc_num = '$docnum'";
+                        $query = "SELECT * FROM documents_patient_copy WHERE doc_num = '$docnum'";
                         $result = mysqli_query($conn, $query);
 
                         $base64 = '';

@@ -753,11 +753,29 @@ legend{
     box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
 }
 
+.click-to-join{
+    margin-bottom: 15px;
+}
+
+.here{
+    border: 2px solid var(--blue);
+    background: white;
+    color: var(--blue);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    -webkit-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    -moz-box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+    box-shadow: 5px 5px 3px -2px rgba(0,0,0,0.22);
+}
+
 #book-appointment{
     margin-left: 10px;
 }
 
-.reload-book-btns button:hover{
+.reload-book-btns button:hover, .here:hover{
     border: 2px solid var(--green);
     color: var(--green);
     transition: 0.3s ease-in-out;

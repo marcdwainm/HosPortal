@@ -93,6 +93,6 @@ $(document).ready(function () {
 
     $(document).on('click', '.doc-notif-type', function () {
         docnum = $(this).val();
-        window.location.href = 'patient-prescription.php?docnum=' + docnum;
+        window.open('patient-prescription.php?docnum=' + docnum, '_blank');
     })
 })

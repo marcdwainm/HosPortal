@@ -1,5 +1,6 @@
 Update video edit
 Update Script
+Make script for PPT
 
 Add FAQs
 Add age in triage in patient
@@ -7,10 +8,22 @@ When Doctor unchecks portal registered checkbox, clear all checbox fiels
 after booking, clear value of "#book-doctor" button
 NOTIF "add ongoing test"
 Tooltip details not appearing after booking doctor
+PATIENT ONLINE REQ MUST BE ANSWERED WHEN SET AS PAID
+IN PATIENT NOTIFS, WHEN LAB RESULT CLICKED, FIND DOCUMENT IN THE COPY OF DOCUMENTS
+"JOIN CHAT ROOM" BUTTON IS HIDDEN, SHOW IN THE BUTTON ABOVE THE TABLE
+FIX CHECKBOXES IN BOOKING FORM WHEN PATIENT CHANGES
+FIX THE "portal registered" div
 
 
 
 FIX triage layout
+
+
+
+// PAGINATION OF DOCUMENTS IN PATIENT LIST
+
+POPULATE DATABASE
+
 
 
 
