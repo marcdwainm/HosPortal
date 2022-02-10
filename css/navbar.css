@@ -19,6 +19,35 @@
     --grayoutline: rgb(209, 209, 209);
 }
 
+.blue-text{
+    color: var(--blue);
+}
+
+.status-circle{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.status-circle-pending,
+.status-circle-ongoing,
+.status-circle-onlinereq{
+    background: #FFCC00;
+}
+
+.status-circle-appointed{
+    background: #33CC33;
+}
+
+.status-circle-missed,
+.status-circle-cancelled{
+    background: #FF0000;
+}
+
+.price-green{
+    color: rgb(36, 184, 36);
+}
+
 body{
     min-height: 100vh;
     width: 100%;

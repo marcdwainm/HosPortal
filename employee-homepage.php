@@ -262,7 +262,7 @@
             <h1>Welcome, Dr. <?php echo ucwords($_SESSION['fullname']) ?></h1>
             
             <?php
-                $query = "SELECT * FROM appointments WHERE (status = 'pending' || status = 'ongoing') AND date(date_and_time) = CURDATE()";
+                $query = "SELECT * FROM appointments WHERE (status = 'pending' || status = 'ongoing' || status = 'onlinereq') AND date(date_and_time) = CURDATE()";
                 $result = mysqli_query($conn, $query);
 
                 if(mysqli_num_rows($result) > 0){

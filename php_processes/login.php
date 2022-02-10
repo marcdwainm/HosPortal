@@ -82,7 +82,7 @@ else {
                 $_SESSION['emp_id'] = $row['employee_id'];
 
                 if ($_SESSION['position'] == 'doctor') {
-                    header('location: ../employee-homepage.php');
+                    header('location: ../employee-dashboard.php');
                 } else if ($_SESSION['position'] == 'medtech') {
                     header('location: ../medtech-homepage.php');
                 } else if ($_SESSION['position'] == 'nurse') {

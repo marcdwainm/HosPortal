@@ -38,6 +38,7 @@
     <div class='logo-container'>
         <img src='img/logo-2.png' class='logo'>
     </div>
+    <button id='dashboard-doctor'><i class="fas fa-chart-line fa-lg"></i><span>Dashboard</span></button>
     <button id='appointments-doctor'><i class="far fa-calendar-check fa-lg"></i><span>Appointments</span></button>
     <button id='patients-doctor'><i class="fas fa-hospital-user fa-lg"></i></i><span>Patients</span></button>
     <button id='documents-doctor'><i class="far fa-file-word fa-lg"></i><span>Documents</span></button>

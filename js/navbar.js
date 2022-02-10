@@ -25,6 +25,10 @@ function displayClock() {
 
 
 $(document).ready(function () {
+    $("#dashboard-doctor").on("click", function () {
+        window.location.href = 'employee-dashboard.php';
+    })
+
     $("#appointments").on("click", function () {
         window.location.href = 'patient-homepage.php';
     })

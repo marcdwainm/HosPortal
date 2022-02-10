@@ -147,6 +147,7 @@ $(document).ready(function () {
         planNote = $('#soap-column-plan-edit').val();
         appnum = "";
 
+
         clearTimeout(saveTimeout)
         $('#saving').html("Saving...")
         saveTimeout = setTimeout(function () {
@@ -838,5 +839,10 @@ $(document).ready(function () {
                 }
             })
         })
+    })
+
+    $(document).on('click', '.generate-report-btn', function(){
+        soap_id = $(this).siblings('select').find('option:selected').val()
+        window.open("appointment-report.php?soap=" + soap_id, "_blank")
     })
 })

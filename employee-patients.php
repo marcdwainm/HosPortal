@@ -238,7 +238,47 @@
                                 echo "</div>
                             </div>
                             <div class = 'hidden-patient-progress-div'>
-                                <i class='fas fa-angle-double-down center-i'></i>
+                                <i class='fas fa-angle-double-down center-i'></i>";
+
+
+
+                            // GENERATE REPORT START //
+
+                            echo"
+                                <div class = 'generate-report'>
+                                    <h2>Appointment Reports</h2>
+                                    <div>
+                                        <select>";
+                                            
+                                        $query_report = "SELECT * FROM soap_notes WHERE patient_id = '$pid' ORDER BY appointment_date_time DESC";
+                                        $result_report = mysqli_query($conn, $query_report);
+                                        $disabled = "";
+
+                                        if(mysqli_num_rows($result_report) > 0){
+                                            while($row = mysqli_fetch_array($result_report)){
+                                                $date_display = date("M d, Y / D", strtotime($row['appointment_date_time']));
+                                                $soap_id = $row['soap_id'];
+                                                echo "
+                                                    <option value = '$soap_id'>$date_display</option>
+                                                ";
+                                            }
+                                        }
+                                        else{
+                                            $disabled = 'disabled';
+                                        }
+
+                                        echo "</select>
+                                        <button class = 'generate-report-btn' $disabled>Generate</button>
+                                    </div>
+                                </div>
+                                <hr />
+                                ";
+
+                            // GENERATE REPORT END //
+
+
+
+                                echo"
                                 <div class = 'patient-progress-header'>
                                     <h2>SOAP Notes</h2>
                                     <div>
@@ -307,7 +347,7 @@
                                 </div>
                                 <div class = 'other-docs-table-contents' id = 'patient-presc-$pid'>";
 
-                                $query2 = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'prescription'";
+                                $query2 = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'prescription' ORDER BY date_uploaded DESC";
                                 $result2 = mysqli_query($conn, $query2);
         
                                 if(mysqli_num_rows($result2) > 0){
@@ -354,7 +394,7 @@
                                 </div>
                                 <div class = 'other-docs-table-contents' id = 'patient-lab-$pid'>";
 
-                                $query2 = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'labresult'";
+                                $query2 = "SELECT * FROM documents WHERE sent_to = '$pid' AND doc_type = 'labresult' ORDER BY date_uploaded DESC";
                                 $result2 = mysqli_query($conn, $query2);
         
                                 if(mysqli_num_rows($result2) > 0){
