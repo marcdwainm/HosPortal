@@ -23,10 +23,7 @@
     }
 
     $position = $_SESSION['position'];
-    if ($position !== 'doctor') {
-        header("Location: $position-homepage.php");
-    }
-    if ($position !== 'nurse'){
+    if ($position !== 'doctor' && $position != 'nurse') {
         header("Location: $position-homepage.php");
     }
 
