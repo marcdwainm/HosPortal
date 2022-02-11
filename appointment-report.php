@@ -26,6 +26,9 @@
     if ($position !== 'doctor') {
         header("Location: $position-homepage.php");
     }
+    else if ($position !== 'nurse'){
+        header("Location: $position-homepage.php");
+    }
 
     include 'extras/profile.php'
     ?>
