@@ -2880,6 +2880,11 @@ border-bottom: none;
     height: 100%;
 }
 
+.prescription-report img{
+    width: 100%;
+    object-fit: contain;
+}
+
 .prescription-report h2, .labresult-report h2{
     text-align: center;
     color: gray;
@@ -2897,6 +2902,11 @@ border-bottom: none;
 .labresult-report iframe{
     width: 100%;
     height: 100%;
+}
+
+.labresult-report img{
+    width: 100%;
+    object-fit: contain;
 }
 
 @media (max-width: 1250.98px) {
