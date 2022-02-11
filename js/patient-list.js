@@ -845,9 +845,4 @@ $(document).ready(function () {
         soap_id = $(this).siblings('select').find('option:selected').val()
         window.open("appointment-report.php?soap=" + soap_id, "_blank")
     })
-
-    $(document).on('click', '.generate-report-btn', function(){
-        soap_id = $(this).siblings('select').find('option:selected').val()
-        window.open("appointment-report.php?soap=" + soap_id, "_blank")
-    })
 })
