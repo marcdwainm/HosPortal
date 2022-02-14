@@ -28,6 +28,9 @@ $(document).ready(function () {
     $("#dashboard-doctor").on("click", function () {
         window.location.href = 'employee-dashboard.php';
     })
+    $("#dashboard-nurse").on("click", function () {
+        window.location.href = 'nurse-dashboard.php';
+    })
 
     $("#appointments").on("click", function () {
         window.location.href = 'patient-homepage.php';

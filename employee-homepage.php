@@ -259,7 +259,6 @@
         </div>
 
         <div class='header-intro'>
-            <h1>Welcome, Dr. <?php echo ucwords($_SESSION['fullname']) ?></h1>
             
             <?php
                 $query = "SELECT * FROM appointments WHERE (status = 'pending' || status = 'ongoing' || status = 'onlinereq') AND date(date_and_time) = CURDATE()";

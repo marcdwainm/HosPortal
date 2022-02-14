@@ -86,7 +86,7 @@ else {
                 } else if ($_SESSION['position'] == 'medtech') {
                     header('location: ../medtech-homepage.php');
                 } else if ($_SESSION['position'] == 'nurse') {
-                    header('location: ../nurse-homepage.php');
+                    header('location: ../nurse-dashboard.php');
                 }
             } else {
                 header("Location: ../index.php?acc=notfound&loginemail=$email");

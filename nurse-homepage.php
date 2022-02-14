@@ -244,7 +244,7 @@
         </div>
 
         <div class='header-intro'>
-            <h1>Welcome, <?php echo ucwords($_SESSION['fullname']) ?></h1>
+            
         </div>
 
         <div class='employee-contents'>
